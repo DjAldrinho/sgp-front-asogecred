@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "sgp-front"
+    }
+  },
+  "defaultProject": "sgp-front",
+  "cli": {
+    "analytics": false
+  }
 }
