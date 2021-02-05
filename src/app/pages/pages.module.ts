@@ -4,6 +4,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { PersonsComponent } from './persons/persons.component';
 import { ProfileComponent } from './profile/profile.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InterceptorService } from '../interceptors/interceptor.service';
 
 
 
@@ -19,6 +21,13 @@ import { ProfileComponent } from './profile/profile.component';
   ],
   exports: [
     DashboardComponent
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorService,
+      multi: true
+    }
   ]
 })
 export class PagesModule { }
