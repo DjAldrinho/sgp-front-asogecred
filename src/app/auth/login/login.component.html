@@ -1,1 +1,40 @@
-<p>login works!</p>
+<div class="container w-100 h-100 pt-5">
+  <div class="flex-column justify-content-center align-items-center pt-5">
+    <div class="lex-row justify-content-center align-items-center ">
+      <div class="col-md-5 col-sm-12 mx-auto">
+        <div class="card card-profile">
+          <div class="card-header card-header-info">
+            <h1 class="text-white text-uppercase font-weight-bold display-3">SGP</h1>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title mb-2 mt-3">Login</h4>
+            <form>
+              <div class="row">
+                <div class="col-10 mx-auto">
+                  <div class="form-group">
+                    <input type="text" id="user" class="form-control" placeholder="Usuario">
+                    <small *ngIf="error" id="userMessage" class="form-text text-muted text-danger float-left">El usuario es requerido</small>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-10 mx-auto">
+                  <div class="form-group">
+                    <input type="text" id="password" class="form-control" placeholder="Contraseña">
+                    <small *ngIf="error" id="passwordMessage" class="form-text text-muted text-danger float-left">La contraseña es requerida</small>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <button class="btn btn-info btn-round mt-4 disabled" type="button">INGRESAR</button>
+          </div>
+          <div class="card-footer mt-2">
+            <div class="stats">
+              Desarrollado por <a href="#" target="_blank" class="ml-1 text-warning"><strong>DevSoft</strong></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
