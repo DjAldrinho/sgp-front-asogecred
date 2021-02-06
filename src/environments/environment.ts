@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  base_url: "https://sgp-api-devsoft.herokuapp.com/api"
+  base_url: 'https://sgpapi.dnrjs.com/api'
 };
