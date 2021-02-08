@@ -1,26 +1,37 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SidebarService {
-  constructor() { }
+  constructor() {
+  }
 
   public menu: any[] = [
     {
+      id: 'dashboard',
       title: 'Dashboard',
       icon: 'dashboard',
-      url: '/dashboard'
+      url: '/dashboard',
+      items: []
     },
     {
+      id: 'profile',
       title: 'Perfil',
       icon: 'person',
-      url: 'profile'
+      url: 'profile',
+      items: []
     },
     {
+      id: 'persons',
       title: 'Personas',
       icon: 'accessibility_new',
-      url: 'persons'
+      url: '',
+      items: [
+        {title: 'Clientes', icon: 'person', url: 'clients'},
+        {title: 'Personas', icon: 'person', url: 'persons'},
+        {title: 'Abogados', icon: 'person', url: 'lawyers'}
+      ]
     }
   ];
 }

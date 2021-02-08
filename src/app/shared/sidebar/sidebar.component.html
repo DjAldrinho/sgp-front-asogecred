@@ -1,32 +1,100 @@
-<div
-  class="sidebar"
-  data-color="purple"
-  data-background-color="white"
-  data-image="../assets/img/sidebar-1.jpg"
->
-  <!--
-      Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+<!-- Sidebar -->
+<div class="menu">
 
-      Tip 2: you can also add an image using data-image tag
-  -->
-  <div class="logo">
-    <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-      Creative Tim
-    </a>
+  <div class="main-menu">
+
+    <div class="scroll">
+      <ul class="list-unstyled">
+        <li>
+          <a href="javascript:;">
+            <i class="iconsminds-home-3"></i>
+            <span>Inicio</span>
+          </a>
+        </li>
+        <li>
+          <a href="#credits">
+            <i class="iconsminds-wallet"></i> Creditos
+          </a>
+        </li>
+        <li class="active">
+          <a href="javascript:;" (click)="showItem('persons')">
+            <i class="iconsminds-business-man-woman"></i> Personas
+          </a>
+        </li>
+        <li>
+          <a href="javascript:;">
+            <i class="iconsminds-statistic"></i> Informes
+          </a>
+        </li>
+        <li>
+          <a href="#setting">
+            <i class="iconsminds-gear"></i> Ajustes
+          </a>
+        </li>
+      </ul>
+    </div>
+
   </div>
-  <div class="sidebar-wrapper">
-    <ul class="nav">
-      <li
-        class="nav-item"
-        *ngFor="let item of sidebarService.menu"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        <a class="nav-link" [routerLink]="item.url">
-          <i class="material-icons">{{ item.icon }}</i>
-          <p>{{ item.title }}</p>
-        </a>
-      </li>
-    </ul>
+
+  <div class="sub-menu">
+    <div class="scroll">
+
+      <ul class="list-unstyled" data-link="credits">
+        <li class="active">
+          <a href="javascript:;">
+            <i class="simple-icon-rocket"></i> <span class="d-inline-block">opcion uno</span>
+          </a>
+        </li>
+        <li>
+          <a href="javascript:;">
+            <i class="simple-icon-pie-chart"></i> <span class="d-inline-block">opcion dos</span>
+          </a>
+        </li>
+        <li>
+          <a href="javascript:;">
+            <i class="simple-icon-basket-loaded"></i> <span class="d-inline-block">opcion tres</span>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="list-unstyled" id="persons">
+        <li class="active">
+          <a href="javascript:;">
+            <i class="simple-icon-rocket"></i> <span class="d-inline-block">Clientes</span>
+          </a>
+        </li>
+        <li>
+          <a href="javascript:;">
+            <i class="simple-icon-pie-chart"></i> <span class="d-inline-block">Abogados</span>
+          </a>
+        </li>
+        <li>
+          <a href="javascript:;">
+            <i class="simple-icon-basket-loaded"></i> <span class="d-inline-block">Codeudores</span>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="list-unstyled" data-link="setting">
+        <li class="active">
+          <a href="javascript:;">
+            <i class="simple-icon-rocket"></i> <span class="d-inline-block">Usuarios</span>
+          </a>
+        </li>
+        <li>
+          <a href="javascript:;">
+            <i class="simple-icon-pie-chart"></i> <span class="d-inline-block">ajuste dos</span>
+          </a>
+        </li>
+        <li>
+          <a href="javascript:;">
+            <i class="simple-icon-basket-loaded"></i> <span class="d-inline-block">ajuste tres</span>
+          </a>
+        </li>
+      </ul>
+
+    </div>
   </div>
+
 </div>
+<!-- End Sidebar -->

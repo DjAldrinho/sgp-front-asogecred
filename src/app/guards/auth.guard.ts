@@ -11,6 +11,7 @@ export class AuthGuard implements CanActivate {
   constructor(private userService: UserService,
     private router: Router){}
 
+  // tslint:disable-next-line:typedef
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot){
@@ -21,5 +22,5 @@ export class AuthGuard implements CanActivate {
         this.router.navigateByUrl('/login');
       }
   }
-  
+
 }

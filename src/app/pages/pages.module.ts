@@ -6,6 +6,7 @@ import { PersonsComponent } from './persons/persons.component';
 import { ProfileComponent } from './profile/profile.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from '../interceptors/interceptor.service';
+import { ClientsComponent } from './clients/clients.component';
 
 
 
@@ -14,13 +15,14 @@ import { InterceptorService } from '../interceptors/interceptor.service';
     DashboardComponent,
     PersonsComponent,
     ProfileComponent,
+    ClientsComponent,
   ],
   imports: [
     CommonModule,
     AppRoutingModule,
   ],
   exports: [
-    DashboardComponent
+    ClientsComponent
   ],
   providers: [
     {
