@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import { User } from 'src/app/models/user.model';
 import {UserService} from 'src/app/services/user.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +9,10 @@ import Swal from 'sweetalert2';
 })
 export class HeaderComponent implements OnInit {
 
+  public user: User;
+
   constructor(private userService: UserService) {
+    this.user = userService.user;
   }
 
   ngOnInit(): void {

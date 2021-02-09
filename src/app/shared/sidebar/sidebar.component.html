@@ -1,100 +1,33 @@
 <!-- Sidebar -->
 <div class="menu">
-
   <div class="main-menu">
-
     <div class="scroll">
       <ul class="list-unstyled">
-        <li>
-          <a href="javascript:;">
-            <i class="iconsminds-home-3"></i>
-            <span>Inicio</span>
-          </a>
-        </li>
-        <li>
-          <a href="#credits">
-            <i class="iconsminds-wallet"></i> Creditos
-          </a>
-        </li>
-        <li class="active">
-          <a href="javascript:;" (click)="showItem('persons')">
-            <i class="iconsminds-business-man-woman"></i> Personas
-          </a>
-        </li>
-        <li>
-          <a href="javascript:;">
-            <i class="iconsminds-statistic"></i> Informes
-          </a>
-        </li>
-        <li>
-          <a href="#setting">
-            <i class="iconsminds-gear"></i> Ajustes
+        <li [attr.data-id]="menu.id" class="menu-item" *ngFor="let menu of sidebarService.menu" >
+          <a (click)="showItem(menu)" class="pointer">
+            <i [className]="menu.icon"></i>
+            <span>{{ menu.title }}</span>
           </a>
         </li>
       </ul>
     </div>
-
   </div>
 
   <div class="sub-menu">
     <div class="scroll">
-
-      <ul class="list-unstyled" data-link="credits">
-        <li class="active">
-          <a href="javascript:;">
-            <i class="simple-icon-rocket"></i> <span class="d-inline-block">opcion uno</span>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:;">
-            <i class="simple-icon-pie-chart"></i> <span class="d-inline-block">opcion dos</span>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:;">
-            <i class="simple-icon-basket-loaded"></i> <span class="d-inline-block">opcion tres</span>
+      <ul class="list-unstyled" data-link="credits" style="display: block">
+        <li
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          *ngFor="let item of menuItems"
+        >
+          <a [routerLink]="item.url">
+            <i class="{{ item.icon }}"></i>
+            <span class="d-inline-block">{{ item.title }}</span>
           </a>
         </li>
       </ul>
-
-      <ul class="list-unstyled" id="persons">
-        <li class="active">
-          <a href="javascript:;">
-            <i class="simple-icon-rocket"></i> <span class="d-inline-block">Clientes</span>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:;">
-            <i class="simple-icon-pie-chart"></i> <span class="d-inline-block">Abogados</span>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:;">
-            <i class="simple-icon-basket-loaded"></i> <span class="d-inline-block">Codeudores</span>
-          </a>
-        </li>
-      </ul>
-
-      <ul class="list-unstyled" data-link="setting">
-        <li class="active">
-          <a href="javascript:;">
-            <i class="simple-icon-rocket"></i> <span class="d-inline-block">Usuarios</span>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:;">
-            <i class="simple-icon-pie-chart"></i> <span class="d-inline-block">ajuste dos</span>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:;">
-            <i class="simple-icon-basket-loaded"></i> <span class="d-inline-block">ajuste tres</span>
-          </a>
-        </li>
-      </ul>
-
     </div>
   </div>
-
 </div>
 <!-- End Sidebar -->

@@ -7,6 +7,9 @@ import { ProfileComponent } from './profile/profile.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from '../interceptors/interceptor.service';
 import { ClientsComponent } from './clients/clients.component';
+import { RouterModule } from '@angular/router';
+import { AddEditClientComponent } from './clients/add-edit-client/add-edit-client.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -16,10 +19,13 @@ import { ClientsComponent } from './clients/clients.component';
     PersonsComponent,
     ProfileComponent,
     ClientsComponent,
+    AddEditClientComponent,
   ],
   imports: [
     CommonModule,
     AppRoutingModule,
+    RouterModule,
+    NgxPaginationModule,
   ],
   exports: [
     ClientsComponent

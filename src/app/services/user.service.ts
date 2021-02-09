@@ -40,13 +40,13 @@ export class UserService {
           id, is_administrator, name
         } = resp.user;
         this.user = new User( 
-          document_number, 
+          id, 
           document_type, 
+          document_number, 
+          name,
           email, 
           email_verified_at, 
-          id, 
           is_administrator, 
-          name
         );
         this.saveLocalStorage(resp.token.access_token);
       })
