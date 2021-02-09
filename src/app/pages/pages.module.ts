@@ -10,6 +10,8 @@ import { ClientsComponent } from './clients/clients.component';
 import { RouterModule } from '@angular/router';
 import { AddEditClientComponent } from './clients/add-edit-client/add-edit-client.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { MatDialogModule } from '@angular/material/dialog';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -26,6 +28,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
     AppRoutingModule,
     RouterModule,
     NgxPaginationModule,
+    MatDialogModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     ClientsComponent

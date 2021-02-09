@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Client } from 'src/app/models/client.model';
 import { ClientsService } from 'src/app/services/clients.service';
+import {MatDialog} from '@angular/material/dialog';
 import Swal from 'sweetalert2';
+import { AddEditClientComponent } from './add-edit-client/add-edit-client.component';
 
 @Component({
   selector: 'app-clients',
@@ -16,7 +18,8 @@ export class ClientsComponent implements OnInit {
   public total: number;
   public max: number;
 
-  constructor(private clientService: ClientsService) {
+  constructor(private clientService: ClientsService,
+    private dialog: MatDialog,) {
     this.page = 1;
     this.total = 0;
     this.max = 10;
@@ -45,6 +48,17 @@ export class ClientsComponent implements OnInit {
     this.getClients(page);
   }
 
+  openModal(): void {
+    let dialogRef = this.dialog.open(AddEditClientComponent,{width:'50%', panelClass: 'card'});
+    dialogRef.componentInstance.title = "Agregar cliente";
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result == "YES") {
+        this.getClients();
+      }
+    });
+  }
+
   deleteClient(client: Client){
     Swal.fire({
       title: '¿Borrar cliente?',
@@ -56,7 +70,7 @@ export class ClientsComponent implements OnInit {
       if(result.value){
         this.clientService.deleteClient(client)
         .subscribe(resp => {
-          this.getClients();
+          this.getClients(this.page);
           Swal.fire('Cliente eliminado', `El cliente ${client.name} fue eliminado correctamente`, 'success');
         }, err => {
           Swal.fire('Error', err.error.msg, 'error');

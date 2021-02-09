@@ -7,6 +7,7 @@
       data-toggle="modal"
       data-backdrop="static"
       data-target="#exampleModal"
+      (click)="openModal()"
     >
       Nuevo cliente
     </button>
@@ -51,6 +52,10 @@
               <th>Documento</th>
               <th>Telefono</th>
               <th>Email</th>
+              <th>Vinculación</th>
+              <th>Salario</th>
+              <th>Cargo</th>
+              <th>Fecha ingreso</th>
               <th class="text-center">Acciones</th>
             </tr>
           </thead>
@@ -70,6 +75,10 @@
               <td>{{ item.document_number }}</td>
               <td>{{ item.phone }}</td>
               <td>{{ item.email }}</td>
+              <td>{{ item.bonding }}</td>
+              <td>{{ item.salary }}</td>
+              <td>{{ item.position }}</td>
+              <td>{{ item.start_date }}</td>
               <td class="text-center">
                 <div class="btn-group" role="group" aria-label="Basic example">
                   <button

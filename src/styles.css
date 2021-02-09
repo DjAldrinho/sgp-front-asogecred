@@ -10,3 +10,11 @@
 .pointer {
     cursor: pointer;
 }
+
+.fixed-top {
+    z-index: 999 !important;
+}
+
+.mat-dialog-container {
+    border-radius: .75rem !important;
+}

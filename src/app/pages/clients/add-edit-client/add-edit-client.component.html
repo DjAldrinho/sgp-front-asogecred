@@ -1,1 +1,239 @@
-<p>add-edit-client works!</p>
+<div class="col-12">
+  <div>
+    <div>
+      <h5 class="mb-4">{{ title }}</h5>
+      <form
+        autocomplete="off"
+        (ngSubmit)="registerUpdateClient()"
+        [formGroup]="addEditClientForm"
+      >
+        <div class="form-group">
+          <label for="name">Nombre*</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Nombre"
+            id="name"
+            formControlName="name"
+          />
+          <small
+            *ngIf="
+              getFormField('name').errors?.required &&
+              getFormField('name').touched
+            "
+            id="userMessage"
+            class="form-text text-danger"
+            >El nombre es requerido</small
+          >
+        </div>
+        <div class="form-group">
+          <label for="email">Email*</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Email"
+            id="email"
+            formControlName="email"
+          />
+          <small
+            *ngIf="
+              getFormField('email').errors?.required &&
+              getFormField('email').touched
+            "
+            class="form-text text-danger"
+            >El email es requerido</small
+          >
+          <small
+            *ngIf="
+              getFormField('email').errors?.pattern &&
+              getFormField('email').touched
+            "
+            class="form-text text-danger"
+            >Debe ingresar un email valido</small
+          >
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="typeDocument">Tipo de documento*</label>
+            <select
+              id="typeDocument"
+              class="form-control"
+              formControlName="document_type"
+            >
+              <option selected value="">Seleccione...</option>
+              <option value="cc">Cédula de ciudadanía</option>
+              <option value="ce">Cédula de extranjería</option>
+              <option value="pp">Pasaporte</option>
+              <option value="ti">Tarjeta de identidad</option>
+            </select>
+            <small
+              *ngIf="
+                getFormField('document_type').errors?.required &&
+                getFormField('document_type').touched
+              "
+              id="userMessage"
+              class="form-text text-danger"
+              >El tipo de documento es requerido</small
+            >
+          </div>
+          <div class="form-group col-md-6">
+            <label for="numberDocument">Número de documento*</label>
+            <input
+              type="text"
+              class="form-control"
+              id="numberDocument"
+              formControlName="document_number"
+              placeholder="Número de documento"
+            />
+            <small
+              *ngIf="
+                getFormField('document_number').errors?.required &&
+                getFormField('document_number').touched
+              "
+              id="userMessage"
+              class="form-text text-danger"
+              >El número de documento es requerido</small
+            >
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="typeClient">Tipo de cliente*</label>
+            <select
+              id="typeClient"
+              class="form-control"
+              formControlName="client_type"
+            >
+              <option selected value="">Seleccione...</option>
+              <option value="debtor">Deudor</option>
+              <option value="codebtor">Codeudor</option>
+              <option value="debtor,codebtor">Deudor y Codeudor</option>
+            </select>
+            <small
+              *ngIf="
+                getFormField('client_type').errors?.required &&
+                getFormField('client_type').touched
+              "
+              id="userMessage"
+              class="form-text text-danger"
+              >El tipo de cliente es requerido</small
+            >
+          </div>
+          <div class="form-group col-md-6">
+            <label for="phone">Teléfono o Celular</label>
+            <input
+              type="text"
+              class="form-control"
+              id="phone"
+              formControlName="phone"
+              placeholder="Teléfono o Celular"
+            />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="sign">Firma</label>
+            <input
+              type="file"
+              class="form-control"
+              id="sign"
+              formControlName="sign"
+              (change)="onFileChange($event)"
+            />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="position">Cargo*</label>
+            <input
+              type="text"
+              class="form-control"
+              id="position"
+              formControlName="position"
+              placeholder="Cargo"
+            />
+            <small
+            *ngIf="
+              getFormField('position').errors?.required &&
+              getFormField('position').touched
+            "
+            id="userMessage"
+            class="form-text text-danger"
+            >El cargo es requerido</small>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="salary">Salario*</label>
+            <input
+              type="text"
+              class="form-control"
+              id="salary"
+              formControlName="salary"
+              placeholder="Salario"
+            />
+            <small
+            *ngIf="
+              getFormField('salary').errors?.required &&
+              getFormField('salary').touched
+            "
+            id="userMessage"
+            class="form-text text-danger"
+            >El salario es requerido</small>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="start_date">Fecha de ingreso*</label>
+            <input
+              type="date"
+              class="form-control"
+              id="start_date"
+              formControlName="start_date"
+            />
+            <small
+            *ngIf="
+              getFormField('start_date').errors?.required &&
+              getFormField('start_date').touched
+            "
+            id="userMessage"
+            class="form-text text-danger"
+            >La fecha de ingreso es requerida</small>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="bonding">Vinculación*</label>
+            <input
+              type="text"
+              class="form-control"
+              id="bonding"
+              formControlName="bonding"
+              placeholder="Vinculación"
+            />
+            <small
+            *ngIf="
+              getFormField('bonding').errors?.required &&
+              getFormField('bonding').touched
+            "
+            id="userMessage"
+            class="form-text text-danger"
+            >La vinculación es requerida</small>
+          </div>
+        </div>
+        <div class="form-row">
+          <button
+            type="submit"
+            class="btn btn-primary d-block mt-3"
+            [disabled]="!addEditClientForm.valid || loading"
+          >
+            Guardar
+          </button>
+          <button
+            type="button"
+            (click)="dialogRef.close()"
+            class="btn btn-light d-block mt-3 ml-1"
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

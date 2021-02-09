@@ -22,12 +22,12 @@
                 <small
                   *ngIf="email.errors?.required && email.touched"
                   id="userMessage"
-                  class="form-text text-muted text-danger float-left"
+                  class="form-text text-danger float-left"
                 >El email es requerido</small>
                 <small
                   *ngIf="email.errors?.pattern && email.touched"
                   id="userMessage"
-                  class="form-text text-muted text-danger float-left"
+                  class="form-text text-danger float-left"
                 >Debe ingresar un email valido</small
                 >
               </label>
@@ -41,7 +41,7 @@
                         password.touched
                       "
                   id="passwordMessage"
-                  class="form-text text-muted text-danger float-left"
+                  class="form-text text-danger float-left"
                 >La contraseña es requerida</small
                 >
               </label>

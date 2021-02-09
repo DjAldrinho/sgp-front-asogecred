@@ -11,5 +11,9 @@ export class Client {
         public created_at:      Date,
         public updated_at:      Date,
         public sign_url:        string,
+        public position:        string,
+        public salary:          string,
+        public bonding:        string,
+        public start_date:        string,
     ){}
 }
