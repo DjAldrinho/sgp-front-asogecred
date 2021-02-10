@@ -23,10 +23,10 @@
             "
             id="userMessage"
             class="form-text text-danger"
-            >El nombre es requerido</small
+          >El nombre es requerido</small
           >
         </div>
-        <div class="form-group">
+        <div *ngIf="false" class="form-group">
           <label for="email">Email*</label>
           <input
             type="text"
@@ -41,7 +41,7 @@
               getFormField('email').touched
             "
             class="form-text text-danger"
-            >El email es requerido</small
+          >El email es requerido</small
           >
           <small
             *ngIf="
@@ -49,7 +49,7 @@
               getFormField('email').touched
             "
             class="form-text text-danger"
-            >Debe ingresar un email valido</small
+          >Debe ingresar un email valido</small
           >
         </div>
         <div class="form-row">
@@ -73,7 +73,7 @@
               "
               id="userMessage"
               class="form-text text-danger"
-              >El tipo de documento es requerido</small
+            >El tipo de documento es requerido</small
             >
           </div>
           <div class="form-group col-md-6">
@@ -92,7 +92,7 @@
               "
               id="userMessage"
               class="form-text text-danger"
-              >El número de documento es requerido</small
+            >El número de documento es requerido</small
             >
           </div>
         </div>
@@ -116,10 +116,28 @@
               "
               id="userMessage"
               class="form-text text-danger"
-              >El tipo de cliente es requerido</small
+            >El tipo de cliente es requerido</small
             >
           </div>
           <div class="form-group col-md-6">
+            <label for="salary">Salario*</label>
+            <input
+              type="text"
+              class="form-control"
+              id="salary"
+              formControlName="salary"
+              placeholder="Salario"
+            />
+            <small
+              *ngIf="
+              getFormField('salary').errors?.required &&
+              getFormField('salary').touched
+            "
+              id="userMessage"
+              class="form-text text-danger"
+            >El salario es requerido</small>
+          </div>
+          <div *ngIf="false" class="form-group col-md-6">
             <label for="phone">Teléfono o Celular</label>
             <input
               type="text"
@@ -130,7 +148,7 @@
             />
           </div>
         </div>
-        <div class="form-row">
+        <div *ngIf="false" class="form-row">
           <div class="form-group col-md-12">
             <label for="sign">Firma</label>
             <input
@@ -143,7 +161,7 @@
           </div>
         </div>
         <div class="form-row">
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-12">
             <label for="position">Cargo*</label>
             <input
               type="text"
@@ -153,31 +171,13 @@
               placeholder="Cargo"
             />
             <small
-            *ngIf="
+              *ngIf="
               getFormField('position').errors?.required &&
               getFormField('position').touched
             "
-            id="userMessage"
-            class="form-text text-danger"
+              id="userMessage"
+              class="form-text text-danger"
             >El cargo es requerido</small>
-          </div>
-          <div class="form-group col-md-6">
-            <label for="salary">Salario*</label>
-            <input
-              type="text"
-              class="form-control"
-              id="salary"
-              formControlName="salary"
-              placeholder="Salario"
-            />
-            <small
-            *ngIf="
-              getFormField('salary').errors?.required &&
-              getFormField('salary').touched
-            "
-            id="userMessage"
-            class="form-text text-danger"
-            >El salario es requerido</small>
           </div>
         </div>
         <div class="form-row">
@@ -190,12 +190,12 @@
               formControlName="start_date"
             />
             <small
-            *ngIf="
+              *ngIf="
               getFormField('start_date').errors?.required &&
               getFormField('start_date').touched
             "
-            id="userMessage"
-            class="form-text text-danger"
+              id="userMessage"
+              class="form-text text-danger"
             >La fecha de ingreso es requerida</small>
           </div>
           <div class="form-group col-md-6">
@@ -208,12 +208,12 @@
               placeholder="Vinculación"
             />
             <small
-            *ngIf="
+              *ngIf="
               getFormField('bonding').errors?.required &&
               getFormField('bonding').touched
             "
-            id="userMessage"
-            class="form-text text-danger"
+              id="userMessage"
+              class="form-text text-danger"
             >La vinculación es requerida</small>
           </div>
         </div>

@@ -1,12 +1,13 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
-import { ClientForm } from '../interfaces/client-form.interface';
-import { Client } from '../models/client.model';
-import { UserService } from './user.service';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {environment} from 'src/environments/environment';
+import {ClientForm} from '../interfaces/client-form.interface';
+import {Client} from '../models/client.model';
+import {UserService} from './user.service';
+
 const base_url = environment.base_url;
 
 @Injectable({
@@ -15,36 +16,39 @@ const base_url = environment.base_url;
 export class ClientsService {
 
   constructor(private http: HttpClient,
-    private userService: UserService,) { }
+              private userService: UserService,) {
+  }
 
 
-  getClients(page?: number, per_page?: number): Observable<{clients: Client[], total:number}> {
-    
+  getClients(page?: number, per_page?: number): Observable<{ clients: Client[], total: number }> {
+
     if (page == null) {
       page = 1;
     }
     if (per_page == null) {
-      per_page = 10
+      per_page = 10;
     }
-    
+
     const url = `${base_url}/clients/all?page=${page}&per_page=${per_page}`;
     return this.http.get(url)
-    .pipe(
-      map((resp: any) => {
-        const clients: Client[] = resp.clients.data;
-        const total: number = resp.clients.total;
-        return {clients, total};
-      })
-    );
+      .pipe(
+        map((resp: any) => {
+          const clients: Client[] = resp.clients.data;
+          const total: number = resp.clients.total;
+          return {clients, total};
+        })
+      );
   }
 
-  createClient(client: ClientForm, file?: File): Observable<any>{
+  createClient(client: ClientForm, file?: File): Observable<any> {
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.userService.token}`,
+      Authorization: `Bearer ${this.userService.token}`,
       'Content-Type': 'multipart/form-data'
     });
-    let formData : FormData = new FormData();
-    formData.append('sign', file, file.name);
+    const formData: FormData = new FormData();
+    if (file) {
+      formData.append('sign', file, file.name);
+    }
     formData.append('name', client.name);
     formData.append('email', client.email);
     formData.append('phone', client.phone);
@@ -58,6 +62,7 @@ export class ClientsService {
     return this.http.post(`${base_url}/clients/create`, formData, {headers});
   }
 
+  // tslint:disable-next-line:typedef
   deleteClient(client: Client) {
     const url = `${base_url}/clients/delete/${client.id}`;
     return this.http.delete(url);

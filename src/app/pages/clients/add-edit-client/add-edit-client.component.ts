@@ -1,7 +1,7 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { ClientsService } from 'src/app/services/clients.service';
+import {Component, OnInit, Inject, Input} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {ClientsService} from 'src/app/services/clients.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -18,11 +18,11 @@ export class AddEditClientComponent implements OnInit {
   public imageToUpload: File;
 
   constructor(public dialogRef: MatDialogRef<AddEditClientComponent>,
-    private fb: FormBuilder,
-    private clientService: ClientsService,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-      
-    }
+              private fb: FormBuilder,
+              private clientService: ClientsService,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+
+  }
 
   ngOnInit(): void {
     this.initForm();
@@ -31,7 +31,7 @@ export class AddEditClientComponent implements OnInit {
   private initForm(): void {
     this.addEditClientForm = this.fb.group({
       name: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.pattern(this.emailRegex)]],
+      email: ['', [Validators.pattern(this.emailRegex)]],
       document_type: ['', [Validators.required]],
       document_number: ['', [Validators.required]],
       client_type: ['', [Validators.required]],
@@ -44,6 +44,7 @@ export class AddEditClientComponent implements OnInit {
     });
   }
 
+  // tslint:disable-next-line:typedef
   getFormField(field: string) {
     return this.addEditClientForm.get(field);
   }
@@ -53,23 +54,24 @@ export class AddEditClientComponent implements OnInit {
     if (this.addEditClientForm.valid) {
       this.loading = true;
       this.clientService.createClient(this.addEditClientForm.value, this.imageToUpload)
-      .subscribe(resp => {
-        this.loading = false;
-        console.log(resp);
-        Swal.fire('Cliente agregado', `El cliente fue agregado correctamente`, 'success');
-        this.dialogRef.close('YES');
-      }, err => {
-        this.loading = false;
-        Swal.fire('Error', "No se pudo agregar el cliente", 'error');
-      });
+        .subscribe(resp => {
+          this.loading = false;
+          console.log(resp);
+          Swal.fire('Cliente agregado', `El cliente fue agregado correctamente`, 'success');
+          this.dialogRef.close('YES');
+        }, err => {
+          this.loading = false;
+          Swal.fire('Error', 'No se pudo agregar el cliente', 'error');
+        });
     }
   }
 
+  // tslint:disable-next-line:typedef
   onFileChange(event) {
-    if(event.target.files && event.target.files.length) {
+    if (event.target.files && event.target.files.length) {
       const file = event.target.files[0];
       this.addEditClientForm.patchValue({
-        file: file
+        file
       });
       this.imageToUpload = file;
     }
