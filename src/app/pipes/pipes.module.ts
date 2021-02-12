@@ -1,14 +1,14 @@
-import { NgModule } from '@angular/core';
-import { FormatTypeTransactionPipe } from './format-type-transaction.pipe';
-
+import {NgModule} from '@angular/core';
+import {FormatTypeTransactionPipe} from './format-type-transaction.pipe';
 
 
 @NgModule({
   declarations: [
     FormatTypeTransactionPipe
   ],
-  exports:[
+  exports: [
     FormatTypeTransactionPipe
   ]
 })
-export class PipesModule { }
+export class PipesModule {
+}

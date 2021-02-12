@@ -4,7 +4,7 @@ import {ClientsService} from 'src/app/services/clients.service';
 import {MatDialog} from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import {AddEditClientComponent} from './add-edit-client/add-edit-client.component';
-import { TypeModal } from 'src/app/enums/modals.enum';
+import {TypeModal} from 'src/app/enums/modals.enum';
 
 @Component({
   selector: 'app-clients',
@@ -20,7 +20,7 @@ export class ClientsComponent implements OnInit {
   public max: number;
 
   constructor(private clientService: ClientsService,
-              private dialog: MatDialog,) {
+              private dialog: MatDialog) {
     this.page = 1;
     this.total = 0;
     this.max = 10;
@@ -70,7 +70,7 @@ export class ClientsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      if (result == 'YES') {
+      if (result === 'YES') {
         this.getClients(this.page);
       }
     });
