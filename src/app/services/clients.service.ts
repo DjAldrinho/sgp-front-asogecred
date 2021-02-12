@@ -1,6 +1,5 @@
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {environment} from 'src/environments/environment';
@@ -16,10 +15,11 @@ const base_url = environment.base_url;
 export class ClientsService {
 
   constructor(private http: HttpClient,
-              private userService: UserService,) {
+              private userService: UserService) {
   }
 
 
+  // tslint:disable-next-line:variable-name
   getClients(page?: number, per_page?: number): Observable<{ clients: Client[], total: number }> {
 
     if (page == null) {
@@ -70,7 +70,7 @@ export class ClientsService {
       bonding: client.bonding,
       client_type: client.client_type,
       start_date: client.start_date
-    }
+    };
 
     return this.http.patch(`${base_url}/clients/update/${id}`, body);
   }

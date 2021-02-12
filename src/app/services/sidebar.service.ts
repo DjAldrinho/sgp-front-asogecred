@@ -29,8 +29,8 @@ export class SidebarService {
       url: '',
       items: [
         {title: 'Clientes', icon: 'simple-icon-people', url: 'clients'},
-        {title: 'Personas', icon: 'iconsminds-conference', url: 'persons'},
-        {title: 'Abogados', icon: 'iconsminds-student-male', url: 'lawyers'}
+        {title: 'Abogados', icon: 'iconsminds-student-male', url: 'lawyers'},
+        {title: 'Personas', icon: 'iconsminds-conference', url: 'persons'}
       ]
     },
     {

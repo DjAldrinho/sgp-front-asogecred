@@ -1,11 +1,16 @@
 export class User {
-    constructor(
-        public id:                number,
-        public document_type:     string,
-        public document_number:   string,
-        public name:              string,
-        public email:             string,
-        public email_verified_at: any,
-        public is_administrator:  boolean,
-    ){}
+  constructor(
+    public id: number,
+    // tslint:disable-next-line:variable-name
+    public document_type: string,
+    // tslint:disable-next-line:variable-name
+    public document_number: string,
+    public name: string,
+    public email: string,
+    // tslint:disable-next-line:variable-name
+    public email_verified_at: any,
+    // tslint:disable-next-line:variable-name
+    public is_administrator: boolean,
+  ) {
+  }
 }
