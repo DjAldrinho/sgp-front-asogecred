@@ -5,57 +5,57 @@
 <div class="row mb-3">
   <div class="col 12">
     <div class="row icon-cards-row mb-4 justify-content-between">
-
       <div class="col-md-3 col-lg-2 col-sm-4 col-6 mb-4 p-0">
-        <a href="#" class="card">
+        <div class="card">
           <div class="card-body text-center">
             <i class="iconsminds-upward"></i>
             <p class="card-text font-weight-semibold mb-0">Ingresos del mes</p>
             <p class="lead text-center">$5.000.000</p>
           </div>
-        </a>
+        </div>
       </div>
 
       <div class="col-md-3 col-lg-2 col-sm-4 col-6 mb-4 p-0">
-        <a href="#" class="card">
+        <div class="card">
           <div class="card-body text-center">
             <i class="iconsminds-downward"></i>
-            <p class="card-text font-weight-semibold mb-0">Engresos del mes</p>
+            <p class="card-text font-weight-semibold mb-0">Egresos del mes</p>
             <p class="lead text-center">$1.800.000</p>
           </div>
-        </a>
+        </div>
       </div>
 
       <div class="col-md-3 col-lg-2 col-sm-4 col-6 mb-4 p-0">
-        <a href="#" class="card">
+        <div class="card">
           <div class="card-body text-center">
             <i class="iconsminds-diploma-2"></i>
             <p class="card-text font-weight-semibold mb-0">Creditos del mes</p>
             <p class="lead text-center">10</p>
           </div>
-        </a>
+        </div>
       </div>
 
       <div class="col-md-3 col-lg-2 col-sm-4 col-6 mb-4 p-0">
-        <a href="#" class="card">
+        <div class="card">
           <div class="card-body text-center">
             <i class="iconsminds-add-user"></i>
             <p class="card-text font-weight-semibold mb-0">Clientes nuevos</p>
             <p class="lead text-center">4</p>
           </div>
-        </a>
+        </div>
       </div>
 
       <div class="col-md-3 col-lg-2 col-sm-4 col-6 mb-4 p-0">
-        <a href="#" class="card">
+        <div class="card">
           <div class="card-body text-center">
             <i class="iconsminds-close"></i>
-            <p class="card-text font-weight-semibold mb-0">Creditos atrasados</p>
+            <p class="card-text font-weight-semibold mb-0">
+              Creditos atrasados
+            </p>
             <p class="lead text-center">4</p>
           </div>
-        </a>
+        </div>
       </div>
-
     </div>
   </div>
 </div>
@@ -77,20 +77,20 @@
         <h5 class="card-title">Ultimas transacciones</h5>
         <table class="table">
           <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Documento</th>
-            <th>Telefono</th>
-            <th>Email</th>
-          </tr>
+            <tr>
+              <th>No.</th>
+              <th>Tipo</th>
+              <th>Valor</th>
+              <th>Fecha</th>
+            </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let item of [1,2,3,4,5]">
-            <td>data</td>
-            <td>data</td>
-            <td>data</td>
-            <td>data</td>
-          </tr>
+            <tr *ngFor="let item of transactions">
+              <td><span class="badge badge-secondary">{{ item.code }}</span></td>
+              <td>{{ item.origin | formatTypeTransaction }}</td>
+              <td>{{ item.value | currency }}</td>
+              <td>{{ item.created_at | date:'yyyy-MM-dd' }}</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -102,20 +102,20 @@
         <h5 class="card-title">Ultimos creditos</h5>
         <table class="table">
           <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Documento</th>
-            <th>Telefono</th>
-            <th>Email</th>
-          </tr>
+            <tr>
+              <th>No.</th>
+              <th>Valor</th>
+              <th>Cuotas</th>
+              <th>Fecha</th>
+            </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let item of [1,2,3,4,5]">
-            <td>data</td>
-            <td>data</td>
-            <td>data</td>
-            <td>data</td>
-          </tr>
+            <tr *ngFor="let item of credits">
+              <td><span class="badge badge-secondary">{{ item.code }}</span></td>
+              <td>{{ item.capital_value | currency }}</td>
+              <td>{{ item.fee }}</td>
+              <td>{{ item.created_at | date:'yyyy-MM-dd' }}</td>
+            </tr>
           </tbody>
         </table>
       </div>

@@ -4,6 +4,7 @@ import {ClientsService} from 'src/app/services/clients.service';
 import {MatDialog} from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import {AddEditClientComponent} from './add-edit-client/add-edit-client.component';
+import { TypeModal } from 'src/app/enums/modals.enum';
 
 @Component({
   selector: 'app-clients',
@@ -32,7 +33,7 @@ export class ClientsComponent implements OnInit {
   getClients(page?: number, query?: string): void {
     this.page = page;
     if (page == null) {
-      page = 1;
+      this.page = 1;
     }
     this.clientService.getClients(this.page, this.max)
       .subscribe(resp => {
@@ -44,31 +45,45 @@ export class ClientsComponent implements OnInit {
       });
   }
 
-  // tslint:disable-next-line:typedef
-  onPageChange(page) {
+  onPageChange(page): void {
     this.getClients(page);
   }
 
-  openModal(): void {
+  openModal(typeModal: string, client?: Client): void {
     const dialogRef = this.dialog.open(AddEditClientComponent, {width: '50%', panelClass: 'card'});
-    dialogRef.componentInstance.title = 'Agregar cliente';
+    switch (typeModal) {
+      case 'C':
+        dialogRef.componentInstance.title = 'Agregar cliente';
+        dialogRef.componentInstance.type = TypeModal.CREATE;
+        break;
+      case 'E':
+        dialogRef.componentInstance.title = 'Actualizar cliente';
+        dialogRef.componentInstance.type = TypeModal.EDIT;
+        dialogRef.componentInstance.client = client;
+        break;
+      default:
+        dialogRef.componentInstance.title = 'Ver cliente';
+        dialogRef.componentInstance.type = TypeModal.SHOW;
+        dialogRef.componentInstance.client = client;
+        break;
+    }
+
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      // tslint:disable-next-line:triple-equals
       if (result == 'YES') {
-        this.getClients();
+        this.getClients(this.page);
       }
     });
   }
 
-  // tslint:disable-next-line:typedef
-  deleteClient(client: Client) {
+  deleteClient(client: Client): void {
     Swal.fire({
       title: '¿Borrar cliente?',
       text: `Está apunto de borrar el cliente ${client.name}`,
       icon: 'question',
       showCancelButton: true,
-      confirmButtonText: 'Si, borrar'
+      confirmButtonText: 'Si, borrar',
+      cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
         this.clientService.deleteClient(client)

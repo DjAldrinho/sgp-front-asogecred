@@ -26,7 +26,7 @@ export class SidebarService {
       id: 'persons',
       title: 'Personas',
       icon: 'iconsminds-business-man-woman',
-      url: '/dashboard/persons',
+      url: '',
       items: [
         {title: 'Clientes', icon: 'simple-icon-people', url: 'clients'},
         {title: 'Personas', icon: 'iconsminds-conference', url: 'persons'},
@@ -44,8 +44,10 @@ export class SidebarService {
       id: 'settings',
       title: 'Ajustes',
       icon: 'iconsminds-gear',
-      url: '/dashboard/settings',
-      items: []
+      url: '',
+      items: [
+        {title: 'Cuentas', icon: 'simple-icon-book-open', url: 'accounts'},
+      ]
     },
   ];
 }

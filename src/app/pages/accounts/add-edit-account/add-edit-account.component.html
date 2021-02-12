@@ -1,0 +1,88 @@
+<div class="col-12">
+    <div>
+      <div>
+        <h5 class="mb-4">{{ title }}</h5>
+        <form
+          autocomplete="off"
+          (ngSubmit)="registerUpdateAccount()"
+          [formGroup]="addEditAccountForm"
+        >
+          <div class="form-group">
+            <label for="name">Nombre*</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Nombre"
+              id="name"
+              formControlName="name"
+            />
+            <small
+              *ngIf="
+                getFormField('name').errors?.required &&
+                getFormField('name').touched
+              "
+              id="userMessage"
+              class="form-text text-danger"
+            >El nombre es requerido</small
+            >
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="account_number">Número de cuenta*</label>
+              <input
+                type="text"
+                class="form-control"
+                id="account_number"
+                formControlName="account_number"
+                placeholder="Número de cuenta"
+              />
+              <small
+                *ngIf="
+                getFormField('account_number').errors?.required &&
+                getFormField('account_number').touched
+              "
+                id="userMessage"
+                class="form-text text-danger"
+              >El número de cuenta es requerido</small>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="value">Valor*</label>
+              <input
+                type="text"
+                class="form-control"
+                id="value"
+                placeholder="Valor"
+                formControlName="value"
+              />
+              <small
+                *ngIf="
+                getFormField('value').errors?.required &&
+                getFormField('value').touched
+              "
+                id="userMessage"
+                class="form-text text-danger"
+              >El valor es requerido</small>
+            </div>
+          </div>
+          <div class="form-row">
+            <button
+              type="submit"
+              class="btn btn-primary d-block mt-3"
+              [disabled]="!addEditAccountForm.valid || loading"
+            >
+              Guardar
+            </button>
+            <button
+              type="button"
+              (click)="dialogRef.close()"
+              class="btn btn-light d-block mt-3 ml-1"
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

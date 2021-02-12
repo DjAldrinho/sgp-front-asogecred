@@ -12,6 +12,9 @@ import { AddEditClientComponent } from './clients/add-edit-client/add-edit-clien
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PipesModule } from '../pipes/pipes.module';
+import { AccountsComponent } from './accounts/accounts.component';
+import { AddEditAccountComponent } from './accounts/add-edit-account/add-edit-account.component';
 
 
 
@@ -22,6 +25,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ProfileComponent,
     ClientsComponent,
     AddEditClientComponent,
+    AccountsComponent,
+    AddEditAccountComponent,
   ],
   imports: [
     CommonModule,
@@ -30,7 +35,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NgxPaginationModule,
     MatDialogModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PipesModule
   ],
   exports: [
     ClientsComponent

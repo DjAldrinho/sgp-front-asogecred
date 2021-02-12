@@ -21,6 +21,7 @@
     "@angular/platform-browser": "~10.1.5",
     "@angular/platform-browser-dynamic": "~10.1.5",
     "@angular/router": "~10.1.5",
+    "moment": "^2.29.1",
     "ng2-pagination": "^2.0.2",
     "ngx-pagination": "^5.0.0",
     "rxjs": "~6.6.0",

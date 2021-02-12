@@ -7,7 +7,7 @@
       data-toggle="modal"
       data-backdrop="static"
       data-target="#exampleModal"
-      (click)="openModal()"
+      (click)="openModal('C')"
     >
       Nuevo cliente
     </button>
@@ -53,8 +53,10 @@
           <tr>
             <th>Nombre</th>
             <th>Documento</th>
-            <th>Telefono</th>
-            <th>Email</th>
+            <!-- <th>Telefono</th>
+            <th>Email</th> -->
+            <th>Salario</th>
+            <th>Cargo</th>
             <th class="text-center">Acciones</th>
           </tr>
           </thead>
@@ -72,8 +74,8 @@
           >
             <td>{{ item.name }}</td>
             <td>{{ item.document_number }}</td>
-            <td>{{ item.phone }}</td>
-            <td>{{ item.email }}</td>
+            <td>{{ item.salary | currency }}</td>
+            <td>{{ item.position }}</td>
             <td class="text-center">
               <div class="btn-group" role="group" aria-label="Basic example">
                 <button
@@ -82,6 +84,7 @@
                   data-toggle="tooltip"
                   data-placement="top"
                   title="Ver"
+                  (click)="openModal('S', item)"
                 >
                   <i class="simple-icon-eye"></i>
                 </button>
@@ -91,6 +94,7 @@
                   data-toggle="tooltip"
                   data-placement="top"
                   title="Editar"
+                  (click)="openModal('E', item)"
                 >
                   <i class="simple-icon-pencil"></i>
                 </button>

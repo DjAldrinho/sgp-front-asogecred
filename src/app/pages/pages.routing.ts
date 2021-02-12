@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from '../guards/auth.guard';
+import { AccountsComponent } from './accounts/accounts.component';
 import {ClientsComponent} from './clients/clients.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {PagesComponent} from './pages.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
       {path: 'persons', component: PersonsComponent},
       {path: 'profile', component: ProfileComponent},
       {path: 'clients', component: ClientsComponent},
+      {path: 'accounts', component: AccountsComponent},
     ],
   },
 ];

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { AccountForm } from '../interfaces/account-form.interface';
 const base_url = environment.base_url;
 @Injectable({
   providedIn: 'root'
@@ -36,5 +37,9 @@ export class AccountsService {
         return {accounts, total};
       })
     );
+  }
+
+  createAccount(account: AccountForm): Observable<any> {
+    return this.http.post(`${base_url}/accounts/create`, account);
   }
 }

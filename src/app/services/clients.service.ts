@@ -50,8 +50,8 @@ export class ClientsService {
       formData.append('sign', file, file.name);
     }
     formData.append('name', client.name);
-    formData.append('email', client.email);
-    formData.append('phone', client.phone);
+    // formData.append('email', client.email);
+    // formData.append('phone', client.phone);
     formData.append('document_type', client.document_type);
     formData.append('document_number', client.document_number);
     formData.append('client_type', client.client_type);
@@ -62,8 +62,21 @@ export class ClientsService {
     return this.http.post(`${base_url}/clients/create`, formData, {headers});
   }
 
-  // tslint:disable-next-line:typedef
-  deleteClient(client: Client) {
+  updateClient(client: ClientForm, id: number, file?: File): Observable<any> {
+
+    const body = {
+      salary: client.salary,
+      position: client.position,
+      bonding: client.bonding,
+      client_type: client.client_type,
+      start_date: client.start_date
+    }
+
+    return this.http.patch(`${base_url}/clients/update/${id}`, body);
+  }
+
+
+  deleteClient(client: Client): Observable<any> {
     const url = `${base_url}/clients/delete/${client.id}`;
     return this.http.delete(url);
   }
