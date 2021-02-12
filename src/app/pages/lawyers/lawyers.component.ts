@@ -72,7 +72,7 @@ export class LawyersComponent implements OnInit {
         this.lawyers = resp.lawyers;
         this.total = resp.total;
       }, () => {
-        SwalTool.onError('visualizar', 'los abogados');
+        SwalTool.onError('Error al cargar las abogados');
       });
   }
 
@@ -89,9 +89,9 @@ export class LawyersComponent implements OnInit {
         this.lawyerService.deleteLawyer(lawyer)
           .subscribe(resp => {
             this.getLawyers(this.page);
-            SwalTool.onMessage('Abogado', lawyer.name, 'eliminado');
+            SwalTool.onMessage('Abogado eliminado', `El abogado ${lawyer.name} fue eliminado correctamente`);
           }, () => {
-            SwalTool.onError('eliminando', 'un abogado');
+            SwalTool.onError("Error al eliminar el abogado");
           });
       }
     });

@@ -2,18 +2,17 @@ import Swal from 'sweetalert2';
 
 export class SwalTool {
 
-  static onError(option: string, section: string): void {
-    Swal.fire(`Error al ${option} ${section}`, 'Ha ocurrido un error inesperado', 'error');
+  static onError(title: string, html: string = 'Ha ocurrido un error inesperado'): void {
+    Swal.fire(title, html, 'error');
   }
 
-  static onMessage(section: string, name: string, option: string, icon: string = 'success'): void {
-    const sectionLower = section.toLowerCase();
+  static onMessage(title: string, html: string, icon: string = 'success'): void {
     // @ts-ignore
-    Swal.fire(`${section} ${option}`, `El ${sectionLower} ${name} fue ${option} correctamente`, icon);
+    Swal.fire(title, html, icon);
   }
 
-  static onDelete(section: string, name: string): void {
-    const sectionLower = section.toLowerCase();
-    Swal.fire(`${section} eliminado`, `El ${sectionLower} ${name} fue eliminado correctamente`, 'success');
+  static onDelete(title: string, html: string, icon: string = 'success'): void {
+    // @ts-ignore
+    Swal.fire(title, html, icon);
   }
 }
