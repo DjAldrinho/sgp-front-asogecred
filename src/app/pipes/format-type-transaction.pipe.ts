@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
   name: 'formatTypeTransaction'
@@ -7,20 +7,20 @@ export class FormatTypeTransactionPipe implements PipeTransform {
 
   transform(type: string): string {
 
-    let formatedType = "";
+    let formatedType: string;
 
     switch (type) {
-      case "credit":
-        formatedType = "CREDITO";
+      case 'credit':
+        formatedType = 'CREDITO';
         break;
-      case "deposit":
-        formatedType = "DEPOSITO";
+      case 'deposit':
+        formatedType = 'DEPOSITO';
         break;
-      case "retire":
-        formatedType = "RETIRO";
+      case 'retire':
+        formatedType = 'RETIRO';
         break;
       default:
-        formatedType = "NO TIPO";
+        formatedType = 'NO TIPO';
         break;
     }
 
