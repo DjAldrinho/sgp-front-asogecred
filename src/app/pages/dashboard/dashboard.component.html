@@ -60,16 +60,6 @@
   </div>
 </div>
 
-<!--<div class="row mb-3">
-  <div class="col 12">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Ultimas transacciones</h5>
-      </div>
-    </div>
-  </div>
-</div>-->
-
 <div class="row">
   <div class="col-xl-6 col-lg-12 mb-4">
     <div class="card">
@@ -86,8 +76,8 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of transactions">
-              <td><span class="badge badge-secondary">{{ item.code }}</span></td>
-              <td>{{ item.origin | formatTypeTransaction }}</td>
+              <td><span class="badge pl-0 font-weight-bold font-badge">{{ item.code }}</span></td>
+              <td><span [ngClass]="getClassBadge( item.origin )">{{ item.origin | formatTypeTransaction }}</span></td>
               <td>{{ item.value | currency }}</td>
               <td>{{ item.created_at | date:'yyyy-MM-dd' }}</td>
             </tr>
