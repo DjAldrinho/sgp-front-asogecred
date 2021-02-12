@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -8,16 +7,6 @@ import { LoginForm } from '../interfaces/login-form.interface';
 import { User } from '../models/user.model';
 import { Observable } from 'rxjs';
 import { of } from 'rxjs';
-=======
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {environment} from 'src/environments/environment';
-import {tap} from 'rxjs/operators';
-import {LoginForm} from '../interfaces/login-form.interface';
-import {User} from '../models/user.model';
-import {Observable} from 'rxjs';
->>>>>>> 6af1250cb66a58134bb408776c34f2a0d8aeb649
 
 const base_url = environment.base_url;
 
@@ -37,8 +26,7 @@ export class UserService {
     return localStorage.getItem('token') || '';
   }
 
-  // tslint:disable-next-line:typedef
-  saveLocalStorage(token: string) {
+  saveLocalStorage(token: string): void {
     localStorage.setItem('token', token);
   }
 
@@ -69,7 +57,6 @@ export class UserService {
 
 
   logout(): Observable<any> {
-<<<<<<< HEAD
     return this.http.get(`${base_url}/auth/logout`)
     .pipe(
       tap((resp: any) => {
@@ -107,25 +94,6 @@ export class UserService {
         return of(false);
       })
     );
-=======
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.token}`
-    });
-    return this.http.get(`${base_url}/auth/logout`, {headers: headers})
-      .pipe(
-        tap((resp: any) => {
-          console.log(resp);
-          this.user = null;
-          localStorage.removeItem('token');
-          this.router.navigateByUrl('/login');
-        })
-      );
-  }
-
-  validateToken(): boolean {
-    return !!this.user;
->>>>>>> 6af1250cb66a58134bb408776c34f2a0d8aeb649
   }
 
 }
