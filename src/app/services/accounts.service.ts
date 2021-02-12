@@ -13,7 +13,7 @@ export class AccountsService {
 
   constructor(private http: HttpClient) { }
 
-  getAccounts(page?: number, per_page?: number, all: boolean = false): Observable<{accounts: any[], total:number}>{
+  getAccounts(page?: number, per_page?: number, all: boolean = false): Observable<{accounts: Account[], total:number}>{
 
     let url = "";
 
@@ -33,7 +33,7 @@ export class AccountsService {
     return this.http.get(url)
     .pipe(
       map((resp: any) => {
-        const accounts: any[] = resp.accounts.data;
+        const accounts: Account[] = resp.accounts.data;
         const total: number = resp.accounts.total;
         return {accounts, total};
       })

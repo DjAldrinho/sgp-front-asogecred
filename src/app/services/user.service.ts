@@ -2,10 +2,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { LoginForm } from '../interfaces/login-form.interface';
 import { User } from '../models/user.model';
 import { Observable } from 'rxjs';
+import { of } from 'rxjs';
 
 const base_url = environment.base_url;
 
@@ -55,11 +56,7 @@ export class UserService {
 
 
   logout(): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.token}`
-    })
-    return this.http.get(`${base_url}/auth/logout`, { headers: headers })
+    return this.http.get(`${base_url}/auth/logout`)
     .pipe(
       tap((resp: any) => {
         console.log(resp);
@@ -70,12 +67,32 @@ export class UserService {
     );
   }
 
-  validateToken(): boolean {
-    if(this.user){
-      return true;
-    }else{
-      return false;
-    }
+  validateToken(): Observable<boolean> {
+    return this.http.get(`${base_url}/auth/user`)
+    .pipe(
+      map((resp: any) => {
+        const { 
+          document_number, 
+          document_type, 
+          email, 
+          email_verified_at, 
+          id, is_administrator, name
+        } = resp.user;
+        this.user = new User( 
+          id, 
+          document_type, 
+          document_number, 
+          name,
+          email, 
+          email_verified_at, 
+          is_administrator, 
+        );
+        return true;
+      }),
+      catchError(error => {
+        return of(false);
+      })
+    );
   }
 
 }

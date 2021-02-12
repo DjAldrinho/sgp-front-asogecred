@@ -1,5 +1,5 @@
 <div class="mb-2">
-  <h1>Cuentas</h1>
+  <h1>Proveedores</h1>
   <div class="top-right-button-container">
     <button
       type="button"
@@ -9,7 +9,7 @@
       data-target="#exampleModal"
       (click)="openModal('C')"
     >
-      Nueva cuenta
+      Nuevo proveedor
     </button>
   </div>
 </div>
@@ -30,14 +30,14 @@
   <div class="collapse d-md-block" id="displayOptions">
     <div class="d-block d-md-inline-block">
       <!-- <div class="btn-group float-md-left mr-1 mb-1">
-            <button class="btn btn-outline-dark btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Order By
-            </button>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-            </div>
-        </div> -->
+              <button class="btn btn-outline-dark btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Order By
+              </button>
+              <div class="dropdown-menu">
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+              </div>
+          </div> -->
       <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
         <label>
           <input placeholder="Buscar..." />
@@ -58,15 +58,13 @@
           <thead>
             <tr>
               <th>Nombre</th>
-              <th>No. cuenta</th>
-              <th>Valor</th>
               <th class="text-center">Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr
               *ngFor="
-                let item of accounts
+                let item of suppliers
                   | paginate
                     : {
                         itemsPerPage: max,
@@ -76,8 +74,6 @@
               "
             >
               <td>{{ item.name }}</td>
-              <td>{{ item.account_number }}</td>
-              <td>{{ item.value | currency }}</td>
               <td class="text-center">
                 <div class="btn-group" role="group" aria-label="Basic example">
                   <button
@@ -106,7 +102,7 @@
                     data-toggle="tooltip"
                     data-placement="top"
                     title="Eliminar"
-                    (click)="deleteAccount(item)"
+                    (click)="deleteSupplier(item)"
                   >
                     <i class="simple-icon-trash"></i>
                   </button>

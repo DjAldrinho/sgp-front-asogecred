@@ -17,6 +17,8 @@ import { AccountsComponent } from './accounts/accounts.component';
 import { AddEditAccountComponent } from './accounts/add-edit-account/add-edit-account.component';
 import { LawyersComponent } from './lawyers/lawyers.component';
 import { AddEditLawyerComponent } from './lawyers/add-edit-lawyer/add-edit-lawyer.component';
+import { SuppliersComponent } from './suppliers/suppliers.component';
+import { AddEditSupplierComponent } from './suppliers/add-edit-supplier/add-edit-supplier.component';
 
 
 
@@ -31,6 +33,8 @@ import { AddEditLawyerComponent } from './lawyers/add-edit-lawyer/add-edit-lawye
     AddEditAccountComponent,
     LawyersComponent,
     AddEditLawyerComponent,
+    SuppliersComponent,
+    AddEditSupplierComponent,
   ],
   imports: [
     CommonModule,

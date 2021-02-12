@@ -47,6 +47,7 @@ export class SidebarService {
       url: '',
       items: [
         {title: 'Cuentas', icon: 'simple-icon-book-open', url: 'accounts'},
+        {title: 'Proveedores', icon: 'simple-icon-people', url: 'suppliers'},
       ]
     },
   ];

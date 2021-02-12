@@ -1,0 +1,48 @@
+<div class="col-12">
+  <div>
+    <div>
+      <h5 class="mb-4">{{ title }}</h5>
+      <form
+        autocomplete="off"
+        (ngSubmit)="registerUpdateSupplier()"
+        [formGroup]="addEditSupplierForm"
+      >
+        <div class="form-group">
+          <label for="name">Nombre*</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Nombre"
+            id="name"
+            formControlName="name"
+          />
+          <small
+            *ngIf="
+              getFormField('name').errors?.required &&
+              getFormField('name').touched
+            "
+            id="userMessage"
+            class="form-text text-danger"
+            >El nombre es requerido</small
+          >
+        </div>
+        <div class="form-row">
+          <button
+            type="submit"
+            class="btn btn-primary d-block mt-3"
+            [disabled]="!addEditSupplierForm.valid || loading"
+          >
+            Guardar
+          </button>
+          <button
+            type="button"
+            (click)="dialogRef.close()"
+            class="btn btn-light d-block mt-3 ml-1"
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
