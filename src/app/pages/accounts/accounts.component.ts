@@ -3,6 +3,7 @@ import {MatDialog} from '@angular/material/dialog';
 import { TypeModal } from 'src/app/enums/modals.enum';
 import { Account } from 'src/app/models/account.model';
 import { AccountsService } from 'src/app/services/accounts.service';
+import { SwalTool } from 'src/app/tools/swal.tool';
 import Swal from 'sweetalert2';
 import { AddEditAccountComponent } from './add-edit-account/add-edit-account.component';
 
@@ -40,7 +41,7 @@ export class AccountsComponent implements OnInit {
       this.accounts = resp.accounts;
       this.total = resp.total;
     }, err => {
-      Swal.fire('Error', "Ha ocurrido un error inesperado", 'error');
+      SwalTool.onError('Error al cargar las cuentas');
     });
   }
 
@@ -75,25 +76,25 @@ export class AccountsComponent implements OnInit {
     });
   }
 
-  // deleteAccount(account: Account): void {
-  //   Swal.fire({
-  //     title: '¿Borrar cuenta?',
-  //     text: `Está apunto de borrar la cuenta ${account.name} ${account.account_number}`,
-  //     icon: 'question',
-  //     showCancelButton: true,
-  //     confirmButtonText: 'Si, borrar',
-  //     cancelButtonText: 'Cancelar'
-  //   }).then((result) => {
-  //     if (result.value) {
-  //       // this.clientService.deleteClient(client)
-  //       //   .subscribe(resp => {
-  //       //     this.getClients(this.page);
-  //       //     Swal.fire('Cuenta eliminada', `La cuenta ${account.name} ${account.account_number} fue eliminada correctamente`, 'success');
-  //       //   }, err => {
-  //       //     Swal.fire('Error', err.error.msg, 'error');
-  //       //   });
-  //     }
-  //   });
-  // }
+  deleteAccount(account: Account): void {
+    Swal.fire({
+      title: '¿Borrar cuenta?',
+      text: `Está apunto de borrar la cuenta ${account.name} ${account.account_number}`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Si, borrar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+        this.accountService.deleteAccount(account)
+          .subscribe(resp => {
+            this.getAccounts(this.page);
+            SwalTool.onMessage('Cuenta eliminada', `La cuenta ${account.name} ${account.account_number} fue eliminada correctamente`);
+          }, err => {
+            SwalTool.onError('Error al eliminar la cuenta');
+          });
+      }
+    });
+  }
 
 }

@@ -5,6 +5,7 @@ import {MatDialog} from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import {AddEditClientComponent} from './add-edit-client/add-edit-client.component';
 import { TypeModal } from 'src/app/enums/modals.enum';
+import { SwalTool } from 'src/app/tools/swal.tool';
 
 @Component({
   selector: 'app-clients',
@@ -41,7 +42,7 @@ export class ClientsComponent implements OnInit {
         this.total = resp.total;
         console.log(this.clients);
       }, err => {
-        Swal.fire('Error', 'Ha ocurrido un error inesperado', 'error');
+        SwalTool.onError('Error al cargar los clientes');
       });
   }
 
@@ -89,9 +90,9 @@ export class ClientsComponent implements OnInit {
         this.clientService.deleteClient(client)
           .subscribe(resp => {
             this.getClients(this.page);
-            Swal.fire('Cliente eliminado', `El cliente ${client.name} fue eliminado correctamente`, 'success');
+            SwalTool.onMessage('Cliente eliminado', `El cliente ${client.name} fue eliminado correctamente`);
           }, err => {
-            Swal.fire('Error', err.error.msg, 'error');
+            SwalTool.onError('Error al eliminar el cliente');
           });
       }
     });

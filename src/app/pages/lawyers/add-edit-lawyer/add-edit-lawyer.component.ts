@@ -77,22 +77,22 @@ export class AddEditLawyerComponent implements OnInit {
         this.lawyerService.createLawyer(this.addEditLawyerForm.value, this.imageToUpload)
           .subscribe(resp => {
             this.loading = false;
-            SwalTool.onMessage('Abogado', name, 'agregado');
+            SwalTool.onMessage('Abogado agregado', `El abogado ${name} fue agregado correctamente`);
             this.dialogRef.close('YES');
           }, () => {
             this.loading = false;
-            SwalTool.onError('agregando', 'un abogado');
+            SwalTool.onError('Error', 'No se pudo agregar el abogado');
           });
       } else {
         this.loading = true;
         this.lawyerService.updateLawyer(this.addEditLawyerForm.value, this.lawyer.id, this.imageToUpload)
           .subscribe(resp => {
             this.loading = false;
-            SwalTool.onMessage('Abogado', name, 'actualizando');
+            SwalTool.onMessage('Abogado actualizado', `El abogado ${name} fue actualizado correctamente`);
             this.dialogRef.close('YES');
           }, () => {
             this.loading = false;
-            SwalTool.onError('actualizando', 'un abogado');
+            SwalTool.onError('Error', 'No se pudo actualizar el abogado');
           });
       }
     }

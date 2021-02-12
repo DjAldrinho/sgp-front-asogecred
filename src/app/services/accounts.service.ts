@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AccountForm } from '../interfaces/account-form.interface';
+import { Account } from '../models/account.model';
 const base_url = environment.base_url;
 @Injectable({
   providedIn: 'root'
@@ -41,5 +42,11 @@ export class AccountsService {
 
   createAccount(account: AccountForm): Observable<any> {
     return this.http.post(`${base_url}/accounts/create`, account);
+  }
+
+
+  deleteAccount(account: Account): Observable<any> {
+    const url = `${base_url}/accounts/delete/${account.id}`;
+    return this.http.delete(url);
   }
 }

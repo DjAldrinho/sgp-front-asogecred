@@ -6,6 +6,7 @@ import { Client } from 'src/app/models/client.model';
 import {ClientsService} from 'src/app/services/clients.service';
 import Swal from 'sweetalert2';
 import * as moment from 'moment';
+import { SwalTool } from 'src/app/tools/swal.tool';
 
 @Component({
   selector: 'app-add-edit-client',
@@ -97,24 +98,22 @@ export class AddEditClientComponent implements OnInit {
         this.clientService.createClient(this.addEditClientForm.value, this.imageToUpload)
         .subscribe(resp => {
           this.loading = false;
-          console.log(resp);
-          Swal.fire('Cliente agregado', `El cliente ${name} fue agregado correctamente`, 'success');
+          SwalTool.onMessage('Cliente agregado', `El cliente ${name} fue agregado correctamente`);
           this.dialogRef.close('YES');
         }, err => {
           this.loading = false;
-          Swal.fire('Error', 'No se pudo agregar el cliente', 'error');
+          SwalTool.onError('Error', 'No se pudo agregar el cliente');
         });
       }else{
         this.loading = true;
         this.clientService.updateClient(this.addEditClientForm.value, this.client.id, this.imageToUpload)
         .subscribe(resp => {
           this.loading = false;
-          console.log(resp);
-          Swal.fire('Cliente actualizado', `El cliente ${name} fue actualizado correctamente`, 'success');
+          SwalTool.onMessage('Cliente actualizado', `El cliente ${name} fue actualizado correctamente`);
           this.dialogRef.close('YES');
         }, err => {
           this.loading = false;
-          Swal.fire('Error', 'No se pudo actualizar el cliente', 'error');
+          SwalTool.onError('Error', 'No se pudo actualizar el cliente');
         });
       }
     }

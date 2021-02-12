@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TypeModal } from 'src/app/enums/modals.enum';
 import { Account } from 'src/app/models/account.model';
 import { AccountsService } from 'src/app/services/accounts.service';
+import { SwalTool } from 'src/app/tools/swal.tool';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -65,12 +66,11 @@ export class AddEditAccountComponent implements OnInit {
         this.accountService.createAccount(this.addEditAccountForm.value)
         .subscribe(resp => {
           this.loading = false;
-          console.log(resp);
-          Swal.fire('Cuenta agregada', `La cuenta No. ${number} fue agregada correctamente`, 'success');
+          SwalTool.onMessage('Cuenta agregada', `La cuenta No. ${number} fue agregada correctamente`);
           this.dialogRef.close('YES');
         }, err => {
           this.loading = false;
-          Swal.fire('Error', 'No se pudo agregar la cuenta', 'error');
+          SwalTool.onError('Error', 'No se pudo agregar la cuenta');
         });
       }else{
         this.loading = true;
