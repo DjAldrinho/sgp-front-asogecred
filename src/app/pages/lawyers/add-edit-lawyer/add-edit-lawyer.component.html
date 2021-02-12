@@ -1,0 +1,142 @@
+<div class="col-12">
+  <div>
+    <div>
+      <h5 class="mb-4">{{ title }}</h5>
+      <form
+        autocomplete="off"
+        (ngSubmit)="registerUpdateLawyer()"
+        [formGroup]="addEditLawyerForm"
+      >
+        <div class="form-group">
+          <label for="name">Nombre*</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Nombre"
+            id="name"
+            formControlName="name"
+          />
+          <small
+            *ngIf="
+              getFormField('name').errors?.required &&
+              getFormField('name').touched
+            "
+            id="userMessage"
+            class="form-text text-danger"
+          >El nombre es requerido</small
+          >
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="typeDocument">Tipo de documento*</label>
+            <select
+              id="typeDocument"
+              class="form-control"
+              formControlName="document_type"
+            >
+              <option selected value="">Seleccione...</option>
+              <option value="cc">Cédula de ciudadanía</option>
+              <option value="ce">Cédula de extranjería</option>
+              <option value="pp">Pasaporte</option>
+              <option value="ti">Tarjeta de identidad</option>
+            </select>
+            <small
+              *ngIf="
+                getFormField('document_type').errors?.required &&
+                getFormField('document_type').touched
+              "
+              id="userMessage"
+              class="form-text text-danger"
+            >El tipo de documento es requerido</small
+            >
+          </div>
+          <div class="form-group col-md-6">
+            <label for="numberDocument">Número de documento*</label>
+            <input
+              type="text"
+              class="form-control"
+              id="numberDocument"
+              formControlName="document_number"
+              placeholder="Número de documento"
+            />
+            <small
+              *ngIf="
+                getFormField('document_number').errors?.required &&
+                getFormField('document_number').touched
+              "
+              id="userMessage"
+              class="form-text text-danger"
+            >El número de documento es requerido</small
+            >
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="email">Email*</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Email"
+              id="email"
+              formControlName="email"
+            />
+            <small
+              *ngIf="
+              getFormField('email').errors?.required &&
+              getFormField('email').touched
+            "
+              class="form-text text-danger"
+            >El email es requerido</small
+            >
+            <small
+              *ngIf="
+              getFormField('email').errors?.pattern &&
+              getFormField('email').touched
+            "
+              class="form-text text-danger"
+            >Debe ingresar un email valido</small
+            >
+          </div>
+          <div class="form-group col-md-6">
+            <label for="phone">Teléfono o Celular</label>
+            <input
+              type="text"
+              class="form-control"
+              id="phone"
+              formControlName="phone"
+              placeholder="Teléfono o Celular"
+            />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="professional_card">Tarjeta profesional</label>
+            <input
+              type="file"
+              class="form-control"
+              id="professional_card"
+              formControlName="professional_card"
+              (change)="onFileChange($event)"
+            />
+          </div>
+        </div>
+        <div class="form-row">
+          <button
+            type="submit"
+            class="btn btn-primary d-block mt-3"
+            [disabled]="!addEditLawyerForm.valid || loading"
+          >
+            Guardar
+          </button>
+          <button
+            type="button"
+            (click)="dialogRef.close()"
+            class="btn btn-light d-block mt-3 ml-1"
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -15,6 +15,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PipesModule } from '../pipes/pipes.module';
 import { AccountsComponent } from './accounts/accounts.component';
 import { AddEditAccountComponent } from './accounts/add-edit-account/add-edit-account.component';
+import { LawyersComponent } from './lawyers/lawyers.component';
+import { AddEditLawyerComponent } from './lawyers/add-edit-lawyer/add-edit-lawyer.component';
 
 
 
@@ -27,6 +29,8 @@ import { AddEditAccountComponent } from './accounts/add-edit-account/add-edit-ac
     AddEditClientComponent,
     AccountsComponent,
     AddEditAccountComponent,
+    LawyersComponent,
+    AddEditLawyerComponent,
   ],
   imports: [
     CommonModule,
