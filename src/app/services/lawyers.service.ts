@@ -29,8 +29,8 @@ export class LawyersService {
     return this.http.get(url)
       .pipe(
         map((resp: any) => {
-          const lawyers: Lawyer[] = resp.laywers.data;
-          const total: number = resp.laywers.total;
+          const lawyers: Lawyer[] = resp.lawyers.data;
+          const total: number = resp.lawyers.total;
           return {lawyers, total};
         })
       );
