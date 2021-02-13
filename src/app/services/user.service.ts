@@ -96,4 +96,8 @@ export class UserService {
     );
   }
 
+  changePassword(new_password: string): Observable<any> {
+    return this.http.patch(`${base_url}/auth/change-password`, {new_password});
+  }
+
 }

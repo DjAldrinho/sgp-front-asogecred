@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { User } from 'src/app/models/user.model';
+import { ChangePasswordComponent } from 'src/app/pages/change-password/change-password.component';
 import {UserService} from 'src/app/services/user.service';
 
 @Component({
@@ -11,7 +13,8 @@ export class HeaderComponent implements OnInit {
 
   public user: User;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,
+    private dialog: MatDialog,) {
     this.user = userService.user;
   }
 
@@ -33,7 +36,13 @@ export class HeaderComponent implements OnInit {
     } else {
       body.setAttribute('class', 'ltr rounded menu-default menu-sub-hidden main-hidden sub-hidden');
     }
+  }
 
+  changePassword() : void {
+    const dialogRef = this.dialog.open(ChangePasswordComponent, {width: '50%', panelClass: 'card'});
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
 
 }
