@@ -40,8 +40,26 @@ export class AccountsService {
     );
   }
 
+  getAccountById(id: number) : Observable<Account> {
+    return this.http.get(`${base_url}/accounts/get/${id}`)
+    .pipe(
+      map((resp: any) => {
+        const account: Account = resp.account;
+        return account;
+      }),
+    );
+  }
+
   createAccount(account: AccountForm): Observable<any> {
     return this.http.post(`${base_url}/accounts/create`, account);
+  }
+
+  updateAccount(account: AccountForm, id: number): Observable<any> {
+    const body = {
+      name: account.name,
+      status: account.status
+    };
+    return this.http.patch(`${base_url}/accounts/update/${id}`, body);
   }
 
 

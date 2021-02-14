@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from '../guards/auth.guard';
 import {AccountsComponent} from './accounts/accounts.component';
+import { ChangeAccountComponent } from './accounts/change-account/change-account.component';
 import {ClientsComponent} from './clients/clients.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {LawyersComponent} from './lawyers/lawyers.component';
@@ -24,6 +25,7 @@ const routes: Routes = [
       {path: 'clients', component: ClientsComponent},
       {path: 'accounts', component: AccountsComponent},
       {path: 'suppliers', component: SuppliersComponent},
+      {path: 'change-account/:id', component: ChangeAccountComponent},
     ],
   },
 ];

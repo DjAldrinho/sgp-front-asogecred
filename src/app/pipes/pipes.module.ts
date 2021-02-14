@@ -1,13 +1,16 @@
 import {NgModule} from '@angular/core';
 import {FormatTypeTransactionPipe} from './format-type-transaction.pipe';
+import { FormatStatusPipe } from './format-status.pipe';
 
 
 @NgModule({
   declarations: [
-    FormatTypeTransactionPipe
+    FormatTypeTransactionPipe,
+    FormatStatusPipe
   ],
   exports: [
-    FormatTypeTransactionPipe
+    FormatTypeTransactionPipe,
+    FormatStatusPipe
   ]
 })
 export class PipesModule {

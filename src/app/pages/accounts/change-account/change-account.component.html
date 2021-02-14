@@ -1,16 +1,12 @@
 <div class="mb-2">
-  <h1>Cuentas</h1>
+  <h1>Transacciones</h1>
   <div class="top-right-button-container">
-    <button
+    <!-- <button
       type="button"
       class="btn btn-outline-primary btn-lg top-right-button mr-1"
-      data-toggle="modal"
-      data-backdrop="static"
-      data-target="#exampleModal"
-      (click)="openModal('C')"
     >
       Nueva cuenta
-    </button>
+    </button> -->
   </div>
 </div>
 
@@ -30,14 +26,14 @@
   <div class="collapse d-md-block" id="displayOptions">
     <div class="d-block d-md-inline-block">
       <!-- <div class="btn-group float-md-left mr-1 mb-1">
-            <button class="btn btn-outline-dark btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Order By
-            </button>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-            </div>
-        </div> -->
+              <button class="btn btn-outline-dark btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Order By
+              </button>
+              <div class="dropdown-menu">
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+              </div>
+          </div> -->
       <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
         <label>
           <input placeholder="Buscar..." />
@@ -57,17 +53,16 @@
         <table class="table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>No. cuenta</th>
-              <th>Valor</th>
-              <th>Estado</th>
-              <th class="text-center">Acciones</th>
+                <th>No.</th>
+                <th>Tipo</th>
+                <th>Valor</th>
+                <th>Fecha</th>
             </tr>
           </thead>
           <tbody>
             <tr
               *ngFor="
-                let item of accounts
+                let item of transactions
                   | paginate
                     : {
                         itemsPerPage: max,
@@ -76,44 +71,10 @@
                       }
               "
             >
-              <td>{{ item.name }}</td>
-              <td>{{ item.account_number }}</td>
-              <td>{{ item.value | currency }}</td>
-              <td>{{ item.status | formatStatus }}</td>
-              <td class="text-center">
-                <div class="btn-group" role="group" aria-label="Basic example">
-                  <button
-                    type="button"
-                    class="btn btn-info"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Ver"
-                    [routerLink]="['/dashboard/change-account', item.id]"
-                  >
-                    <i class="simple-icon-eye"></i>
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Editar"
-                    (click)="openModal('E', item)"
-                  >
-                    <i class="simple-icon-pencil"></i>
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-danger"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Eliminar"
-                    (click)="deleteAccount(item)"
-                  >
-                    <i class="simple-icon-trash"></i>
-                  </button>
-                </div>
-              </td>
+                <td><span class="badge pl-0 font-weight-bold font-badge">{{ item.code }}</span></td>
+                <td><span [ngClass]="getClassBadge( item.origin )">{{ item.origin | formatTypeTransaction }}</span></td>
+                <td>{{ item.value | currency }}</td>
+                <td>{{ item.created_at | date:'yyyy-MM-dd' }}</td>
             </tr>
           </tbody>
         </table>

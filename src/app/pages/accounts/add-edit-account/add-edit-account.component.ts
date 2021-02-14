@@ -34,6 +34,7 @@ export class AddEditAccountComponent implements OnInit {
       name: ['', [Validators.required]],
       account_number: ['', [Validators.required]],
       value: ['', [Validators.required]],
+      status: ['', [Validators.required]],
     });
 
     switch (this.type) {
@@ -42,12 +43,16 @@ export class AddEditAccountComponent implements OnInit {
       default:
         if(this.type === TypeModal.SHOW){
           this.addEditAccountForm.disable();
+        } else {
+          this.getFormField('account_number').disable();
+          this.getFormField('value').disable();
         }
 
         this.addEditAccountForm.patchValue({
           name : this.account.name,
           account_number : this.account.account_number,
           value: this.account.value,
+          status: this.account.status
         });
         break;
     }
@@ -74,16 +79,16 @@ export class AddEditAccountComponent implements OnInit {
         });
       }else{
         this.loading = true;
-        // this.accountService.updateClient(this.addEditClientForm.value, this.client.id, this.imageToUpload)
-        // .subscribe(resp => {
-        //   this.loading = false;
-        //   console.log(resp);
-        //   Swal.fire('Cuenta actualizado', `La cuenta No. ${number} fue actualizada correctamente`, 'success');
-        //   this.dialogRef.close('YES');
-        // }, err => {
-        //   this.loading = false;
-        //   Swal.fire('Error', 'No se pudo actualizar la cuenta', 'error');
-        // });
+        this.accountService.updateAccount(this.addEditAccountForm.value, this.account.id)
+        .subscribe(resp => {
+          this.loading = false;
+          console.log(resp);
+          Swal.fire('Cuenta actualizada', `La cuenta No. ${number} fue actualizada correctamente`, 'success');
+          this.dialogRef.close('YES');
+        }, err => {
+          this.loading = false;
+          Swal.fire('Error', 'No se pudo actualizar la cuenta', 'error');
+        });
       }
     }
   }

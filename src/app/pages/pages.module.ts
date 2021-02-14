@@ -19,6 +19,7 @@ import { LawyersComponent } from './lawyers/lawyers.component';
 import { AddEditLawyerComponent } from './lawyers/add-edit-lawyer/add-edit-lawyer.component';
 import { SuppliersComponent } from './suppliers/suppliers.component';
 import { AddEditSupplierComponent } from './suppliers/add-edit-supplier/add-edit-supplier.component';
+import { ChangeAccountComponent } from './accounts/change-account/change-account.component';
 
 
 
@@ -35,6 +36,7 @@ import { AddEditSupplierComponent } from './suppliers/add-edit-supplier/add-edit
     AddEditLawyerComponent,
     SuppliersComponent,
     AddEditSupplierComponent,
+    ChangeAccountComponent,
   ],
   imports: [
     CommonModule,

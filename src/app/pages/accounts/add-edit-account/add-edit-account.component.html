@@ -7,24 +7,26 @@
         (ngSubmit)="registerUpdateAccount()"
         [formGroup]="addEditAccountForm"
       >
-        <div class="form-group">
-          <label for="name">Nombre*</label>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Nombre"
-            id="name"
-            formControlName="name"
-          />
-          <small
-            *ngIf="
-              getFormField('name').errors?.required &&
-              getFormField('name').touched
-            "
-            id="userMessage"
-            class="form-text text-danger"
-            >El nombre es requerido</small
-          >
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="name">Nombre*</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Nombre"
+              id="name"
+              formControlName="name"
+            />
+            <small
+              *ngIf="
+                getFormField('name').errors?.required &&
+                getFormField('name').touched
+              "
+              id="userMessage"
+              class="form-text text-danger"
+              >El nombre es requerido</small
+            >
+          </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-12">
@@ -65,6 +67,29 @@
               id="userMessage"
               class="form-text text-danger"
               >El valor es requerido</small
+            >
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="status">Estado*</label>
+            <select
+              id="status"
+              class="form-control"
+              formControlName="status"
+            >
+              <option selected value="">Seleccione...</option>
+              <option value="A">Activo</option>
+              <option value="I">Inactivo</option>
+            </select>
+            <small
+              *ngIf="
+                getFormField('status').errors?.required &&
+                getFormField('status').touched
+              "
+              id="userMessage"
+              class="form-text text-danger"
+            >El estado es requerido</small
             >
           </div>
         </div>
