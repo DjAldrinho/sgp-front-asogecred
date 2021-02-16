@@ -18,8 +18,6 @@ export class ClientsService {
               private userService: UserService) {
   }
 
-
-  // tslint:disable-next-line:variable-name
   getClients(page?: number, per_page?: number): Observable<{ clients: Client[], total: number }> {
 
     if (page == null) {

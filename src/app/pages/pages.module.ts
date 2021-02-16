@@ -20,6 +20,9 @@ import { AddEditLawyerComponent } from './lawyers/add-edit-lawyer/add-edit-lawye
 import { SuppliersComponent } from './suppliers/suppliers.component';
 import { AddEditSupplierComponent } from './suppliers/add-edit-supplier/add-edit-supplier.component';
 import { ChangeAccountComponent } from './accounts/change-account/change-account.component';
+import { NumbersOnlyDirective } from '../directives/numbers-only.directive';
+import { UsersComponent } from './users/users.component';
+import { AddEditUserComponent } from './users/add-edit-user/add-edit-user.component';
 
 
 
@@ -37,6 +40,9 @@ import { ChangeAccountComponent } from './accounts/change-account/change-account
     SuppliersComponent,
     AddEditSupplierComponent,
     ChangeAccountComponent,
+    NumbersOnlyDirective,
+    UsersComponent,
+    AddEditUserComponent,
   ],
   imports: [
     CommonModule,

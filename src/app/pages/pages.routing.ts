@@ -10,6 +10,7 @@ import {PagesComponent} from './pages.component';
 import {PersonsComponent} from './persons/persons.component';
 import {ProfileComponent} from './profile/profile.component';
 import { SuppliersComponent } from './suppliers/suppliers.component';
+import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,7 @@ const routes: Routes = [
       {path: 'accounts', component: AccountsComponent},
       {path: 'suppliers', component: SuppliersComponent},
       {path: 'change-account/:id', component: ChangeAccountComponent},
+      {path: 'users', component: UsersComponent},
     ],
   },
 ];
