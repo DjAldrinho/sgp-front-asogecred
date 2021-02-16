@@ -4,8 +4,8 @@
       <h5 class="mb-4">{{ title }}</h5>
       <form
         autocomplete="off"
-        (ngSubmit)="registerUpdatePayroll()"
-        [formGroup]="addEditPayrollForm"
+        (ngSubmit)="registerUpdateCreditType()"
+        [formGroup]="addEditCreditTypeForm"
       >
         <div class="form-group">
           <label for="name">Nombre*</label>
@@ -28,24 +28,22 @@
         </div>
         <div class="form-row">
           <div class="form-group col-md-12">
-            <label for="status">Estado*</label>
-            <select
-              id="status"
+            <label for="value">Valor*</label>
+            <input
+              type="text"
               class="form-control"
-              formControlName="status"
-            >
-              <option selected value="">Seleccione...</option>
-              <option value="A">Activo</option>
-              <option value="I">Inactivo</option>
-            </select>
+              placeholder="1"
+              id="value"
+              formControlName="value"
+            />
             <small
               *ngIf="
-                getFormField('status').errors?.required &&
-                getFormField('status').touched
+                getFormField('value').errors?.required &&
+                getFormField('value').touched
               "
-              id="stateMessage"
+              id="valueMessage"
               class="form-text text-danger"
-            >El estado es requerido</small
+            >El valor es requerido</small
             >
           </div>
         </div>
@@ -53,7 +51,7 @@
           <button
             type="submit"
             class="btn btn-primary d-block mt-3"
-            [disabled]="!addEditPayrollForm.valid || loading"
+            [disabled]="!addEditCreditTypeForm.valid || loading"
           >
             Guardar
           </button>

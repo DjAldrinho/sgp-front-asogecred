@@ -45,10 +45,12 @@ export class SidebarService {
       icon: 'iconsminds-gear',
       url: '',
       items: [
+        {title: 'Asesores', icon: 'iconsminds-business-man-woman', url: 'advisers'},
         {title: 'Cuentas', icon: 'simple-icon-book-open', url: 'accounts'},
         {title: 'Pagadurias', icon: 'iconsminds-cash-register-2', url: 'payrolls'},
         {title: 'Proveedores', icon: 'simple-icon-people', url: 'suppliers'},
-        {title: 'Tipos de credito', icon: 'iconsminds-wallet', url: 'credit-types'}
+        {title: 'Tipos de credito', icon: 'iconsminds-wallet', url: 'credit-types'},
+        {title: 'Tipos de transacciones', icon: 'iconsminds-shuffle-3', url: 'transaction-types'}
       ]
     },
   ];

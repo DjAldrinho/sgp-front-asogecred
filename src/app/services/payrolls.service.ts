@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Payroll} from '../models/payroll.model';
-import {Observable, pipe} from 'rxjs';
+import {Observable} from 'rxjs';
 import {BaseService} from './base.service';
 import {PayrollInterface} from '../interfaces/payroll.interface';
 import {map} from 'rxjs/operators';
@@ -31,7 +31,7 @@ export class PayrollsService {
     return this.baseService.create(this.section, {name, status});
   }
 
-  updatePayroll({id, name, status}: PayrollInterface): Observable<any> {
+  updatePayroll({name, status}: PayrollInterface, id: number): Observable<any> {
     return this.baseService.update(this.section, {name, status}, id);
   }
 

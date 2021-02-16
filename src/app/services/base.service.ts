@@ -26,6 +26,7 @@ export class BaseService {
     const url = all ? `${this.base_url}/${section}/all` : `${this.base_url}/${section}/all?page=${page}&per_page=${per_page}`;
     return this.http.get(url).pipe(
       map(response => {
+        section = section === 'type-transaction' || section === 'credit-types' ? 'types' : section;
         const items = response[section].data;
         const total = response[section].total;
         return {items, total};

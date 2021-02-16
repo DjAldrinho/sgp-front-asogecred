@@ -4,6 +4,7 @@ import {Payroll} from '../../../models/payroll.model';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {PayrollsService} from '../../../services/payrolls.service';
+import {SwalTool} from '../../../tools/swal.tool';
 
 @Component({
   selector: 'app-add-edit-payrolls',
@@ -52,6 +53,35 @@ export class AddEditPayrollsComponent implements OnInit {
 
   getFormField(field: string): AbstractControl {
     return this.addEditPayrollForm.get(field);
+  }
+
+  registerUpdatePayroll(): void {
+    if (this.addEditPayrollForm.valid) {
+      const name = this.getFormField('name').value;
+      if (this.type === TypeModal.CREATE) {
+        this.loading = true;
+        this.payrollsService.createPayroll(this.addEditPayrollForm.value)
+          .subscribe(() => {
+            this.loading = false;
+            SwalTool.onMessage('Pagaduría agregada', `La pagaduría ${name} fue agregada correctamente`);
+            this.dialogRef.close('YES');
+          }, () => {
+            this.loading = false;
+            SwalTool.onError('Error', 'No se pudo agregar la pagaduría');
+          });
+      } else {
+        this.loading = true;
+        this.payrollsService.updatePayroll(this.addEditPayrollForm.value, this.payroll.id)
+          .subscribe(() => {
+            this.loading = false;
+            SwalTool.onMessage('Pagaduría actualizada', `La pagaduría ${name} fue actualizada correctamente`);
+            this.dialogRef.close('YES');
+          }, () => {
+            this.loading = false;
+            SwalTool.onError('Error', 'No se pudo actualizar la pagaduría');
+          });
+      }
+    }
   }
 
 }

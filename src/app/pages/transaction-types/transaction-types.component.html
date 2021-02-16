@@ -1,13 +1,12 @@
-<p>credit-types works!</p>
 <div class="mb-2">
-  <h1>Tipos de credito</h1>
+  <h1>Tipos de transacción</h1>
   <div class="top-right-button-container">
     <button
       type="button"
       class="btn btn-outline-primary btn-lg top-right-button mr-1"
       (click)="openModal('C')"
     >
-      Nuevo tipo de credito
+      Nuevo tipo de transacción
     </button>
   </div>
 </div>
@@ -47,7 +46,6 @@
           <thead>
           <tr>
             <th>Nombre</th>
-            <th>Valor</th>
             <th>Estado</th>
             <th class="text-center">Acciones</th>
           </tr>
@@ -55,7 +53,7 @@
           <tbody>
           <tr
             *ngFor="
-                let creditType of creditTypes
+                let transactionType of transactionTypes
                   | paginate
                     : {
                         itemsPerPage: max,
@@ -64,9 +62,8 @@
                       }
               "
           >
-            <td>{{ creditType.name }}</td>
-            <td>{{ creditType.value }}%</td>
-            <td><span class="badge badge-success">{{ creditType.status }}</span></td>
+            <td>{{ transactionType.name }}</td>
+            <td><span class="badge badge-success">{{ transactionType.status }}</span></td>
             <td class="text-center">
               <div class="btn-group" role="group" aria-label="Basic example">
                 <button
@@ -75,7 +72,7 @@
                   data-toggle="tooltip"
                   data-placement="top"
                   title="Ver"
-                  (click)="openModal('S', creditType)"
+                  (click)="openModal('S', transactionType)"
                 >
                   <i class="simple-icon-eye"></i>
                 </button>
@@ -85,7 +82,7 @@
                   data-toggle="tooltip"
                   data-placement="top"
                   title="Editar"
-                  (click)="openModal('E', creditType)"
+                  (click)="openModal('E', transactionType)"
                 >
                   <i class="simple-icon-pencil"></i>
                 </button>
@@ -95,7 +92,7 @@
                   data-toggle="tooltip"
                   data-placement="top"
                   title="Eliminar"
-                  (click)="deleteCreditType(creditType)"
+                  (click)="deleteTransactionType(transactionType)"
                 >
                   <i class="simple-icon-trash"></i>
                 </button>
