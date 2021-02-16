@@ -23,7 +23,14 @@ import { ChangeAccountComponent } from './accounts/change-account/change-account
 import { NumbersOnlyDirective } from '../directives/numbers-only.directive';
 import { UsersComponent } from './users/users.component';
 import { AddEditUserComponent } from './users/add-edit-user/add-edit-user.component';
-
+import {PayrollsComponent} from './payrolls/payrolls.component';
+import {CreditTypesComponent} from './credit-types/credit-types.component';
+import { AddEditPayrollsComponent } from './payrolls/add-edit-payrolls/add-edit-payrolls.component';
+import { AdvisersComponent } from './advisers/advisers.component';
+import { TransactionTypesComponent } from './transaction-types/transaction-types.component';
+import { AddEditTransactionTypesComponent } from './transaction-types/add-edit-transaction-types/add-edit-transaction-types.component';
+import { AddEditCreditTypesComponent } from './credit-types/add-edit-credit-types/add-edit-credit-types.component';
+import { AddEditAdvisersComponent } from './advisers/add-edit-advisers/add-edit-advisers.component';
 
 
 @NgModule({
@@ -43,6 +50,14 @@ import { AddEditUserComponent } from './users/add-edit-user/add-edit-user.compon
     NumbersOnlyDirective,
     UsersComponent,
     AddEditUserComponent,
+    PayrollsComponent,
+    CreditTypesComponent,
+    AddEditPayrollsComponent,
+    AdvisersComponent,
+    TransactionTypesComponent,
+    AddEditTransactionTypesComponent,
+    AddEditCreditTypesComponent,
+    AddEditAdvisersComponent,
   ],
   imports: [
     CommonModule,
