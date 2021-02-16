@@ -21,7 +21,7 @@ export class AccountsComponent implements OnInit {
   public max: number;
 
   constructor(private accountService: AccountsService,
-              private dialog: MatDialog,) {
+              private dialog: MatDialog, ) {
     this.page = 1;
     this.total = 0;
     this.max = 10;

@@ -29,8 +29,7 @@ export class SidebarService {
       url: '',
       items: [
         {title: 'Clientes', icon: 'simple-icon-people', url: 'clients'},
-        {title: 'Abogados', icon: 'iconsminds-student-male', url: 'lawyers'},
-        {title: 'Personas', icon: 'iconsminds-conference', url: 'persons'}
+        {title: 'Abogados', icon: 'iconsminds-student-male', url: 'lawyers'}
       ]
     },
     {
@@ -47,7 +46,9 @@ export class SidebarService {
       url: '',
       items: [
         {title: 'Cuentas', icon: 'simple-icon-book-open', url: 'accounts'},
+        {title: 'Pagadurias', icon: 'iconsminds-cash-register-2', url: 'payrolls'},
         {title: 'Proveedores', icon: 'simple-icon-people', url: 'suppliers'},
+        {title: 'Tipos de credito', icon: 'iconsminds-wallet', url: 'credit-types'}
       ]
     },
   ];

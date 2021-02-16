@@ -1,0 +1,143 @@
+<div class="mb-2">
+  <h1>Pagadurias</h1>
+  <div class="top-right-button-container">
+    <button
+      type="button"
+      class="btn btn-outline-primary btn-lg top-right-button mr-1"
+      (click)="openModal('C')"
+    >
+      Nueva pagaduria
+    </button>
+  </div>
+</div>
+
+<!-- buscador -->
+<div class="mb-2">
+  <a
+    class="btn pt-0 pl-0 d-inline-block d-md-none"
+    data-toggle="collapse"
+    href="#displayOptions"
+    role="button"
+    aria-expanded="true"
+    aria-controls="displayOptions"
+  >
+    Display Options
+    <i class="simple-icon-arrow-down align-middle"></i>
+  </a>
+  <div class="collapse d-md-block" id="displayOptions">
+    <div class="d-block d-md-inline-block">
+      <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+        <label>
+          <input placeholder="Buscar..."/>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- fin buscador -->
+
+<div class="separator mb-5"></div>
+
+<div class="row mb-4">
+  <div class="col-12 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Estado</th>
+            <th class="text-center">Acciones</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr
+            *ngFor="
+                let payroll of payrolls
+                  | paginate
+                    : {
+                        itemsPerPage: max,
+                        currentPage: page,
+                        totalItems: total
+                      }
+              "
+          >
+            <td>{{ payroll.name }}</td>
+            <td><span class="badge badge-success">{{ payroll.status }}</span></td>
+            <td class="text-center">
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <button
+                  type="button"
+                  class="btn btn-info"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Ver"
+                  (click)="openModal('S', payroll)"
+                >
+                  <i class="simple-icon-eye"></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Editar"
+                  (click)="openModal('E', payroll)"
+                >
+                  <i class="simple-icon-pencil"></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Eliminar"
+                  (click)="deletePayroll(payroll)"
+                >
+                  <i class="simple-icon-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="text-center mt-3">
+          <pagination-template
+            #p="paginationApi"
+            (pageChange)="onPageChange($event)"
+          >
+            <div class="custom-pagination">
+              <div
+                class="pagination-previous"
+                [class.disabled]="p.isFirstPage()"
+              >
+                <span *ngIf="!p.isFirstPage()" (click)="p.previous()"
+                ><i class="simple-icon-arrow-left"></i
+                ></span>
+              </div>
+              <div
+                class="page-number"
+                *ngFor="let page of p.pages"
+                [class.current]="p.getCurrent() === page.value"
+              >
+                <span
+                  (click)="p.setCurrent(page.value)"
+                  *ngIf="p.getCurrent() !== page.value"
+                >{{ page.label }}</span
+                >
+                <div *ngIf="p.getCurrent() === page.value">
+                  <span>{{ page.label }}</span>
+                </div>
+              </div>
+              <div class="pagination-next" [class.disabled]="p.isLastPage()">
+                <span *ngIf="!p.isLastPage()" (click)="p.next()"
+                ><i class="simple-icon-arrow-right"></i
+                ></span>
+              </div>
+            </div>
+          </pagination-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
