@@ -27,12 +27,12 @@ export class PayrollsService {
 
   }
 
-  createPayroll({name, status}: PayrollInterface): Observable<any> {
-    return this.baseService.create(this.section, {name, status});
+  createPayroll({name}: PayrollInterface): Observable<any> {
+    return this.baseService.create(this.section, {name});
   }
 
-  updatePayroll({name, status}: PayrollInterface, id: number): Observable<any> {
-    return this.baseService.update(this.section, {name, status}, id);
+  updatePayroll({name}: PayrollInterface, id: number): Observable<any> {
+    return this.baseService.update(this.section, {name}, id);
   }
 
   deletePayroll({id}: Payroll): Observable<any> {

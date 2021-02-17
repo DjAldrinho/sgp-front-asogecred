@@ -27,29 +27,6 @@
           >
         </div>
         <div class="form-row">
-          <div class="form-group col-md-12">
-            <label for="status">Estado*</label>
-            <select
-              id="status"
-              class="form-control"
-              formControlName="status"
-            >
-              <option selected value="">Seleccione...</option>
-              <option value="A">Activo</option>
-              <option value="I">Inactivo</option>
-            </select>
-            <small
-              *ngIf="
-                getFormField('status').errors?.required &&
-                getFormField('status').touched
-              "
-              id="stateMessage"
-              class="form-text text-danger"
-            >El estado es requerido</small
-            >
-          </div>
-        </div>
-        <div class="form-row">
           <button
             type="submit"
             class="btn btn-primary d-block mt-3"

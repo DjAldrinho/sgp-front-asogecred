@@ -31,8 +31,7 @@ export class AddEditPayrollsComponent implements OnInit {
 
   private initForm(): void {
     this.addEditPayrollForm = this.fb.group({
-      name: ['', [Validators.required]],
-      status: ['', [Validators.required]]
+      name: ['', [Validators.required]]
     });
 
     switch (this.type) {
@@ -44,8 +43,7 @@ export class AddEditPayrollsComponent implements OnInit {
         }
 
         this.addEditPayrollForm.patchValue({
-          name: this.payroll.name,
-          status: this.payroll.status
+          name: this.payroll.name
         });
         break;
     }
