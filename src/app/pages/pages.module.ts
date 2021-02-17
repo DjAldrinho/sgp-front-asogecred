@@ -29,7 +29,7 @@ import { AddEditPayrollsComponent } from './payrolls/add-edit-payrolls/add-edit-
 import { AdvisersComponent } from './advisers/advisers.component';
 import { TransactionTypesComponent } from './transaction-types/transaction-types.component';
 import { AddEditTransactionTypesComponent } from './transaction-types/add-edit-transaction-types/add-edit-transaction-types.component';
-import { AddEditCreditTypesComponent } from './credit-types/add-edit-credit-types/add-edit-credit-types.component';
+import {AddEditCreditTypesComponent} from './credit-types/add-edit-credit-types/add-edit-credit-types.component';
 import { AddEditAdvisersComponent } from './advisers/add-edit-advisers/add-edit-advisers.component';
 
 

@@ -63,7 +63,7 @@
               "
           >
             <td>{{ transactionType.name }}</td>
-            <td><span class="badge badge-success">{{ transactionType.status }}</span></td>
+            <td><span [ngClass]="getClassBadge(transactionType.status)">{{ transactionType.status | formatStatus }}</span></td>
             <td class="text-center">
               <div class="btn-group" role="group" aria-label="Basic example">
                 <button

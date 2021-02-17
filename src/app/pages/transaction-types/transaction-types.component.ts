@@ -97,4 +97,19 @@ export class TransactionTypesComponent implements OnInit {
     });
   }
 
+  getClassBadge(item: string): string {
+    let classBadge: string;
+    switch (item) {
+      case 'A': {
+        classBadge = 'badge badge-success';
+        break;
+      }
+      default: {
+        classBadge = 'badge badge-danger';
+        break;
+      }
+    }
+    return classBadge;
+  }
+
 }

@@ -8,8 +8,8 @@ import {SwalTool} from '../../../tools/swal.tool';
 
 @Component({
   selector: 'app-add-edit-credit-types',
-  templateUrl: './add-edit-credit-types.component.html',
-  styleUrls: ['./add-edit-credit-types.component.css']
+  templateUrl: 'add-edit-credit-types.component.html',
+  styleUrls: ['add-edit-credit-types.component.css']
 })
 export class AddEditCreditTypesComponent implements OnInit {
 
