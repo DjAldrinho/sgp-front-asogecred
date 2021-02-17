@@ -19,7 +19,7 @@ export class SidebarService {
       id: 'credits',
       title: 'Creditos',
       icon: 'iconsminds-wallet',
-      url: '/dashboard/persons',
+      url: '/dashboard/credits',
       items: []
     },
     {

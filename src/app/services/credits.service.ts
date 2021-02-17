@@ -1,9 +1,10 @@
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {environment} from 'src/environments/environment';
-import {Credit} from '../models/credit.model';
+import {Credit, Liquidate} from '../models/credit.model';
+import { UserService } from './user.service';
 
 const base_url = environment.base_url;
 
@@ -12,7 +13,8 @@ const base_url = environment.base_url;
 })
 export class CreditsService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+    private userService: UserService) {
   }
 
   // tslint:disable-next-line:variable-name
@@ -29,10 +31,29 @@ export class CreditsService {
     return this.http.get(url)
       .pipe(
         map((resp: any) => {
-          const credits: Credit[] = resp.transactions.data;
-          const total: number = resp.transactions.total;
+          const credits: Credit[] = resp.credits.data;
+          const total: number = resp.credits.total;
           return {credits, total};
         })
       );
   }
+
+  getLiquidate(): Observable<Liquidate> {
+    const body = {
+      "interest": "3",
+      "other_value": "50000",
+      "transport_value": "20000",
+      "capital_value": "100000",
+      "fee": "12",
+      "start_date": "2021/02/15"
+    };
+    return this.http.post(`${base_url}/credits/liquidate`, body)
+      .pipe(
+        map((resp: any) => {
+          const liquidate: Liquidate = resp;
+          return liquidate;
+        })
+      );
+  }
+
 }

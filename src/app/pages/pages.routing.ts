@@ -4,6 +4,8 @@ import {AuthGuard} from '../guards/auth.guard';
 import {AccountsComponent} from './accounts/accounts.component';
 import { ChangeAccountComponent } from './accounts/change-account/change-account.component';
 import {ClientsComponent} from './clients/clients.component';
+import { CreditsComponent } from './credits/credits.component';
+import { NewCreditComponent } from './credits/new-credit/new-credit.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {LawyersComponent} from './lawyers/lawyers.component';
 import {PagesComponent} from './pages.component';
@@ -28,6 +30,8 @@ const routes: Routes = [
       {path: 'suppliers', component: SuppliersComponent},
       {path: 'change-account/:id', component: ChangeAccountComponent},
       {path: 'users', component: UsersComponent},
+      {path: 'credits', component: CreditsComponent},
+      {path: 'new-credit', component: NewCreditComponent},
     ],
   },
 ];

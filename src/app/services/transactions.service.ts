@@ -36,6 +36,7 @@ export class TransactionsService {
         map((resp: any) => {
           const transactions: Transaction[] = resp.transactions.data;
           const total: number = resp.transactions.total;
+          console.log(transactions, total);
           return {transactions, total};
         })
       );

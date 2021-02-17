@@ -1,0 +1,322 @@
+<div class="mb-2">
+  <h1>Nuevo credito</h1>
+</div>
+
+<div class="separator mb-5"></div>
+
+<div class="row mb-4">
+  <div class="col-12 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="mb-4">Información Básica</h5>
+        <form
+          autocomplete="off"
+          (ngSubmit)="addNewCredit()"
+          [formGroup]="addNewCreditForm"
+        >
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="account_id">Cuenta*</label>
+              <select
+                id="account_id"
+                class="form-control"
+                formControlName="account_id"
+              >
+                <option selected value="">Seleccione...</option>
+                <option [value]="item.id" *ngFor="let item of accounts">
+                  {{ item.account_number + " - " + item.name }}
+                </option>
+              </select>
+              <small
+                *ngIf="
+                  getFormField('account_id').errors?.required &&
+                  getFormField('account_id').touched
+                "
+                class="form-text text-danger"
+                >La cuenta es requerida</small
+              >
+            </div>
+            <div class="form-group col-md-4">
+              <label for="payroll_id">Pagaduría*</label>
+              <select
+                id="payroll_id"
+                class="form-control"
+                formControlName="payroll_id"
+              >
+                <option selected value="">Seleccione...</option>
+                <option value="cc">Cédula de ciudadanía</option>
+                <option value="ce">Cédula de extranjería</option>
+                <option value="pp">Pasaporte</option>
+                <option value="ti">Tarjeta de identidad</option>
+              </select>
+              <small
+                *ngIf="
+                  getFormField('payroll_id').errors?.required &&
+                  getFormField('payroll_id').touched
+                "
+                class="form-text text-danger"
+                >La pagaduría es requerida</small
+              >
+            </div>
+            <div class="form-group col-md-4">
+              <label for="credit_type_id">Tipo de credito*</label>
+              <select
+                id="credit_type_id"
+                class="form-control"
+                formControlName="credit_type_id"
+              >
+                <option selected value="">Seleccione...</option>
+                <option value="cc">Cédula de ciudadanía</option>
+                <option value="ce">Cédula de extranjería</option>
+                <option value="pp">Pasaporte</option>
+                <option value="ti">Tarjeta de identidad</option>
+              </select>
+              <small
+                *ngIf="
+                  getFormField('credit_type_id').errors?.required &&
+                  getFormField('credit_type_id').touched
+                "
+                class="form-text text-danger"
+                >El tipo de credito es requerido</small
+              >
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="debtor_id">Titular*</label>
+              <input
+                type="text"
+                class="form-control"
+                id="debtor_id"
+                placeholder="Nombre o documento del titular"
+                formControlName="debtor_id"
+              />
+              <small
+                *ngIf="
+                  getFormField('debtor_id').errors?.required &&
+                  getFormField('debtor_id').touched
+                "
+                class="form-text text-danger"
+                >El titular es requerido</small
+              >
+            </div>
+            <div class="form-group col-md-6">
+              <label for="first_co_debtor">Codeudor 1*</label>
+              <input
+                type="text"
+                class="form-control"
+                id="first_co_debtor"
+                placeholder="Nombre o documento del codeudor 1"
+                formControlName="first_co_debtor"
+              />
+              <small
+                *ngIf="
+                  getFormField('first_co_debtor').errors?.required &&
+                  getFormField('first_co_debtor').touched
+                "
+                class="form-text text-danger"
+                >El codeudor es requerido</small
+              >
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="second_co_debtor">Codudor 2</label>
+              <input
+                type="text"
+                class="form-control"
+                id="second_co_debtor"
+                placeholder="Nombre o documento del codeudor 1"
+                formControlName="second_co_debtor"
+              />
+            </div>
+            <div class="form-group col-md-4">
+              <label for="adviser_id">Asesor*</label>
+              <input
+                type="text"
+                class="form-control"
+                id="adviser_id"
+                placeholder="Nombre o documento del asesor"
+                formControlName="adviser_id"
+              />
+              <small
+                *ngIf="
+                  getFormField('adviser_id').errors?.required &&
+                  getFormField('adviser_id').touched
+                "
+                class="form-text text-danger"
+                >El asesor es requerido</small
+              >
+            </div>
+            <div class="form-group col-md-4">
+              <label for="start_date">Fecha de inicio*</label>
+              <input
+                type="date"
+                class="form-control"
+                id="start_date"
+                formControlName="start_date"
+              />
+              <small
+                *ngIf="
+                  getFormField('start_date').errors?.required &&
+                  getFormField('start_date').touched
+                "
+                class="form-text text-danger"
+                >El fecha de inicio es requerida</small
+              >
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-2">
+              <label for="capital_value">Valor capital*</label>
+              <input
+                type="text"
+                class="form-control"
+                id="capital_value"
+                formControlName="capital_value"
+              />
+              <small
+                *ngIf="
+                  getFormField('capital_value').errors?.required &&
+                  getFormField('capital_value').touched
+                "
+                class="form-text text-danger"
+                >El valor capital es requerido</small
+              >
+            </div>
+            <div class="form-group col-md-2">
+              <label for="transport_value">Valor Transporte</label>
+              <input
+                type="text"
+                class="form-control"
+                id="transport_value"
+                formControlName="transport_value"
+              />
+            </div>
+            <div class="form-group col-md-2">
+              <label for="other_value">Valor Otros</label>
+              <input
+                type="text"
+                class="form-control"
+                id="other_value"
+                formControlName="other_value"
+              />
+            </div>
+            <div class="form-group col-md-2">
+              <label for="interest">% Interés*</label>
+              <input
+                type="text"
+                class="form-control"
+                id="interest"
+                formControlName="interest"
+              />
+              <small
+                *ngIf="
+                  getFormField('interest').errors?.required &&
+                  getFormField('interest').touched
+                "
+                class="form-text text-danger"
+                >El interes es requerido</small
+              >
+            </div>
+            <div class="form-group col-md-2">
+              <label for="commission">% Comisión*</label>
+              <input
+                type="text"
+                class="form-control"
+                id="commission"
+                formControlName="commission"
+              />
+              <small
+                *ngIf="
+                  getFormField('commission').errors?.required &&
+                  getFormField('commission').touched
+                "
+                class="form-text text-danger"
+                >La comisión es requerida</small
+              >
+            </div>
+            <div class="form-group col-md-2">
+              <label for="fee">Meses Plazo*</label>
+              <input
+                type="text"
+                class="form-control"
+                id="fee"
+                formControlName="fee"
+              />
+              <small
+                *ngIf="
+                  getFormField('fee').errors?.required &&
+                  getFormField('fee').touched
+                "
+                class="form-text text-danger"
+                >La comisión es requerida</small
+              >
+            </div>
+          </div>
+          <div class="form-row">
+            <button
+              type="button"
+              class="btn btn-info d-block mt-3"
+              (click)="getLiquidate()"
+            >
+              Ver liquidación
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary d-block mt-3 ml-1"
+              [disabled]="!addNewCreditForm.valid || loading"
+            >
+              Guardar
+            </button>
+            <button type="button" class="btn btn-light d-block mt-3 ml-1">
+              Cancelar
+            </button>
+          </div>
+        </form>
+
+        <!-- tabla de liquidación -->
+        <div class="mt-4" *ngIf="liquidate">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>Fecha vencimiento</th>
+                <th>Valor cuota</th>
+                <th>Valor capital</th>
+                <th>Valor intereses</th>
+                <th>Saldo capital</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><strong>${{ liquidate.total_credit }}</strong></td>
+              </tr>
+              <tr *ngFor="let item of liquidate.fees">
+                <td>{{ item.number }}</td>
+                <td>{{ item.start_date }}</td>
+                <td>${{ item.fee_value }}</td>
+                <td>${{ item.capital_fee }}</td>
+                <td>${{ item.interest_value }}</td>
+                <td>${{ item.capital_balance }}</td>
+              </tr>
+              <tr>
+                <th colspan="2">TOTALES</th>
+                <td><strong>${{ liquidate.total_credit }}</strong></td>
+                <td><strong>${{ liquidate.total_capital }}</strong></td>
+                <td><strong>${{ liquidate.total_interest }}</strong></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- fin de tabla de liquidación -->
+      </div>
+    </div>
+  </div>
+</div>

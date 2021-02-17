@@ -19,15 +19,13 @@ export class DashboardComponent implements OnInit {
   public credits: Credit[] = [];
 
   public fulldata = combineLatest([
-    this.accountService.getAccounts(0, 0, true),
     this.transactionService.getTransactions(1, 5),
     this.CreditsService.getCredits(1, 5),
   ]).pipe(
     map((data) => {
       return {
-        accounts: data[0],
-        transactions: data[1],
-        credits: data[2]
+        transactions: data[0],
+        credits: data[1]
       };
     })
   );
@@ -41,7 +39,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.fulldata
       .subscribe(resp => {
-        console.log('combinados', resp);
         this.transactions = resp.transactions.transactions;
         this.credits = resp.credits.credits;
       }, err => {

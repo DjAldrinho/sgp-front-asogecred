@@ -23,6 +23,8 @@ import { ChangeAccountComponent } from './accounts/change-account/change-account
 import { NumbersOnlyDirective } from '../directives/numbers-only.directive';
 import { UsersComponent } from './users/users.component';
 import { AddEditUserComponent } from './users/add-edit-user/add-edit-user.component';
+import { CreditsComponent } from './credits/credits.component';
+import { NewCreditComponent } from './credits/new-credit/new-credit.component';
 
 
 
@@ -43,6 +45,8 @@ import { AddEditUserComponent } from './users/add-edit-user/add-edit-user.compon
     NumbersOnlyDirective,
     UsersComponent,
     AddEditUserComponent,
+    CreditsComponent,
+    NewCreditComponent,
   ],
   imports: [
     CommonModule,
