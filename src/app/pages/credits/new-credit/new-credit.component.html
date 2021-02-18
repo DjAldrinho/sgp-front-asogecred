@@ -44,10 +44,9 @@
                 formControlName="payroll_id"
               >
                 <option selected value="">Seleccione...</option>
-                <option value="cc">Cédula de ciudadanía</option>
-                <option value="ce">Cédula de extranjería</option>
-                <option value="pp">Pasaporte</option>
-                <option value="ti">Tarjeta de identidad</option>
+                <option [value]="item.id" *ngFor="let item of payrolls">
+                  {{ item.name }}
+                </option>
               </select>
               <small
                 *ngIf="
@@ -66,10 +65,9 @@
                 formControlName="credit_type_id"
               >
                 <option selected value="">Seleccione...</option>
-                <option value="cc">Cédula de ciudadanía</option>
-                <option value="ce">Cédula de extranjería</option>
-                <option value="pp">Pasaporte</option>
-                <option value="ti">Tarjeta de identidad</option>
+                <option [value]="item.id" *ngFor="let item of creditTypes">
+                  {{ item.name }}
+                </option>
               </select>
               <small
                 *ngIf="
@@ -90,7 +88,17 @@
                 id="debtor_id"
                 placeholder="Nombre o documento del titular"
                 formControlName="debtor_id"
+                [matAutocomplete]="debtorComplete"
               />
+              <mat-autocomplete
+                #debtorComplete="matAutocomplete"
+                [displayWith]="showDebtorCodebtors"
+                (optionSelected)="selectDebtor($event.option.value)"
+              >
+                <mat-option *ngFor="let debtor of debtors" [value]="debtor">
+                  {{ debtor.document_number }} {{ debtor.name }}
+                </mat-option>
+              </mat-autocomplete>
               <small
                 *ngIf="
                   getFormField('debtor_id').errors?.required &&
@@ -108,7 +116,17 @@
                 id="first_co_debtor"
                 placeholder="Nombre o documento del codeudor 1"
                 formControlName="first_co_debtor"
+                [matAutocomplete]="codebtorComplete"
               />
+              <mat-autocomplete
+                #codebtorComplete="matAutocomplete"
+                [displayWith]="showDebtorCodebtors"
+                (optionSelected)="selectCoDebtor($event.option.value)"
+              >
+                <mat-option *ngFor="let debtor of co_debtors" [value]="debtor">
+                  {{ debtor.document_number }} {{ debtor.name }}
+                </mat-option>
+              </mat-autocomplete>
               <small
                 *ngIf="
                   getFormField('first_co_debtor').errors?.required &&
@@ -128,25 +146,40 @@
                 id="second_co_debtor"
                 placeholder="Nombre o documento del codeudor 1"
                 formControlName="second_co_debtor"
+                [matAutocomplete]="secondCodebtorComplete"
               />
+              <mat-autocomplete
+                #secondCodebtorComplete="matAutocomplete"
+                [displayWith]="showDebtorCodebtors"
+                (optionSelected)="selectSecondCoDebtor($event.option.value)"
+              >
+                <mat-option
+                  *ngFor="let debtor of seconds_co_debtors"
+                  [value]="debtor"
+                >
+                  {{ debtor.document_number }} {{ debtor.name }}
+                </mat-option>
+              </mat-autocomplete>
             </div>
             <div class="form-group col-md-4">
-              <label for="adviser_id">Asesor*</label>
+              <label for="adviser_id">Asesor</label>
               <input
                 type="text"
                 class="form-control"
                 id="adviser_id"
                 placeholder="Nombre o documento del asesor"
                 formControlName="adviser_id"
+                [matAutocomplete]="adviserComplete"
               />
-              <small
-                *ngIf="
-                  getFormField('adviser_id').errors?.required &&
-                  getFormField('adviser_id').touched
-                "
-                class="form-text text-danger"
-                >El asesor es requerido</small
+              <mat-autocomplete
+                #adviserComplete="matAutocomplete"
+                [displayWith]="showAdviser"
+                (optionSelected)="selectAdviser($event.option.value)"
               >
+                <mat-option *ngFor="let adviser of advisers" [value]="adviser">
+                  {{ adviser.name }}
+                </mat-option>
+              </mat-autocomplete>
             </div>
             <div class="form-group col-md-4">
               <label for="start_date">Fecha de inicio*</label>
@@ -259,6 +292,7 @@
               type="button"
               class="btn btn-info d-block mt-3"
               (click)="getLiquidate()"
+              [disabled]="!enabledLiquidation"
             >
               Ver liquidación
             </button>
@@ -269,7 +303,11 @@
             >
               Guardar
             </button>
-            <button type="button" class="btn btn-light d-block mt-3 ml-1">
+            <button
+              type="button"
+              class="btn btn-light d-block mt-3 ml-1"
+              [routerLink]="['/dashboard/credits']"
+            >
               Cancelar
             </button>
           </div>
@@ -295,7 +333,9 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td><strong>${{ liquidate.total_credit }}</strong></td>
+                <td>
+                  <strong>${{ liquidate.total_credit }}</strong>
+                </td>
               </tr>
               <tr *ngFor="let item of liquidate.fees">
                 <td>{{ item.number }}</td>
@@ -307,9 +347,15 @@
               </tr>
               <tr>
                 <th colspan="2">TOTALES</th>
-                <td><strong>${{ liquidate.total_credit }}</strong></td>
-                <td><strong>${{ liquidate.total_capital }}</strong></td>
-                <td><strong>${{ liquidate.total_interest }}</strong></td>
+                <td>
+                  <strong>${{ liquidate.total_credit }}</strong>
+                </td>
+                <td>
+                  <strong>${{ liquidate.total_capital }}</strong>
+                </td>
+                <td>
+                  <strong>${{ liquidate.total_interest }}</strong>
+                </td>
                 <td></td>
               </tr>
             </tbody>

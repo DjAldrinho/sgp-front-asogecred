@@ -1,10 +1,11 @@
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {environment} from 'src/environments/environment';
+import { NewCreditForm } from '../interfaces/new-credit-form.interface';
 import {Credit, Liquidate} from '../models/credit.model';
-import { UserService } from './user.service';
+import { BaseService } from './base.service';
 
 const base_url = environment.base_url;
 
@@ -13,8 +14,10 @@ const base_url = environment.base_url;
 })
 export class CreditsService {
 
+  private section = 'credits';
+
   constructor(private http: HttpClient,
-    private userService: UserService) {
+    private baseService: BaseService) {
   }
 
   // tslint:disable-next-line:variable-name
@@ -38,22 +41,26 @@ export class CreditsService {
       );
   }
 
-  getLiquidate(): Observable<Liquidate> {
+  getLiquidate(capital_value: number,interest: number, fee:number, start_date: string, other_value?:number, transport_value?:number): Observable<Liquidate> {
     const body = {
-      "interest": "3",
-      "other_value": "50000",
-      "transport_value": "20000",
-      "capital_value": "100000",
-      "fee": "12",
-      "start_date": "2021/02/15"
+      interest,
+      "other_value": other_value == null ? 0 : other_value,
+      "transport_value": transport_value == null ? 0 : transport_value,
+      capital_value,
+      fee,
+      start_date
     };
     return this.http.post(`${base_url}/credits/liquidate`, body)
       .pipe(
         map((resp: any) => {
-          const liquidate: Liquidate = resp;
+          const liquidate: Liquidate = resp.liquidate;
           return liquidate;
         })
       );
+  }
+
+  createCredit(newCreditForm: NewCreditForm): Observable<any> {
+    return this.baseService.create(this.section, newCreditForm);
   }
 
 }

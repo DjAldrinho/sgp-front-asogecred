@@ -1,3 +1,6 @@
+import { Adviser } from "./adviser.model";
+import { Client } from "./client.model";
+import { CreditType } from "./credit-type.model";
 import { Transaction } from "./transaction.model";
 
 export class Credit {
@@ -7,8 +10,8 @@ export class Credit {
     public payroll_id:       number,
     public credit_type_id:   number,
     public debtor_id:        number,
-    public first_co_debtor:  number,
-    public second_co_debtor: number,
+    public first_co_debtor:  Client,
+    public second_co_debtor: Client,
     public start_date:       Date,
     public refinanced:       boolean,
     public capital_value:    string,
@@ -25,6 +28,10 @@ export class Credit {
     public account_id:       number,
     public liquidate:        Liquidate,
     public transactions:     Transaction[],
+    public debtor:           Client,
+    public adviser:          Adviser,
+    public credit_type:      CreditType,
+    public payment:          number,
   ){}
 }
 

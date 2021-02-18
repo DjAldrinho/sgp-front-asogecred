@@ -29,8 +29,7 @@ export class SidebarService {
       url: '',
       items: [
         {title: 'Clientes', icon: 'simple-icon-people', url: 'clients'},
-        {title: 'Abogados', icon: 'iconsminds-student-male', url: 'lawyers'},
-        {title: 'Personas', icon: 'iconsminds-conference', url: 'persons'}
+        {title: 'Abogados', icon: 'iconsminds-student-male', url: 'lawyers'}
       ]
     },
     {
@@ -46,9 +45,13 @@ export class SidebarService {
       icon: 'iconsminds-gear',
       url: '',
       items: [
+        {title: 'Asesores', icon: 'iconsminds-business-man-woman', url: 'advisers'},
         {title: 'Cuentas', icon: 'simple-icon-book-open', url: 'accounts'},
+        {title: 'Pagadurias', icon: 'iconsminds-cash-register-2', url: 'payrolls'},
         {title: 'Proveedores', icon: 'simple-icon-people', url: 'suppliers'},
         {title: 'Usuarios', icon: 'iconsminds-affiliate', url: 'users'},
+        {title: 'Tipos de credito', icon: 'iconsminds-wallet', url: 'credit-types'},
+        {title: 'Tipos de transacciones', icon: 'iconsminds-shuffle-3', url: 'transaction-types'}
       ]
     },
   ];

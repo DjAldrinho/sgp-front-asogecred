@@ -79,7 +79,7 @@
               <td>{{ item.name }}</td>
               <td>{{ item.account_number }}</td>
               <td>{{ item.value | currency }}</td>
-              <td>{{ item.status | formatStatus }}</td>
+              <td><span [ngClass]="getClassBadge(item.status)">{{ item.status | formatStatus }}</span></td>
               <td class="text-center">
                 <div class="btn-group" role="group" aria-label="Basic example">
                   <button

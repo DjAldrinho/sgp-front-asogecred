@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import { TypeModal } from 'src/app/enums/modals.enum';
-import { Account } from 'src/app/models/account.model';
-import { AccountsService } from 'src/app/services/accounts.service';
-import { SwalTool } from 'src/app/tools/swal.tool';
+import {TypeModal} from 'src/app/enums/modals.enum';
+import {Account} from 'src/app/models/account.model';
+import {AccountsService} from 'src/app/services/accounts.service';
+import {SwalTool} from 'src/app/tools/swal.tool';
 import Swal from 'sweetalert2';
-import { AddEditAccountComponent } from './add-edit-account/add-edit-account.component';
+import {AddEditAccountComponent} from './add-edit-account/add-edit-account.component';
 
 @Component({
   selector: 'app-accounts',
@@ -37,12 +37,12 @@ export class AccountsComponent implements OnInit {
       this.page = 1;
     }
     this.accountService.getAccounts(this.page, this.max)
-    .subscribe(resp => {
-      this.accounts = resp.accounts;
-      this.total = resp.total;
-    }, err => {
-      SwalTool.onError('Error al cargar las cuentas');
-    });
+      .subscribe(resp => {
+        this.accounts = resp.accounts;
+        this.total = resp.total;
+      }, err => {
+        SwalTool.onError('Error al cargar las cuentas');
+      });
   }
 
   onPageChange(page): void {
@@ -70,7 +70,7 @@ export class AccountsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      if (result == 'YES') {
+      if (result === 'YES') {
         this.getAccounts(this.page);
       }
     });
@@ -95,6 +95,21 @@ export class AccountsComponent implements OnInit {
           });
       }
     });
+  }
+
+  getClassBadge(item: string): string {
+    let classBadge: string;
+    switch (item) {
+      case 'A': {
+        classBadge = 'badge badge-success';
+        break;
+      }
+      default: {
+        classBadge = 'badge badge-danger';
+        break;
+      }
+    }
+    return classBadge;
   }
 
 }

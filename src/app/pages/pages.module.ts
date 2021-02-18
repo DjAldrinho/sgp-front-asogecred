@@ -25,7 +25,15 @@ import { UsersComponent } from './users/users.component';
 import { AddEditUserComponent } from './users/add-edit-user/add-edit-user.component';
 import { CreditsComponent } from './credits/credits.component';
 import { NewCreditComponent } from './credits/new-credit/new-credit.component';
-
+import {PayrollsComponent} from './payrolls/payrolls.component';
+import {CreditTypesComponent} from './credit-types/credit-types.component';
+import { AddEditPayrollsComponent } from './payrolls/add-edit-payrolls/add-edit-payrolls.component';
+import { AdvisersComponent } from './advisers/advisers.component';
+import { TransactionTypesComponent } from './transaction-types/transaction-types.component';
+import { AddEditTransactionTypesComponent } from './transaction-types/add-edit-transaction-types/add-edit-transaction-types.component';
+import {AddEditCreditTypesComponent} from './credit-types/add-edit-credit-types/add-edit-credit-types.component';
+import { AddEditAdvisersComponent } from './advisers/add-edit-advisers/add-edit-advisers.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -47,6 +55,14 @@ import { NewCreditComponent } from './credits/new-credit/new-credit.component';
     AddEditUserComponent,
     CreditsComponent,
     NewCreditComponent,
+    PayrollsComponent,
+    CreditTypesComponent,
+    AddEditPayrollsComponent,
+    AdvisersComponent,
+    TransactionTypesComponent,
+    AddEditTransactionTypesComponent,
+    AddEditCreditTypesComponent,
+    AddEditAdvisersComponent,
   ],
   imports: [
     CommonModule,
@@ -56,7 +72,8 @@ import { NewCreditComponent } from './credits/new-credit/new-credit.component';
     MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
-    PipesModule
+    PipesModule,
+    MatAutocompleteModule
   ],
   exports: [
     ClientsComponent

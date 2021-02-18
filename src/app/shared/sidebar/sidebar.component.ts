@@ -1,39 +1,41 @@
 import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 import {SidebarService} from 'src/app/services/sidebar.service';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styles: []
+  styleUrls: ['sidebar.component.css']
 })
 export class SidebarComponent implements OnInit, AfterViewInit {
 
   public menuItems: any[] = [];
 
   constructor(public sidebarService: SidebarService,
-    private router: Router) {
+              private router: Router) {
   }
+
   ngAfterViewInit(): void {
-    const liElements = Array.prototype.slice.call(document.getElementsByClassName("menu-item")); 
+    const liElements = Array.prototype.slice.call(document.getElementsByClassName('menu-item'));
     liElements.forEach(element => {
-      if(element.getAttribute('data-id') === "dashboard"){
+      if (element.getAttribute('data-id') === 'dashboard') {
         element.setAttribute('class', 'menu-item active');
-      }else{
+      } else {
         element.setAttribute('class', 'menu-item');
       }
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   showItem(menu: any): void {
 
-    const liElements = Array.prototype.slice.call(document.getElementsByClassName("menu-item")); 
+    const liElements = Array.prototype.slice.call(document.getElementsByClassName('menu-item'));
     liElements.forEach(element => {
-      if(element.getAttribute('data-id') === menu.id){
+      if (element.getAttribute('data-id') === menu.id) {
         element.setAttribute('class', 'menu-item active');
-      }else{
+      } else {
         element.setAttribute('class', 'menu-item');
       }
     });
@@ -43,11 +45,10 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     if (classHtml.search('main-show-temporary') !== -1) {
       body.setAttribute('class', 'ltr rounded menu-default menu-sub-hidden sub-hidden');
     }
-    if(menu.items.length === 0){
-      console.log(menu.url);
+    if (menu.items.length === 0) {
       this.router.navigateByUrl(menu.url);
-    }else{
-      this.menuItems = menu.items; 
+    } else {
+      this.menuItems = menu.items;
       if (classHtml.search('main-show-temporary') !== -1) {
         body.setAttribute('class', 'ltr rounded menu-default menu-sub-hidden sub-hidden');
       } else {

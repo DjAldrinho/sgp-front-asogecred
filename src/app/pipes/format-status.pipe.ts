@@ -15,6 +15,12 @@ export class FormatStatusPipe implements PipeTransform {
       case 'I':
         formatedStatus = 'INACTIVO';
         break;
+      case 'P':
+        formatedStatus = 'PENDIENTE';
+        break;
+      case 'F':
+        formatedStatus = 'FINALIZADO';
+        break;
       default:
         formatedStatus = 'SIN ESTADO';
         break;

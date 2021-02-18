@@ -55,9 +55,17 @@
           <thead>
             <tr>
               <th>No.</th>
+              <th>Tipo</th>
+              <th>Fecha Inicio</th>
+              <th>Fecha Desembolso</th>
+              <th>Estado</th>
+              <th>ID titular</th>
+              <th>Titular</th>
+              <th>ID codeudor 1</th>
+              <th>Codeudor 1</th>
               <th>Valor</th>
+              <th>Saldo</th>
               <th>Cuotas</th>
-              <th>Fecha</th>
               <th class="text-center">Acciones</th>
             </tr>
           </thead>
@@ -74,9 +82,17 @@
               "
             >
               <td>{{ item.code }}</td>
-              <td>{{ item.capital_value | currency }}</td>
-              <td>{{ item.fee }}</td>
+              <td>{{ item.credit_type.name }}</td>
               <td>{{ item.created_at | date: "yyyy-MM-dd" }}</td>
+              <td>{{ item.start_date | date: "yyyy-MM-dd" }}</td>
+              <td>{{ item.status | formatStatus }}</td>
+              <td>{{ item.debtor?.document_number }}</td>
+              <td>{{ item.debtor?.name }}</td>
+              <td>{{ item.first_co_debtor?.document_number }}</td>
+              <td>{{ item.first_co_debtor?.name }}</td>
+              <td>${{ item.liquidate.total_credit }}</td>
+              <td>{{ item.payment | currency }}</td>
+              <td>{{ item.fee }}</td>
               <td class="text-center">
                 <div class="btn-group" role="group" aria-label="Basic example">
                   <button

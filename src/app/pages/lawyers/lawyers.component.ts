@@ -87,11 +87,11 @@ export class LawyersComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.lawyerService.deleteLawyer(lawyer)
-          .subscribe(resp => {
+          .subscribe(() => {
             this.getLawyers(this.page);
             SwalTool.onMessage('Abogado eliminado', `El abogado ${lawyer.name} fue eliminado correctamente`);
           }, () => {
-            SwalTool.onError("Error al eliminar el abogado");
+            SwalTool.onError('Error al eliminar el abogado');
           });
       }
     });
