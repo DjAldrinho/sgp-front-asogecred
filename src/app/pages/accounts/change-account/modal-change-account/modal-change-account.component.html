@@ -1,0 +1,127 @@
+<div class="col-12">
+  <div>
+    <div>
+      <h5 class="mb-4">Agregar transacción</h5>
+      <form
+        autocomplete="off"
+        (ngSubmit)="registerUpdateTransaction()"
+        [formGroup]="addEditTransactionForm"
+      >
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="type">Tipo*</label>
+            <select id="type" class="form-control" formControlName="type">
+              <option selected value="">Seleccione...</option>
+              <option value="deposit">DEPOSITO</option>
+              <option value="retire">RETIRO</option>
+            </select>
+            <small
+              *ngIf="
+                getFormField('type').errors?.required &&
+                getFormField('type').touched
+              "
+              class="form-text text-danger"
+              >El tipo es requerido</small
+            >
+          </div>
+          <div class="form-group col-md-6">
+            <label for="supplier_id">Proveedor*</label>
+            <select
+              id="supplier_id"
+              class="form-control"
+              formControlName="supplier_id"
+            >
+              <option selected value="">Seleccione...</option>
+              <option [value]="item.id" *ngFor="let item of suppliers">
+                {{ item.name | uppercase }}
+              </option>
+            </select>
+            <small
+              *ngIf="
+                getFormField('supplier_id').errors?.required &&
+                getFormField('supplier_id').touched
+              "
+              class="form-text text-danger"
+              >El proveedor es requerido</small
+            >
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="type_transaction">Tipo de transacción*</label>
+            <select
+              id="type_transaction"
+              class="form-control"
+              formControlName="type_transaction"
+            >
+              <option selected value="">Seleccione...</option>
+              <option [value]="item.id" *ngFor="let item of type_transactions">
+                {{ item.name | uppercase }}
+              </option>
+            </select>
+            <small
+              *ngIf="
+                getFormField('type_transaction').errors?.required &&
+                getFormField('type_transaction').touched
+              "
+              class="form-text text-danger"
+              >El tipo de transacción es requerido</small
+            >
+          </div>
+          <div class="form-group col-md-6">
+            <label for="amount">Valor*</label>
+            <input
+              type="text"
+              class="form-control"
+              id="amount"
+              formControlName="amount"
+              placeholder="Número de cuenta"
+            />
+            <small
+              *ngIf="
+                getFormField('amount').errors?.required &&
+                getFormField('amount').touched
+              "
+              class="form-text text-danger"
+              >El valor es requerido</small
+            >
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="commentary">Comentario*</label>
+            <textarea
+              class="form-control"
+              formControlName="commentary"
+              id="commentary"
+            ></textarea>
+            <small
+              *ngIf="
+                getFormField('commentary').errors?.required &&
+                getFormField('commentary').touched
+              "
+              class="form-text text-danger"
+              >El comentario es requerido</small
+            >
+          </div>
+        </div>
+        <div class="form-row">
+          <button
+            type="submit"
+            class="btn btn-primary d-block mt-3"
+            [disabled]="!addEditTransactionForm.valid || loading"
+          >
+            Guardar
+          </button>
+          <button
+            type="button"
+            (click)="dialogRef.close()"
+            class="btn btn-light d-block mt-3 ml-1"
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

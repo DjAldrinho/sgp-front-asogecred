@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {environment} from 'src/environments/environment';
 import {AccountForm} from '../interfaces/account-form.interface';
+import { TransactionForm } from '../interfaces/transaction-form.interface';
 import {Account} from '../models/account.model';
 
 const base_url = environment.base_url;
@@ -16,7 +17,6 @@ export class AccountsService {
   constructor(private http: HttpClient) {
   }
 
-  // tslint:disable-next-line:variable-name
   getAccounts(page?: number, per_page?: number, all: boolean = false): Observable<{ accounts: Account[], total: number }> {
 
     let url: string;
@@ -51,6 +51,10 @@ export class AccountsService {
 
   createAccount(account: AccountForm): Observable<any> {
     return this.http.post(`${base_url}/accounts/create`, account);
+  }
+
+  createTransaction(transaction: TransactionForm): Observable<any> {
+    return this.http.patch(`${base_url}/accounts/change-account`, transaction);
   }
 
   updateAccount(account: AccountForm, id: number): Observable<any> {

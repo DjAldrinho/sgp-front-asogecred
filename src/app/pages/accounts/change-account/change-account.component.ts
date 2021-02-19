@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Account } from 'src/app/models/account.model';
 import { Transaction } from 'src/app/models/transaction.model';
 import { AccountsService } from 'src/app/services/accounts.service';
 import { TransactionsService } from 'src/app/services/transactions.service';
 import { SwalTool } from 'src/app/tools/swal.tool';
+import { ModalChangeAccountComponent } from './modal-change-account/modal-change-account.component';
 
 @Component({
   selector: 'app-change-account',
@@ -18,18 +20,34 @@ export class ChangeAccountComponent implements OnInit {
   public page: number;
   public total: number;
   public max: number;
+  private idAccount: number;
 
   constructor( private router: Router,
     private activatedRoute: ActivatedRoute,
     private accountService: AccountsService,
-    private transactionService: TransactionsService,) {
+    private transactionService: TransactionsService,
+    private dialog: MatDialog,) {
       this.page = 1;
       this.total = 0;
       this.max = 10;
     }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(({id}) => this.getAccount(id))
+    this.activatedRoute.params.subscribe(({id}) => {
+      this.idAccount = id;
+      this.getAccount(id);
+    })
+  }
+
+  openModal(): void {
+    const dialogRef = this.dialog.open(ModalChangeAccountComponent, {width: '50%', panelClass: 'card'});
+    dialogRef.componentInstance.account = this.account;
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result === 'YES') {
+        this.getAccount(this.idAccount);
+      }
+    });
   }
 
 

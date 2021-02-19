@@ -34,6 +34,7 @@ import { AddEditTransactionTypesComponent } from './transaction-types/add-edit-t
 import {AddEditCreditTypesComponent} from './credit-types/add-edit-credit-types/add-edit-credit-types.component';
 import { AddEditAdvisersComponent } from './advisers/add-edit-advisers/add-edit-advisers.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { ModalChangeAccountComponent } from './accounts/change-account/modal-change-account/modal-change-account.component';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     AddEditTransactionTypesComponent,
     AddEditCreditTypesComponent,
     AddEditAdvisersComponent,
+    ModalChangeAccountComponent,
   ],
   imports: [
     CommonModule,

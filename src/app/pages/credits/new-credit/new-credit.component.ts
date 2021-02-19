@@ -35,6 +35,7 @@ export class NewCreditComponent implements OnInit {
   public co_debtors: Client[] = [];
   public seconds_co_debtors: Client[] = [];
   public advisers: Adviser[] = [];
+  public showCommisionField: boolean = false;
 
   public liquidate: Liquidate;
 
@@ -63,12 +64,14 @@ export class NewCreditComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.addNewCreditForm.disable();
     this.fulldata
     .subscribe(resp => {
       console.log(resp);
       this.accounts = resp.accounts.accounts;
       this.payrolls = resp.payrolls.payrolls;
       this.creditTypes = resp.credit_types.creditTypes;
+      this.addNewCreditForm.enable();
     }, err => {
       Swal.fire('Error', 'Ha ocurrido un error inesperado', 'error');
     });
@@ -96,9 +99,16 @@ export class NewCreditComponent implements OnInit {
     });
 
     this.getFormField('adviser_id').valueChanges.subscribe(value => {
+      console.log(value.length);
+      console.log(typeof(value));
       if(this.getFormField('adviser_id').value.length > 0){
         this.getAdvisers(value);
       }
+
+      if(!(this.getFormField('adviser_id').value === Object) || !(this.getFormField('adviser_id').value.length > 0)){
+        console.log("aqui");
+      }
+
     });
 
   }
@@ -191,7 +201,8 @@ export class NewCreditComponent implements OnInit {
   }
 
   selectAdviser(adviser: Adviser): void {
-    console.log(adviser);
+    this.showCommisionField = true;
+    this.getFormField('commission').setValidators([Validators.required]);
   }
 
   validateLiquidateData(): void {

@@ -1,12 +1,13 @@
 <div class="mb-2">
   <h1>Transacciones</h1>
   <div class="top-right-button-container">
-    <!-- <button
+    <button
       type="button"
       class="btn btn-outline-primary btn-lg top-right-button mr-1"
+      (click)="openModal()"
     >
-      Nueva cuenta
-    </button> -->
+      Nueva transacción
+    </button>
   </div>
 </div>
 
@@ -56,6 +57,7 @@
                 <th>No.</th>
                 <th>Tipo</th>
                 <th>Valor</th>
+                <th>Comentarios</th>
                 <th>Fecha</th>
             </tr>
           </thead>
@@ -74,6 +76,7 @@
                 <td><span class="badge pl-0 font-weight-bold font-badge">{{ item.code }}</span></td>
                 <td><span [ngClass]="getClassBadge( item.origin )">{{ item.origin | formatTypeTransaction }}</span></td>
                 <td>{{ item.value | currency }}</td>
+                <td>{{ item.commentary }}</td>
                 <td>{{ item.created_at | date:'yyyy-MM-dd' }}</td>
             </tr>
           </tbody>

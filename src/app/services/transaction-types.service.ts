@@ -15,8 +15,8 @@ export class TransactionTypeService {
   }
 
   // tslint:disable-next-line:variable-name
-  getTransactionTypes(page?: number, per_page?: number): Observable<{ transactionTypes: TransactionType[], total: number }> {
-    return this.baseService.get(this.section, page, per_page)
+  getTransactionTypes(page?: number, per_page?: number, all: boolean = false): Observable<{ transactionTypes: TransactionType[], total: number }> {
+    return this.baseService.get(this.section, page, per_page, all)
       .pipe(
         map((response) => {
           const transactionTypes: TransactionType[] = response.items;
