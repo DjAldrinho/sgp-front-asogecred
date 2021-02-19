@@ -1,4 +1,4 @@
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -6,6 +6,7 @@ import {environment} from 'src/environments/environment';
 import { NewCreditForm } from '../interfaces/new-credit-form.interface';
 import {Credit, Liquidate} from '../models/credit.model';
 import { BaseService } from './base.service';
+import { UserService } from './user.service';
 
 const base_url = environment.base_url;
 
@@ -17,7 +18,8 @@ export class CreditsService {
   private section = 'credits';
 
   constructor(private http: HttpClient,
-    private baseService: BaseService) {
+    private baseService: BaseService,
+    private userService: UserService) {
   }
 
   // tslint:disable-next-line:variable-name
@@ -41,6 +43,16 @@ export class CreditsService {
       );
   }
 
+  getCreditById(id: number) : Observable<Credit> {
+    return this.http.get(`${base_url}/credits/info/${id}`)
+    .pipe(
+      map((resp: any) => {
+        const credit: Credit = resp.credit;
+        return credit;
+      }),
+    );
+  }
+
   getLiquidate(capital_value: number,interest: number, fee:number, start_date: string, other_value?:number, transport_value?:number): Observable<Liquidate> {
     const body = {
       interest,
@@ -61,6 +73,22 @@ export class CreditsService {
 
   createCredit(newCreditForm: NewCreditForm): Observable<any> {
     return this.baseService.create(this.section, newCreditForm);
+  }
+
+  rejectCredit(idCredit: number): Observable<any> {
+    return this.http.patch(`${base_url}/credits/cancel/${idCredit}`, {});
+  }
+
+  approveCredit(idCredit: number, commentary : string, file: File): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.userService.token}`,
+      'Content-Type': 'multipart/form-data'
+    });
+    const formData: FormData = new FormData();
+    formData.append('files', file);
+    formData.append('credit_id', `${idCredit}`);
+    formData.append('commentary', commentary);
+    return this.http.post(`${base_url}/credits/approve`, formData, {headers});
   }
 
 }

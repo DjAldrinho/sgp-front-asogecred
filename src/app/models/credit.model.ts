@@ -1,6 +1,8 @@
+import { Account } from "./account.model";
 import { Adviser } from "./adviser.model";
 import { Client } from "./client.model";
 import { CreditType } from "./credit-type.model";
+import { Payroll } from "./payroll.model";
 import { Transaction } from "./transaction.model";
 
 export class Credit {
@@ -32,6 +34,9 @@ export class Credit {
     public adviser:          Adviser,
     public credit_type:      CreditType,
     public payment:          number,
+    public account:          Account,
+    public payroll:          Payroll,
+    public totals :          Totals
   ){}
 }
 
@@ -52,5 +57,12 @@ export class Fee {
     public interest_value:  string,
     public capital_balance: string,
     public capital_fee: string,
+  ){}
+}
+
+export class Totals {
+  constructor(
+    public total_deposit  : number,
+    public total_retires  : number,
   ){}
 }

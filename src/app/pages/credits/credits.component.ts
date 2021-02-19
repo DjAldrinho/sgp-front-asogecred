@@ -40,7 +40,7 @@ export class CreditsComponent implements OnInit {
       this.total = resp.total;
       console.log(this.credits);
     }, err => {
-      SwalTool.onError('Error al cargar los creditos');
+      SwalTool.onError('Error al cargar los créditos');
     });
   }
 

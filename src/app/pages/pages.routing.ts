@@ -17,6 +17,7 @@ import {ProfileComponent} from './profile/profile.component';
 import { SuppliersComponent } from './suppliers/suppliers.component';
 import { UsersComponent } from './users/users.component';
 import {TransactionTypesComponent} from './transaction-types/transaction-types.component';
+import { DetailCreditComponent } from './credits/detail-credit/detail-credit.component';
 
 const routes: Routes = [
   {
@@ -39,7 +40,8 @@ const routes: Routes = [
       {path: 'payrolls', component: PayrollsComponent},
       {path: 'credit-types', component: CreditTypesComponent},
       {path: 'advisers', component: AdvisersComponent},
-      {path: 'transaction-types', component: TransactionTypesComponent}
+      {path: 'transaction-types', component: TransactionTypesComponent},
+      {path: 'detail-credit/:id', component: DetailCreditComponent},
     ],
   },
 ];

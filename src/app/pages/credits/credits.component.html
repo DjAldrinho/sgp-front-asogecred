@@ -1,12 +1,12 @@
 <div class="mb-2">
-  <h1>Creditos</h1>
+  <h1>Créditos</h1>
   <div class="top-right-button-container">
     <button
       type="button"
       class="btn btn-outline-primary btn-lg top-right-button mr-1"
       [routerLink]="['/dashboard/new-credit']"
     >
-      Nuevo credito
+      Nuevo crédito
     </button>
   </div>
 </div>
@@ -101,6 +101,7 @@
                     data-toggle="tooltip"
                     data-placement="top"
                     title="Ver"
+                    [routerLink]="['/dashboard/detail-credit', item.id]"
                   >
                     <i class="simple-icon-eye"></i>
                   </button>

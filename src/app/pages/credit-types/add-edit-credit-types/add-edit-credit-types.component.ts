@@ -63,22 +63,22 @@ export class AddEditCreditTypesComponent implements OnInit {
         this.creditTypesService.createCreditType(this.addEditCreditTypeForm.value)
           .subscribe(() => {
             this.loading = false;
-            SwalTool.onMessage('Tipo de credito agregado', `el tipo de credito ${name} fue agregado correctamente`);
+            SwalTool.onMessage('Tipo de crédito agregado', `el tipo de crédito ${name} fue agregado correctamente`);
             this.dialogRef.close('YES');
           }, () => {
             this.loading = false;
-            SwalTool.onError('Error', 'No se pudo agregar el tipo de credito');
+            SwalTool.onError('Error', 'No se pudo agregar el tipo de crédito');
           });
       } else {
         this.loading = true;
         this.creditTypesService.updateCreditType(this.addEditCreditTypeForm.value, this.creditType.id)
           .subscribe(() => {
             this.loading = false;
-            SwalTool.onMessage('Tipo de credito actualizado', `el tipo de credito ${name} fue actualizado correctamente`);
+            SwalTool.onMessage('Tipo de crédito actualizado', `el tipo de crédito ${name} fue actualizado correctamente`);
             this.dialogRef.close('YES');
           }, () => {
             this.loading = false;
-            SwalTool.onError('Error', 'No se pudo actualizar el tipo de credito');
+            SwalTool.onError('Error', 'No se pudo actualizar el tipo de crédito');
           });
       }
     }

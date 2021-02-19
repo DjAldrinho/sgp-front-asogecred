@@ -21,6 +21,9 @@ export class FormatStatusPipe implements PipeTransform {
       case 'F':
         formatedStatus = 'FINALIZADO';
         break;
+      case 'C':
+        formatedStatus = 'RECHAZADO';
+        break;
       default:
         formatedStatus = 'SIN ESTADO';
         break;

@@ -1,0 +1,67 @@
+<div class="col-12">
+  <div>
+    <div>
+      <h5 class="mb-4">Aprobar crédito</h5>
+      <form
+        autocomplete="off"
+        (ngSubmit)="approveCredit()"
+        [formGroup]="approveCreditForm"
+      >
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="files">Archivo*</label>
+            <input
+              type="file"
+              class="form-control"
+              id="files"
+              formControlName="files"
+              (change)="onFileChange($event)"
+            />
+            <small
+              *ngIf="
+                getFormField('files').errors?.required &&
+                getFormField('files').touched
+              "
+              class="form-text text-danger"
+              >El archivo es requerido</small
+            >
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="commentary">Comentario*</label>
+            <textarea
+              class="form-control"
+              formControlName="commentary"
+              id="commentary"
+            ></textarea>
+            <small
+              *ngIf="
+                getFormField('commentary').errors?.required &&
+                getFormField('commentary').touched
+              "
+              class="form-text text-danger"
+              >El comentario es requerido</small
+            >
+          </div>
+        </div>
+        <div class="form-row">
+          <button
+            type="submit"
+            class="btn btn-primary d-block mt-3"
+            [disabled]="!approveCreditForm.valid || loading"
+          >
+            Guardar
+          </button>
+          <button
+            type="button"
+            (click)="dialogRef.close()"
+            class="btn btn-light d-block mt-3 ml-1"
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

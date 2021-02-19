@@ -42,7 +42,7 @@ export class CreditTypesComponent implements OnInit {
         this.creditTypes = creditTypes;
         this.total = total;
       }, () => {
-        SwalTool.onError('Error al cargar los tipos de credito');
+        SwalTool.onError('Error al cargar los tipos de crédito');
       });
   }
 
@@ -54,16 +54,16 @@ export class CreditTypesComponent implements OnInit {
     const dialogRef = this.dialog.open(AddEditCreditTypesComponent, {width: '50%', panelClass: 'card'});
     switch (typeModal) {
       case 'C':
-        dialogRef.componentInstance.title = 'Agregar tipo de credito';
+        dialogRef.componentInstance.title = 'Agregar tipo de crédito';
         dialogRef.componentInstance.type = TypeModal.CREATE;
         break;
       case 'E':
-        dialogRef.componentInstance.title = 'Actualizar tipo de credito';
+        dialogRef.componentInstance.title = 'Actualizar tipo de crédito';
         dialogRef.componentInstance.type = TypeModal.EDIT;
         dialogRef.componentInstance.creditType = creditType;
         break;
       default:
-        dialogRef.componentInstance.title = 'Ver tipo de credito';
+        dialogRef.componentInstance.title = 'Ver tipo de crédito';
         dialogRef.componentInstance.type = TypeModal.SHOW;
         dialogRef.componentInstance.creditType = creditType;
         break;
@@ -78,8 +78,8 @@ export class CreditTypesComponent implements OnInit {
 
   deleteCreditType(creditType: CreditType): void {
     Swal.fire({
-      title: '¿Borrar tipo de credito?',
-      text: `Está apunto de borrar el tipo de credito ${creditType.name}`,
+      title: '¿Borrar tipo de crédito?',
+      text: `Está apunto de borrar el tipo de crédito ${creditType.name}`,
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Si, borrar',
@@ -89,9 +89,9 @@ export class CreditTypesComponent implements OnInit {
         this.creditTypesService.deleteCreditType(creditType)
           .subscribe(() => {
             this.getCreditTypes(this.page);
-            SwalTool.onMessage('Tipo de credito eliminado', `El tipo de credito ${creditType.name} fue eliminado correctamente`);
+            SwalTool.onMessage('Tipo de crédito eliminado', `El tipo de crédito ${creditType.name} fue eliminado correctamente`);
           }, () => {
-            SwalTool.onError('Error al eliminar el tipo de credito');
+            SwalTool.onError('Error al eliminar el tipo de crédito');
           });
       }
     });

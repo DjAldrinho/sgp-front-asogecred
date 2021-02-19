@@ -10,7 +10,7 @@
           <div class="card-body text-center">
             <i class="iconsminds-upward"></i>
             <p class="card-text font-weight-semibold mb-0">Ingresos del mes</p>
-            <p class="lead text-center">$5.000.000</p>
+            <p class="lead text-center">${{dashboard.total_deposit}}</p>
           </div>
         </div>
       </div>
@@ -20,7 +20,7 @@
           <div class="card-body text-center">
             <i class="iconsminds-downward"></i>
             <p class="card-text font-weight-semibold mb-0">Egresos del mes</p>
-            <p class="lead text-center">$1.800.000</p>
+            <p class="lead text-center">${{dashboard.total_retire}}</p>
           </div>
         </div>
       </div>
@@ -29,8 +29,8 @@
         <div class="card">
           <div class="card-body text-center">
             <i class="iconsminds-diploma-2"></i>
-            <p class="card-text font-weight-semibold mb-0">Creditos del mes</p>
-            <p class="lead text-center">10</p>
+            <p class="card-text font-weight-semibold mb-0">Créditos del mes</p>
+            <p class="lead text-center">{{dashboard.total_credits}}</p>
           </div>
         </div>
       </div>
@@ -38,9 +38,9 @@
       <div class="col-md-3 col-lg-2 col-sm-4 col-6 mb-4 p-0">
         <div class="card">
           <div class="card-body text-center">
-            <i class="iconsminds-add-user"></i>
-            <p class="card-text font-weight-semibold mb-0">Clientes nuevos</p>
-            <p class="lead text-center">4</p>
+            <i class="simple-icon-book-open"></i>
+            <p class="card-text font-weight-semibold mb-0">Créditos activos</p>
+            <p class="lead text-center">{{dashboard.active_credits}}</p>
           </div>
         </div>
       </div>
@@ -50,9 +50,9 @@
           <div class="card-body text-center">
             <i class="iconsminds-close"></i>
             <p class="card-text font-weight-semibold mb-0">
-              Creditos atrasados
+              Créditos atrasados
             </p>
-            <p class="lead text-center">4</p>
+            <p class="lead text-center">{{dashboard.expired_credits}}</p>
           </div>
         </div>
       </div>
@@ -89,7 +89,7 @@
   <div class="col-xl-6 col-lg-12 mb-4">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">Ultimos creditos</h5>
+        <h5 class="card-title">Ultimos créditos</h5>
         <table class="table">
           <thead>
             <tr>

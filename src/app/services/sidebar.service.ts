@@ -17,7 +17,7 @@ export class SidebarService {
     },
     {
       id: 'credits',
-      title: 'Creditos',
+      title: 'Créditos',
       icon: 'iconsminds-wallet',
       url: '/dashboard/credits',
       items: []
@@ -50,7 +50,7 @@ export class SidebarService {
         {title: 'Pagadurias', icon: 'iconsminds-cash-register-2', url: 'payrolls'},
         {title: 'Proveedores', icon: 'simple-icon-people', url: 'suppliers'},
         {title: 'Usuarios', icon: 'iconsminds-affiliate', url: 'users'},
-        {title: 'Tipos de credito', icon: 'iconsminds-wallet', url: 'credit-types'},
+        {title: 'Tipos de crédito', icon: 'iconsminds-wallet', url: 'credit-types'},
         {title: 'Tipos de transacciones', icon: 'iconsminds-shuffle-3', url: 'transaction-types'}
       ]
     },

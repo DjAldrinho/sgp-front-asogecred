@@ -253,7 +253,7 @@ export class NewCreditComponent implements OnInit {
       }
       Swal.fire({
         title: '¿Está seguro?',
-        text: `Está apunto de crear un credito al titular ${debtor_selected.name}`,
+        text: `Está apunto de crear un crédito al titular ${debtor_selected.name}`,
         icon: 'question',
         showCancelButton: true,
         confirmButtonText: 'Si, guardar',
@@ -266,10 +266,10 @@ export class NewCreditComponent implements OnInit {
           .subscribe(() => {
             this.loading = false;
             this.router.navigateByUrl(`/dashboard/credits`);
-            SwalTool.onMessage('Credito creado', `El credito fue creado correctamente`);
+            SwalTool.onMessage('Crédito creado', `El crédito fue creado correctamente`);
           }, () => {
             this.loading = false;
-            SwalTool.onError('Error', 'No se pudo crear el credito');
+            SwalTool.onError('Error', 'No se pudo crear el crédito');
           });
         }
       });
