@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {environment} from 'src/environments/environment';
+import { DepositForm } from '../interfaces/deposit-form.interface';
 import { NewCreditForm } from '../interfaces/new-credit-form.interface';
 import {Credit, Liquidate} from '../models/credit.model';
 import { BaseService } from './base.service';
@@ -89,6 +90,10 @@ export class CreditsService {
     formData.append('credit_id', `${idCredit}`);
     formData.append('commentary', commentary);
     return this.http.post(`${base_url}/credits/approve`, formData, {headers});
+  }
+
+  depositCredit(deposit: DepositForm): Observable<any> {
+    return this.http.post(`${base_url}/credits/deposit`, deposit);
   }
 
 }

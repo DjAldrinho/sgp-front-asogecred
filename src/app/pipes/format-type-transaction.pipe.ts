@@ -22,6 +22,9 @@ export class FormatTypeTransactionPipe implements PipeTransform {
       case 'commission':
         formatedType = 'COMISIÓN';
         break;
+      case 'credit_payment':
+        formatedType = 'ABONO';
+          break;
       default:
         formatedType = 'NO TIPO';
         break;

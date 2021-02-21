@@ -1,0 +1,48 @@
+<div class="col-12">
+  <div>
+    <div>
+      <h5 class="mb-4">Nuevo abono</h5>
+      <form
+        autocomplete="off"
+        (ngSubmit)="newDeposit()"
+        [formGroup]="newDepositForm"
+      >
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="value">Valor*</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="value"
+              id="value"
+            />
+            <small
+              *ngIf="
+                getFormField('value').errors?.required &&
+                getFormField('value').touched
+              "
+              class="form-text text-danger"
+              >El valor es requerido</small
+            >
+          </div>
+        </div>
+        <div class="form-row">
+          <button
+            type="submit"
+            class="btn btn-primary d-block mt-3"
+            [disabled]="!newDepositForm.valid || loading"
+          >
+            Guardar
+          </button>
+          <button
+            type="button"
+            (click)="dialogRef.close()"
+            class="btn btn-light d-block mt-3 ml-1"
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
