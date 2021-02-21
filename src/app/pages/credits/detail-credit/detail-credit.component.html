@@ -4,6 +4,34 @@
 
 <div class="separator mb-5"></div>
 
+<!-- aprobar rechazar credito -->
+<div class="row mb-4" *ngIf="credit && credit.status === 'P'">
+  <div class="col-12 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="mb-3">Acciones del credito</h5>
+        <div class="form-row">
+          <button
+            type="submit"
+            class="btn btn-primary d-block ml-1"
+            (click)="approveRejectCredit('A')"
+          >
+            Aprobar
+          </button>
+          <button
+            type="submit"
+            class="btn btn-danger d-block ml-1"
+            (click)="approveRejectCredit('R')"
+          >
+            Rechazar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- fin aprobar rechazar credito -->
+
 <!-- detalles basicos del crédito -->
 <div class="row mb-4" *ngIf="credit">
   <div class="col-12 mb-4">
@@ -338,6 +366,7 @@
                         type="button"
                         class="btn btn-outline-primary btn-sm"
                         (click)="openModalDeposit()"
+                        *ngIf="credit.status === 'A'"
                       >
                         Nuevo abono
                       </button>
@@ -479,34 +508,6 @@
   </div>
 </div>
 <!-- fin observaciones sobre el crédito -->
-
-<!-- aprobar rechazar credito -->
-<div class="row mb-4" *ngIf="credit && credit.status === 'P'">
-  <div class="col-12 mb-4">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="mb-3">Acciones del credito</h5>
-        <div class="form-row">
-          <button
-            type="submit"
-            class="btn btn-primary d-block ml-1"
-            (click)="approveRejectCredit('A')"
-          >
-            Aprobar
-          </button>
-          <button
-            type="submit"
-            class="btn btn-danger d-block ml-1"
-            (click)="approveRejectCredit('R')"
-          >
-            Rechazar
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- fin aprobar rechazar credito -->
 
 <!-- tabla de liquidación -->
 <div class="row mb-4" *ngIf="credit">

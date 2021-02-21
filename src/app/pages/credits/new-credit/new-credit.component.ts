@@ -166,7 +166,7 @@ export class NewCreditComponent implements OnInit {
   }
 
   showDebtorCodebtors(debtor: Client): string | Client {
-    return debtor ? `${debtor.document_number} ${debtor.name}` : debtor;
+    return debtor ? `${debtor.document_number} ${debtor.name}`.toUpperCase()  : debtor;
   }
 
   selectDebtor(debtor: Client): void {
@@ -197,7 +197,7 @@ export class NewCreditComponent implements OnInit {
   }
 
   showAdviser(adviser: Adviser): string | Adviser {
-    return adviser ? `${adviser.name}` : adviser;
+    return adviser ? `${adviser.name}`.toUpperCase() : adviser;
   }
 
   selectAdviser(adviser: Adviser): void {

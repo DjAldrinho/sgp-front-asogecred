@@ -10,7 +10,7 @@
           <div class="card-body text-center">
             <i class="iconsminds-upward"></i>
             <p class="card-text font-weight-semibold mb-0">Ingresos del mes</p>
-            <p class="lead text-center">${{dashboard.total_deposit}}</p>
+            <p class="lead text-center">${{ dashboard.total_deposit }}</p>
           </div>
         </div>
       </div>
@@ -20,7 +20,7 @@
           <div class="card-body text-center">
             <i class="iconsminds-downward"></i>
             <p class="card-text font-weight-semibold mb-0">Egresos del mes</p>
-            <p class="lead text-center">${{dashboard.total_retire}}</p>
+            <p class="lead text-center">${{ dashboard.total_retire }}</p>
           </div>
         </div>
       </div>
@@ -30,7 +30,7 @@
           <div class="card-body text-center">
             <i class="iconsminds-diploma-2"></i>
             <p class="card-text font-weight-semibold mb-0">Créditos del mes</p>
-            <p class="lead text-center">{{dashboard.total_credits}}</p>
+            <p class="lead text-center">{{ dashboard.total_credits }}</p>
           </div>
         </div>
       </div>
@@ -40,7 +40,7 @@
           <div class="card-body text-center">
             <i class="simple-icon-book-open"></i>
             <p class="card-text font-weight-semibold mb-0">Créditos activos</p>
-            <p class="lead text-center">{{dashboard.active_credits}}</p>
+            <p class="lead text-center">{{ dashboard.active_credits }}</p>
           </div>
         </div>
       </div>
@@ -52,7 +52,7 @@
             <p class="card-text font-weight-semibold mb-0">
               Créditos atrasados
             </p>
-            <p class="lead text-center">{{dashboard.expired_credits}}</p>
+            <p class="lead text-center">{{ dashboard.expired_credits }}</p>
           </div>
         </div>
       </div>
@@ -61,31 +61,6 @@
 </div>
 
 <div class="row">
-  <div class="col-xl-6 col-lg-12 mb-4">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Ultimas transacciones</h5>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>No.</th>
-              <th>Tipo</th>
-              <th>Valor</th>
-              <th>Fecha</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of transactions">
-              <td><span class="badge pl-0 font-weight-bold font-badge">{{ item.code }}</span></td>
-              <td><span [ngClass]="getClassBadge( item.origin )">{{ item.origin | formatTypeTransaction }}</span></td>
-              <td>{{ item.value | currency }}</td>
-              <td>{{ item.created_at | date:'yyyy-MM-dd' }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
   <div class="col-xl-6 col-lg-12 mb-4">
     <div class="card">
       <div class="card-body">
@@ -101,10 +76,45 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of credits">
-              <td><span class="badge badge-secondary">{{ item.code }}</span></td>
+              <td>
+                <span class="badge badge-secondary">{{ item.code }}</span>
+              </td>
               <td>{{ item.capital_value | currency }}</td>
               <td>{{ item.fee }}</td>
-              <td>{{ item.created_at | date:'yyyy-MM-dd' }}</td>
+              <td>{{ item.created_at | date: "yyyy-MM-dd" }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-6 col-lg-12 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Ultimas transacciones</h5>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Tipo</th>
+              <th>Valor</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of transactions">
+              <td>
+                <span class="badge pl-0 font-weight-bold font-badge">{{
+                  item.code
+                }}</span>
+              </td>
+              <td>
+                <span [ngClass]="getClassBadge(item.origin)">{{
+                  item.origin | formatTypeTransaction
+                }}</span>
+              </td>
+              <td>{{ item.value | currency }}</td>
+              <td>{{ item.created_at | date: "yyyy-MM-dd" }}</td>
             </tr>
           </tbody>
         </table>

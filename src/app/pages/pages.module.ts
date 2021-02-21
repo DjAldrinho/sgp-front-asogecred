@@ -20,7 +20,6 @@ import { AddEditLawyerComponent } from './lawyers/add-edit-lawyer/add-edit-lawye
 import { SuppliersComponent } from './suppliers/suppliers.component';
 import { AddEditSupplierComponent } from './suppliers/add-edit-supplier/add-edit-supplier.component';
 import { ChangeAccountComponent } from './accounts/change-account/change-account.component';
-import { NumbersOnlyDirective } from '../directives/numbers-only.directive';
 import { UsersComponent } from './users/users.component';
 import { AddEditUserComponent } from './users/add-edit-user/add-edit-user.component';
 import { CreditsComponent } from './credits/credits.component';
@@ -38,6 +37,7 @@ import { ModalChangeAccountComponent } from './accounts/change-account/modal-cha
 import { DetailCreditComponent } from './credits/detail-credit/detail-credit.component';
 import { ModalApproveCreditComponent } from './credits/modal-approve-credit/modal-approve-credit.component';
 import { DepositCreditComponent } from './credits/deposit-credit/deposit-credit.component';
+import { NgxMaskModule } from 'ngx-mask';
 
 
 @NgModule({
@@ -54,7 +54,6 @@ import { DepositCreditComponent } from './credits/deposit-credit/deposit-credit.
     SuppliersComponent,
     AddEditSupplierComponent,
     ChangeAccountComponent,
-    NumbersOnlyDirective,
     UsersComponent,
     AddEditUserComponent,
     CreditsComponent,
@@ -81,7 +80,8 @@ import { DepositCreditComponent } from './credits/deposit-credit/deposit-credit.
     FormsModule,
     ReactiveFormsModule,
     PipesModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    NgxMaskModule.forRoot()
   ],
   exports: [
     ClientsComponent

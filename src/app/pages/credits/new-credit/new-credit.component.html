@@ -24,7 +24,7 @@
               >
                 <option selected value="">Seleccione...</option>
                 <option [value]="item.id" *ngFor="let item of accounts">
-                  {{ item.account_number + " - " + item.name }}
+                  {{ item.account_number + " - " + item.name | uppercase }}
                 </option>
               </select>
               <small
@@ -45,7 +45,7 @@
               >
                 <option selected value="">Seleccione...</option>
                 <option [value]="item.id" *ngFor="let item of payrolls">
-                  {{ item.name }}
+                  {{ item.name | uppercase }}
                 </option>
               </select>
               <small
@@ -66,7 +66,7 @@
               >
                 <option selected value="">Seleccione...</option>
                 <option [value]="item.id" *ngFor="let item of creditTypes">
-                  {{ item.name }}
+                  {{ item.name | uppercase }}
                 </option>
               </select>
               <small
@@ -96,7 +96,7 @@
                 (optionSelected)="selectDebtor($event.option.value)"
               >
                 <mat-option *ngFor="let debtor of debtors" [value]="debtor">
-                  {{ debtor.document_number }} {{ debtor.name }}
+                  {{ debtor.document_number }} {{ debtor.name | uppercase }} 
                 </mat-option>
               </mat-autocomplete>
               <small
@@ -124,7 +124,7 @@
                 (optionSelected)="selectCoDebtor($event.option.value)"
               >
                 <mat-option *ngFor="let debtor of co_debtors" [value]="debtor">
-                  {{ debtor.document_number }} {{ debtor.name }}
+                  {{ debtor.document_number }} {{ debtor.name | uppercase }}
                 </mat-option>
               </mat-autocomplete>
               <small
@@ -157,7 +157,7 @@
                   *ngFor="let debtor of seconds_co_debtors"
                   [value]="debtor"
                 >
-                  {{ debtor.document_number }} {{ debtor.name }}
+                  {{ debtor.document_number }} {{ debtor.name | uppercase }}
                 </mat-option>
               </mat-autocomplete>
             </div>
@@ -177,7 +177,7 @@
                 (optionSelected)="selectAdviser($event.option.value)"
               >
                 <mat-option *ngFor="let adviser of advisers" [value]="adviser">
-                  {{ adviser.name }}
+                  {{ adviser.name | uppercase }}
                 </mat-option>
               </mat-autocomplete>
             </div>
@@ -207,6 +207,8 @@
                 class="form-control"
                 id="capital_value"
                 formControlName="capital_value"
+                mask="separator.2"
+                thousandSeparator="."
               />
               <small
                 *ngIf="
@@ -224,6 +226,8 @@
                 class="form-control"
                 id="transport_value"
                 formControlName="transport_value"
+                mask="separator.2"
+                thousandSeparator="."
               />
             </div>
             <div class="form-group col-md-2">
@@ -233,6 +237,8 @@
                 class="form-control"
                 id="other_value"
                 formControlName="other_value"
+                mask="separator.2"
+                thousandSeparator="."
               />
             </div>
             <div class="form-group col-md-2">
@@ -242,6 +248,8 @@
                 class="form-control"
                 id="interest"
                 formControlName="interest"
+                mask="percent"
+                suffix="%"
               />
               <small
                 *ngIf="
@@ -259,6 +267,8 @@
                 class="form-control"
                 id="commission"
                 formControlName="commission"
+                mask="percent"
+                suffix="%"
               />
               <small
                 *ngIf="
