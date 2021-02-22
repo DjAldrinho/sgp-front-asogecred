@@ -12,14 +12,14 @@ export class SidebarService {
       id: 'dashboard',
       title: 'Inicio',
       icon: 'iconsminds-home-3',
-      url: '/dashboard',
+      url: '',
       items: []
     },
     {
       id: 'credits',
       title: 'Créditos',
       icon: 'iconsminds-wallet',
-      url: '/dashboard/credits',
+      url: '/credits',
       items: []
     },
     {
@@ -36,7 +36,7 @@ export class SidebarService {
       id: 'reports',
       title: 'Informes',
       icon: 'iconsminds-statistic',
-      url: '/dashboard/persons',
+      url: '/persons',
       items: []
     },
     {

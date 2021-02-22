@@ -36,7 +36,8 @@ export class Credit {
     public payment:          number,
     public account:          Account,
     public payroll:          Payroll,
-    public totals :          Totals
+    public totals :          Totals,
+    public commentary:       string,
   ){}
 }
 

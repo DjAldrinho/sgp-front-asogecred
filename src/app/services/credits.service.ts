@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {environment} from 'src/environments/environment';
+import { AddCreditCommentaryForm } from '../interfaces/add-credit-commentary-form-interface';
 import { DepositForm } from '../interfaces/deposit-form.interface';
 import { NewCreditForm } from '../interfaces/new-credit-form.interface';
 import {Credit, Liquidate} from '../models/credit.model';
@@ -94,6 +95,10 @@ export class CreditsService {
 
   depositCredit(deposit: DepositForm): Observable<any> {
     return this.http.post(`${base_url}/credits/deposit`, deposit);
+  }
+
+  addCommentary(commentary: AddCreditCommentaryForm){
+    return this.http.post(`${base_url}/credits/add-commentary`, commentary);
   }
 
 }

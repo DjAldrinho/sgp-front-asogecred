@@ -21,7 +21,7 @@ import { DetailCreditComponent } from './credits/detail-credit/detail-credit.com
 
 const routes: Routes = [
   {
-    path: 'dashboard',
+    path: '',
     component: PagesComponent,
     canActivate: [AuthGuard],
     canLoad: [AuthGuard],

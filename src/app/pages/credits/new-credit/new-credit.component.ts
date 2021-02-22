@@ -265,7 +265,7 @@ export class NewCreditComponent implements OnInit {
           this.creditService.createCredit(credit)
           .subscribe(() => {
             this.loading = false;
-            this.router.navigateByUrl(`/dashboard/credits`);
+            this.router.navigateByUrl(`/credits`);
             SwalTool.onMessage('Crédito creado', `El crédito fue creado correctamente`);
           }, () => {
             this.loading = false;

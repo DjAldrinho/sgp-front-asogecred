@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Credit } from 'src/app/models/credit.model';
@@ -32,12 +33,16 @@ export class DetailCreditComponent implements OnInit {
   public pageExpenses: number;
   public totalExpenses: number;
 
+  public commentarysForm: FormGroup;
+  public loadingCommentaryForm: boolean = false;
+
 
   constructor(private router: Router,
     private activatedRoute: ActivatedRoute,
     private creditsService: CreditsService,
     private transactionService: TransactionsService,
-    private dialog: MatDialog,) {
+    private dialog: MatDialog,
+    private fb: FormBuilder,) {
       this.pageIncomes = 1;
       this.totalIncomes = 0;
       this.pageExpenses = 1;
@@ -46,10 +51,40 @@ export class DetailCreditComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.initForm();
     this.activatedRoute.params.subscribe(({id}) => {
       this.idCredit = id;
       this.getCredit(id);
     })
+  }
+
+  private initForm(): void {
+    this.commentarysForm = this.fb.group({
+      commentary: ['', [Validators.required]],
+    });
+  }
+
+  getFormField(field: string): AbstractControl {
+    return this.commentarysForm.get(field);
+  }
+
+  addCreditCommentary(): void {
+    if(this.commentarysForm.valid){
+      this.loadingCommentaryForm = true;
+      const commentary = this.getFormField('commentary').value;
+      const addCommentary = {
+        credit_id: this.credit.id,
+        commentary
+      }
+      this.creditsService.addCommentary(addCommentary)
+      .subscribe(resp => {
+        this.loadingCommentaryForm = false;
+        SwalTool.onMessage('Observación agregada', `La observación fue agregada satisfactoriamente`);
+      }, err => {
+        this.loadingCommentaryForm = false;
+        SwalTool.onError('Error al agregar la observación');
+      });
+    }
   }
 
 
@@ -59,6 +94,7 @@ export class DetailCreditComponent implements OnInit {
     .subscribe(resp => {
       this.credit = resp;
       this.loading = false;
+      this.getFormField('commentary').setValue(this.credit.commentary);
       this.getIncomes();
       this.getExpenses();
     }, err => {
