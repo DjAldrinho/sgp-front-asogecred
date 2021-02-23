@@ -47,14 +47,17 @@ export class ModalApproveCreditComponent implements OnInit {
 
   approveCredit(): void {
     if (this.approveCreditForm.valid) {
+      this.loading = true;
       const commentary = this.getFormField('commentary').value;
       this.creditsService.approveCredit(this.credit.id, commentary, this.fileToUpload)
       .subscribe(resp => {
+        this.loading = false;
         console.log(resp);
         SwalTool.onMessage('Credito aprobado', `El credito fue aprobado correctamente`);
         this.dialogRef.close('YES');
       }, err => {
-        SwalTool.onError('Error al aprobar el credito');
+        this.loading = false;
+        SwalTool.onError('Error','Error al aprobar el credito');
       });
     }
   }

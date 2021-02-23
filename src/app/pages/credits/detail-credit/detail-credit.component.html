@@ -5,12 +5,12 @@
 <div class="separator mb-5"></div>
 
 <!-- aprobar rechazar credito -->
-<div class="row mb-4" *ngIf="credit && credit.status === 'P'">
+<div class="row mb-4" *ngIf="credit && (credit.status === 'P' || credit.status === 'A')">
   <div class="col-12 mb-4">
     <div class="card">
       <div class="card-body">
         <h5 class="mb-3">Acciones del credito</h5>
-        <div class="form-row">
+        <div class="form-row" *ngIf="credit.status === 'P'">
           <button
             type="submit"
             class="btn btn-primary d-block ml-1"
@@ -24,6 +24,15 @@
             (click)="approveRejectCredit('R')"
           >
             Rechazar
+          </button>
+        </div>
+        <div class="form-row" *ngIf="credit.status === 'A'">
+          <button
+            type="submit"
+            class="btn btn-primary d-block ml-1"
+            (click)="openModalRefinanceCredit()"
+          >
+            Refinanciar
           </button>
         </div>
       </div>
@@ -209,6 +218,7 @@
           <span class="badge badge-info">{{
             credit.status | formatStatus
           }}</span>
+          <span class="badge badge-info m-1" *ngIf="credit.refinanced">REFINANCIADO</span>
         </h5>
         <div class="form-row">
           <div class="form-group col-md-3">

@@ -48,7 +48,7 @@ export class DepositCreditComponent implements OnInit {
         SwalTool.onMessage('Abono agregado', `El abono se realizó correctamente`);
         this.dialogRef.close('YES');
       }, err => {
-        SwalTool.onError('Error no se pudo agregar el abono');
+        SwalTool.onError('Error', err.message);
       });
     }
   }

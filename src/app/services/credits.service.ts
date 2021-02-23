@@ -6,6 +6,7 @@ import {environment} from 'src/environments/environment';
 import { AddCreditCommentaryForm } from '../interfaces/add-credit-commentary-form-interface';
 import { DepositForm } from '../interfaces/deposit-form.interface';
 import { NewCreditForm } from '../interfaces/new-credit-form.interface';
+import { RefinanceCreditForm } from '../interfaces/refinance-credit-form.interface';
 import {Credit, Liquidate} from '../models/credit.model';
 import { BaseService } from './base.service';
 import { UserService } from './user.service';
@@ -97,8 +98,12 @@ export class CreditsService {
     return this.http.post(`${base_url}/credits/deposit`, deposit);
   }
 
-  addCommentary(commentary: AddCreditCommentaryForm){
+  addCommentary(commentary: AddCreditCommentaryForm): Observable<any>{
     return this.http.post(`${base_url}/credits/add-commentary`, commentary);
+  }
+
+  refinanceCredit(refinance: RefinanceCreditForm): Observable<any>{
+    return this.http.post(`${base_url}/credits/refinance`, refinance);
   }
 
 }

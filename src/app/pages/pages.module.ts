@@ -38,6 +38,7 @@ import { DetailCreditComponent } from './credits/detail-credit/detail-credit.com
 import { ModalApproveCreditComponent } from './credits/modal-approve-credit/modal-approve-credit.component';
 import { DepositCreditComponent } from './credits/deposit-credit/deposit-credit.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { RefinanceCreditComponent } from './credits/refinance-credit/refinance-credit.component';
 
 
 @NgModule({
@@ -70,6 +71,7 @@ import { NgxMaskModule } from 'ngx-mask';
     DetailCreditComponent,
     ModalApproveCreditComponent,
     DepositCreditComponent,
+    RefinanceCreditComponent,
   ],
   imports: [
     CommonModule,

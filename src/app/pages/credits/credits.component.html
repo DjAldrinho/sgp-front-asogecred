@@ -82,7 +82,8 @@
               <td>{{ item.code }}</td>
               <td>{{ item.credit_type.name | uppercase }}</td>
               <td>{{ item.start_date | date: "yyyy-MM-dd" }}</td>
-              <td>{{ item.status | formatStatus }}</td>
+              <td *ngIf="!item.refinanced">{{ item.status | formatStatus }}</td>
+              <td  *ngIf="item.refinanced"><span class="badge badge-info">REFINANCIADO</span></td>
               <td>{{ item.debtor?.document_number }}</td>
               <td>{{ item.debtor?.name | uppercase }}</td>
               <td>{{ item.first_co_debtor?.name | uppercase }}</td>

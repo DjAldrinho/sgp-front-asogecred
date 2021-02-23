@@ -10,6 +10,7 @@ import { SwalTool } from 'src/app/tools/swal.tool';
 import Swal from 'sweetalert2';
 import { DepositCreditComponent } from '../deposit-credit/deposit-credit.component';
 import { ModalApproveCreditComponent } from '../modal-approve-credit/modal-approve-credit.component';
+import { RefinanceCreditComponent } from '../refinance-credit/refinance-credit.component';
 
 @Component({
   selector: 'app-detail-credit',
@@ -94,6 +95,7 @@ export class DetailCreditComponent implements OnInit {
     .subscribe(resp => {
       this.credit = resp;
       this.loading = false;
+      console.log(this.credit);
       this.getFormField('commentary').setValue(this.credit.commentary);
       this.getIncomes();
       this.getExpenses();
@@ -158,7 +160,7 @@ export class DetailCreditComponent implements OnInit {
     return classBadge;
   }
 
-  approveRejectCredit(type: 'A'|'R'){
+  approveRejectCredit(type: 'A'|'R'): void{
     if(type == 'A'){
       const dialogRef = this.dialog.open(ModalApproveCreditComponent, {width: '50%', panelClass: 'card'});
       dialogRef.componentInstance.credit = this.credit;
@@ -190,8 +192,18 @@ export class DetailCreditComponent implements OnInit {
     }
   }
 
-  openModalDeposit(){
+  openModalDeposit(): void{
     const dialogRef = this.dialog.open(DepositCreditComponent, {width: '50%', panelClass: 'card'});
+    dialogRef.componentInstance.credit = this.credit;
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'YES') {
+        this.getCredit(this.idCredit);
+      }
+    });
+  }
+
+  openModalRefinanceCredit(): void{
+    const dialogRef = this.dialog.open(RefinanceCreditComponent, {width: '50%', panelClass: 'card'});
     dialogRef.componentInstance.credit = this.credit;
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'YES') {
