@@ -1,62 +1,81 @@
-<div class="mb-2">
-  <h1>Procesos</h1>
-  <div class="top-right-button-container">
-    <button
-      type="button"
-      class="btn btn-outline-primary btn-lg top-right-button mr-1"
-      [routerLink]="['/new-process']"
-    >
-      Nuevo proceso
-    </button>
-  </div>
-</div>
-
-<!-- buscador -->
-<div class="mb-2">
+<h1 class="d-flex flex-row align-items-center">
   <a
-    class="btn pt-0 pl-0 d-inline-block d-md-none"
-    data-toggle="collapse"
-    href="#displayOptions"
-    role="button"
-    aria-expanded="true"
-    aria-controls="displayOptions"
+    [routerLink]="'/lawyers'"
+    class="flex flex-row align-items-center mr-4 p-0"
   >
-    Display Options
-    <i class="simple-icon-arrow-down align-middle"></i>
+    <i class="simple-icon-arrow-left align-middle title-md"></i>
   </a>
-  <div class="collapse d-md-block" id="displayOptions">
-    <div class="d-block d-md-inline-block">
-      <!-- <div class="btn-group float-md-left mr-1 mb-1">
-              <button class="btn btn-outline-dark btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Order By
-              </button>
-              <div class="dropdown-menu">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-              </div>
-          </div> -->
-      <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-        <label>
-          <input placeholder="Buscar..." />
-        </label>
+  <span>Detalle del abogado</span>
+</h1>
+
+<div class="separator mb-5"></div>
+
+<div class="row mb-4" *ngIf="lawyer">
+  <div class="col-12 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="mb-4">Información Básica</h5>
+        <form autocomplete="off">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>Nombre</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                [value]="lawyer?.name"
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <label for="credit_id">Número de documento</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                [value]="lawyer?.document_number"
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>Email</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                [value]="lawyer?.email"
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <label>Teléfono o Celular</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                [value]="lawyer?.phone"
+              />
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
 </div>
-<!-- fin buscador -->
 
-<div class="separator mb-5"></div>
-
-<div class="row mb-4">
+<div class="row mb-4" *ngIf="processes">
   <div class="col-12 mb-4">
     <div class="card">
       <div class="card-body">
+        <div>
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="">Procesos</h6>
+          </div>
+        </div>
         <table class="table">
           <thead>
             <tr>
               <th>No.</th>
               <th>Estado</th>
-              <th>Abogado</th>
               <th>Crédito</th>
               <th>ID titular</th>
               <th>Titular</th>
@@ -74,21 +93,20 @@
                   | paginate
                     : {
                         itemsPerPage: max,
-                        currentPage: page,
-                        totalItems: total
+                        currentPage: pageProcesses,
+                        totalItems: totalProcesses
                       }
               "
             >
               <td>{{ item.code }}</td>
               <td>{{ item.status | formatStatus }}</td>
-              <td>{{ item.lawyer.name | uppercase }}</td>
               <td>{{ item.credit.code }}</td>
               <td>{{ item.credit.debtor?.document_number }}</td>
               <td>{{ item.credit.debtor?.name | uppercase }}</td>
               <td>{{ item.credit.first_co_debtor?.name | uppercase }}</td>
               <td>{{ item.demand_value | currency }}</td>
               <td>{{ item.payment | currency }}</td>
-              <td>{{ item.credit.start_date | date: 'yyyy-MM-dd' }}</td>
+              <td>{{ item.credit.start_date | date: "yyyy-MM-dd" }}</td>
               <td class="text-center">
                 <div class="btn-group" role="group" aria-label="Basic example">
                   <button
@@ -117,7 +135,8 @@
                 [class.disabled]="p.isFirstPage()"
                 (click)="p.previous()"
               >
-                <span *ngIf="!p.isFirstPage()"
+                <span
+                  *ngIf="!p.isFirstPage()"
                   ><i class="simple-icon-arrow-left"></i
                 ></span>
               </div>
@@ -127,9 +146,10 @@
                 [class.current]="p.getCurrent() === page.value"
                 (click)="p.setCurrent(page.value)"
               >
-                <span *ngIf="p.getCurrent() !== page.value">{{
-                  page.label
-                }}</span>
+                <span
+                  *ngIf="p.getCurrent() !== page.value"
+                  >{{ page.label }}</span
+                >
                 <div *ngIf="p.getCurrent() === page.value">
                   <span>{{ page.label }}</span>
                 </div>

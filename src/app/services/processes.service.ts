@@ -16,7 +16,7 @@ export class ProcessesService {
 
   constructor(private http: HttpClient) { }
 
-  getProcesses(page?: number, per_page?: number): Observable<{ processes: Process[], total: number }> {
+  getProcesses(page?: number, per_page?: number, lawyerId?: number): Observable<{ processes: Process[], total: number }> {
 
     if (page == null) {
       page = 1;
@@ -25,7 +25,13 @@ export class ProcessesService {
       per_page = 10;
     }
 
-    const url = `${base_url}/processes/all?page=${page}&per_page=${per_page}`;
+    let urlLawyer = ""
+
+    if(lawyerId != null){
+      urlLawyer = `&lawyer=${lawyerId}`
+    }
+
+    const url = `${base_url}/processes/all?page=${page}&per_page=${per_page}${urlLawyer}`;
     return this.http.get(url)
       .pipe(
         map((resp: any) => {

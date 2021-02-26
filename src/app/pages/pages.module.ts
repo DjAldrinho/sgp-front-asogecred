@@ -44,6 +44,7 @@ import { ProcessesComponent } from './processes/processes.component';
 import { NewProcessComponent } from './processes/new-process/new-process.component';
 import { DetailProcessComponent } from './processes/detail-process/detail-process.component';
 import { DepositProcessComponent } from './processes/deposit-process/deposit-process.component';
+import { DetailLawyerComponent } from './lawyers/detail-lawyer/detail-lawyer.component';
 
 
 @NgModule({
@@ -82,6 +83,7 @@ import { DepositProcessComponent } from './processes/deposit-process/deposit-pro
     NewProcessComponent,
     DetailProcessComponent,
     DepositProcessComponent,
+    DetailLawyerComponent,
   ],
   imports: [
     CommonModule,

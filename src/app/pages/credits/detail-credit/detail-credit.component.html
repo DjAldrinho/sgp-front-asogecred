@@ -5,7 +5,10 @@
 <div class="separator mb-5"></div>
 
 <!-- aprobar rechazar credito -->
-<div class="row mb-4" *ngIf="credit && (credit.status === 'P' || credit.status === 'A')">
+<div
+  class="row mb-4"
+  *ngIf="credit && (credit.status === 'P' || credit.status === 'A')"
+>
   <div class="col-12 mb-4">
     <div class="card">
       <div class="card-body">
@@ -218,7 +221,9 @@
           <span class="badge badge-info">{{
             credit.status | formatStatus
           }}</span>
-          <span class="badge badge-info m-1" *ngIf="credit.refinanced">REFINANCIADO</span>
+          <span class="badge badge-info m-1" *ngIf="credit.refinanced"
+            >REFINANCIADO</span
+          >
         </h5>
         <div class="form-row">
           <div class="form-group col-md-3">
@@ -324,21 +329,25 @@
                     <pagination-template
                       #pExpenses="paginationApi"
                       (pageChange)="onPageExpensesChange($event)"
-                      id='expenses'
+                      id="expenses"
                     >
                       <div class="custom-pagination">
                         <div
                           class="pagination-previous"
                           [class.disabled]="pExpenses.isFirstPage()"
                         >
-                          <span *ngIf="!pExpenses.isFirstPage()" (click)="pExpenses.previous()"
+                          <span
+                            *ngIf="!pExpenses.isFirstPage()"
+                            (click)="pExpenses.previous()"
                             ><i class="simple-icon-arrow-left"></i
                           ></span>
                         </div>
                         <div
                           class="page-number"
                           *ngFor="let page of pExpenses.pages"
-                          [class.current]="pExpenses.getCurrent() === page.value"
+                          [class.current]="
+                            pExpenses.getCurrent() === page.value
+                          "
                         >
                           <span
                             (click)="pExpenses.setCurrent(page.value)"
@@ -353,7 +362,9 @@
                           class="pagination-next"
                           [class.disabled]="pExpenses.isLastPage()"
                         >
-                          <span *ngIf="!pExpenses.isLastPage()" (click)="pExpenses.next()"
+                          <span
+                            *ngIf="!pExpenses.isLastPage()"
+                            (click)="pExpenses.next()"
                             ><i class="simple-icon-arrow-right"></i
                           ></span>
                         </div>
@@ -428,14 +439,16 @@
                     <pagination-template
                       #pIncomes="paginationApi"
                       (pageChange)="onPageIncomesChange($event)"
-                      id='incomes'
+                      id="incomes"
                     >
                       <div class="custom-pagination">
                         <div
                           class="pagination-previous"
                           [class.disabled]="pIncomes.isFirstPage()"
                         >
-                          <span *ngIf="!pIncomes.isFirstPage()" (click)="pIncomes.previous()"
+                          <span
+                            *ngIf="!pIncomes.isFirstPage()"
+                            (click)="pIncomes.previous()"
                             ><i class="simple-icon-arrow-left"></i
                           ></span>
                         </div>
@@ -457,7 +470,9 @@
                           class="pagination-next"
                           [class.disabled]="pIncomes.isLastPage()"
                         >
-                          <span *ngIf="!pIncomes.isLastPage()" (click)="pIncomes.next()"
+                          <span
+                            *ngIf="!pIncomes.isLastPage()"
+                            (click)="pIncomes.next()"
                             ><i class="simple-icon-arrow-right"></i
                           ></span>
                         </div>
@@ -486,13 +501,32 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>Descripción</th>
               <th>Nombre archivo</th>
               <th>Fecha anexado</th>
-              <th>Acciones</th>
+              <th class="text-center">Acciones</th>
             </tr>
           </thead>
-          <tbody></tbody>
+          <tbody>
+            <tr *ngFor="let item of credit.documents">
+              <td>{{ item.document_file_url }}</td>
+              <td>{{ item.created_at | date: "yyyy-MM-dd" }}</td>
+              <td class="text-center">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                  <a
+                    type="button"
+                    class="btn btn-info"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Ver"
+                    [href]="item.document_file_url"
+                    target="_blank"
+                  >
+                    <i class="simple-icon-eye"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>

@@ -73,7 +73,7 @@
                   data-toggle="tooltip"
                   data-placement="top"
                   title="Ver"
-                  (click)="openModal('S', lawyer)"
+                  [routerLink]="['/detail-lawyer', lawyer.id]"
                 >
                   <i class="simple-icon-eye"></i>
                 </button>

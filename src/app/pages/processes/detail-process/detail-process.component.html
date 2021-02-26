@@ -222,10 +222,10 @@
               <div
                 class="pagination-previous"
                 [class.disabled]="pIncomes.isFirstPage()"
+                (click)="pIncomes.previous()"
               >
                 <span
                   *ngIf="!pIncomes.isFirstPage()"
-                  (click)="pIncomes.previous()"
                   ><i class="simple-icon-arrow-left"></i
                 ></span>
               </div>
@@ -233,9 +233,9 @@
                 class="page-number"
                 *ngFor="let page of pIncomes.pages"
                 [class.current]="pIncomes.getCurrent() === page.value"
+                (click)="pIncomes.setCurrent(page.value)"
               >
                 <span
-                  (click)="pIncomes.setCurrent(page.value)"
                   *ngIf="pIncomes.getCurrent() !== page.value"
                   >{{ page.label }}</span
                 >
@@ -246,8 +246,9 @@
               <div
                 class="pagination-next"
                 [class.disabled]="pIncomes.isLastPage()"
+                (click)="pIncomes.next()"
               >
-                <span *ngIf="!pIncomes.isLastPage()" (click)="pIncomes.next()"
+                <span *ngIf="!pIncomes.isLastPage()"
                   ><i class="simple-icon-arrow-right"></i
                 ></span>
               </div>
