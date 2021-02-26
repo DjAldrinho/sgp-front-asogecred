@@ -22,6 +22,15 @@ export class Client {
     public bonding: string,
     // tslint:disable-next-line:variable-name
     public start_date: string,
+    public credits: any,
+    // tslint:disable-next-line:variable-name
+    public credits_co_debtor: any,
+    // tslint:disable-next-line:variable-name
+    public credits_second_debtor: any,
+    // tslint:disable-next-line:variable-name
+    public last_transactions: any,
+    public status: string
   ) {
   }
 }
+

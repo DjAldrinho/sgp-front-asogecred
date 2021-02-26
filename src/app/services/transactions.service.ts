@@ -15,32 +15,43 @@ export class TransactionsService {
   constructor(private http: HttpClient) {
   }
 
-  // tslint:disable-next-line:variable-name
-  getTransactions(page?: number, per_page?: number, account_id?: number, idCredit?: number, origin?: string): Observable<{ transactions: Transaction[], total: number }> {
+  getTransactions(
+    page?: number, perPage?: number, accountId?: number,
+    creditId?: number, origin?: string, clientId?: number, userId?: number): Observable<{ transactions: Transaction[], total: number }> {
 
     if (page == null) {
       page = 1;
     }
-    if (per_page == null) {
-      per_page = 10;
+    if (perPage == null) {
+      perPage = 10;
     }
 
-    let account = "";
-    if(account_id != null){
-      account = `&account=${account_id}`;
+    let account = '';
+    if (accountId != null) {
+      account = `&account=${accountId}`;
     }
 
-    let credit = "";
-    if(idCredit != null){
-      credit = `&credit=${idCredit}`;
+    let credit = '';
+    if (creditId != null) {
+      credit = `&credit=${creditId}`;
     }
 
-    let origins = "";
-    if(origin != null){
+    let origins = '';
+    if (origin != null) {
       origins = `&origin=${origin}`;
     }
 
-    const url = `${base_url}/transactions/all?page=${page}&per_page=${per_page}${account}${credit}${origins}`;
+    let client = '';
+    if (clientId != null) {
+      client = `&client=${clientId}`;
+    }
+
+    let user = '';
+    if (userId != null) {
+      user = `&user=${userId}`;
+    }
+
+    const url = `${base_url}/transactions/all?page=${page}&per_page=${perPage}${account}${credit}${origins}${client}${user}`;
     return this.http.get(url)
       .pipe(
         map((resp: any) => {

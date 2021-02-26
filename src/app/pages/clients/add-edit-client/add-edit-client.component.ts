@@ -1,12 +1,11 @@
 import {Component, OnInit, Inject, Input} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { TypeModal } from 'src/app/enums/modals.enum';
-import { Client } from 'src/app/models/client.model';
+import {TypeModal} from 'src/app/enums/modals.enum';
+import {Client} from 'src/app/models/client.model';
 import {ClientsService} from 'src/app/services/clients.service';
-import Swal from 'sweetalert2';
 import * as moment from 'moment';
-import { SwalTool } from 'src/app/tools/swal.tool';
+import {SwalTool} from 'src/app/tools/swal.tool';
 
 @Component({
   selector: 'app-add-edit-client',
@@ -16,11 +15,11 @@ import { SwalTool } from 'src/app/tools/swal.tool';
 export class AddEditClientComponent implements OnInit {
 
   @Input() title: string;
-  @Input() type : TypeModal;
-  @Input() client : Client;
+  @Input() type: TypeModal;
+  @Input() client: Client;
   public addEditClientForm: FormGroup;
   private emailRegex: any = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  public loading: boolean = false;
+  public loading = false;
   public imageToUpload: File;
 
   constructor(public dialogRef: MatDialogRef<AddEditClientComponent>,
@@ -53,16 +52,14 @@ export class AddEditClientComponent implements OnInit {
       case TypeModal.CREATE:
         break;
       default:
-        if(this.type === TypeModal.SHOW){
+        if (this.type === TypeModal.SHOW) {
           this.addEditClientForm.disable();
-        }else{
-          this.getFormField('name').disable();
+        } else {
           this.getFormField('document_type').disable();
-          this.getFormField('document_number').disable();
         }
 
-        let formatedDate = "";
-        if(this.client.start_date){
+        let formatedDate = '';
+        if (this.client.start_date) {
           formatedDate = moment.utc(this.client.start_date).format('yyyy-MM-DD');
         }
 
@@ -70,8 +67,8 @@ export class AddEditClientComponent implements OnInit {
         const clientType = arrayTypes.join();
 
         this.addEditClientForm.patchValue({
-          name : this.client.name,
-          email : this.client.email,
+          name: this.client.name,
+          email: this.client.email,
           document_type: this.client.document_type,
           document_number: this.client.document_number,
           client_type: clientType,
@@ -93,33 +90,33 @@ export class AddEditClientComponent implements OnInit {
   registerUpdateClient(): void {
     if (this.addEditClientForm.valid) {
       const name = this.getFormField('name').value;
-      if(this.type === TypeModal.CREATE){
+      if (this.type === TypeModal.CREATE) {
         this.loading = true;
         this.clientService.createClient(this.addEditClientForm.value, this.imageToUpload)
-        .subscribe(resp => {
-          this.loading = false;
-          SwalTool.onMessage('Cliente agregado', `El cliente ${name} fue agregado correctamente`);
-          this.dialogRef.close('YES');
-        }, err => {
-          this.loading = false;
-          SwalTool.onError('Error', 'No se pudo agregar el cliente');
-        });
-      }else{
+          .subscribe(() => {
+            this.loading = false;
+            SwalTool.onMessage('Cliente agregado', `El cliente ${name} fue agregado correctamente`);
+            this.dialogRef.close('YES');
+          }, () => {
+            this.loading = false;
+            SwalTool.onError('Error', 'No se pudo agregar el cliente');
+          });
+      } else {
         this.loading = true;
         this.clientService.updateClient(this.addEditClientForm.value, this.client.id, this.imageToUpload)
-        .subscribe(resp => {
-          this.loading = false;
-          SwalTool.onMessage('Cliente actualizado', `El cliente ${name} fue actualizado correctamente`);
-          this.dialogRef.close('YES');
-        }, err => {
-          this.loading = false;
-          SwalTool.onError('Error', 'No se pudo actualizar el cliente');
-        });
+          .subscribe(() => {
+            this.loading = false;
+            SwalTool.onMessage('Cliente actualizado', `El cliente ${name} fue actualizado correctamente`);
+            this.dialogRef.close('YES');
+          }, () => {
+            this.loading = false;
+            SwalTool.onError('Error', 'No se pudo actualizar el cliente');
+          });
       }
     }
   }
 
-  onFileChange(event) : void {
+  onFileChange(event): void {
     if (event.target.files && event.target.files.length) {
       const file = event.target.files[0];
       this.addEditClientForm.patchValue({

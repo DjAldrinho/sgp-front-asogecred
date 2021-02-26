@@ -18,6 +18,7 @@ export class ClientsService {
               private userService: UserService) {
   }
 
+  // tslint:disable-next-line:variable-name
   getClients(page?: number, per_page?: number, query?: string): Observable<{ clients: Client[], total: number }> {
 
     if (page == null) {
@@ -27,10 +28,10 @@ export class ClientsService {
       per_page = 10;
     }
 
-    let search = ""
+    let search = '';
 
-    if(query != null){
-      search = `&search=${query}`
+    if (query != null) {
+      search = `&search=${query}`;
     }
 
     const url = `${base_url}/clients/all?page=${page}&per_page=${per_page}${search}`;
@@ -44,6 +45,11 @@ export class ClientsService {
       );
   }
 
+  getClient(id: number): Observable<any> {
+    const url = `${base_url}/clients/info/${id}`;
+    return this.http.get(url);
+  }
+
   createClient(client: ClientForm, file?: File): Observable<any> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.userService.token}`,
@@ -54,8 +60,6 @@ export class ClientsService {
       formData.append('sign', file, file.name);
     }
     formData.append('name', client.name);
-    // formData.append('email', client.email);
-    // formData.append('phone', client.phone);
     formData.append('document_type', client.document_type);
     formData.append('document_number', client.document_number);
     formData.append('client_type', client.client_type);
@@ -73,7 +77,9 @@ export class ClientsService {
       position: client.position,
       bonding: client.bonding,
       client_type: client.client_type,
-      start_date: client.start_date
+      start_date: client.start_date,
+      document_number: client.document_number,
+      name: client.name
     };
 
     return this.http.patch(`${base_url}/clients/update/${id}`, body);
@@ -84,4 +90,15 @@ export class ClientsService {
     const url = `${base_url}/clients/delete/${client.id}`;
     return this.http.delete(url);
   }
+
+  massiveLoad(file: File): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.userService.token}`,
+      'Content-Type': 'multipart/form-data'
+    });
+    const formData: FormData = new FormData();
+    formData.append('document', file, file.name);
+    return this.http.post(`${base_url}/clients/create-massive`, formData, {headers});
+  }
+
 }

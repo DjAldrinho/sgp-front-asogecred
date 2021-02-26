@@ -72,7 +72,6 @@ export class ModalChangeAccountComponent implements OnInit {
   }
 
   registerUpdateTransaction(): void {
-    console.log(this.addEditTransactionForm.value);
     if (this.addEditTransactionForm.valid) {
       this.loading = true;
       const transaction = {

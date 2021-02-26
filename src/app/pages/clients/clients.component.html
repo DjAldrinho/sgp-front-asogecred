@@ -1,13 +1,23 @@
 <div class="mb-2">
   <h1>Clientes</h1>
   <div class="top-right-button-container">
-    <button
-      type="button"
-      class="btn btn-outline-primary btn-lg top-right-button mr-1"
-      (click)="openModal('C')"
-    >
-      Nuevo cliente
-    </button>
+    <div class="top-right-button-container">
+      <button
+        (click)="openModalMassiveLoad()"
+        type="button"
+        class="btn btn-primary btn-lg top-right-button mr-1">
+        Cargar clientes
+      </button>
+    </div>
+    <div class="top-right-button-container">
+      <button
+        type="button"
+        class="btn btn-outline-primary btn-lg top-right-button mr-1"
+        (click)="openModal('C')"
+      >
+        Nuevo cliente
+      </button>
+    </div>
   </div>
 </div>
 
@@ -20,15 +30,6 @@
   </a>
   <div class="collapse d-md-block" id="displayOptions">
     <div class="d-block d-md-inline-block">
-      <!-- <div class="btn-group float-md-left mr-1 mb-1">
-          <button class="btn btn-outline-dark btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Order By
-          </button>
-          <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-          </div>
-      </div> -->
       <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
         <label>
           <input placeholder="Buscar...">
@@ -50,8 +51,6 @@
           <tr>
             <th>Nombre</th>
             <th>Documento</th>
-            <!-- <th>Telefono</th>
-            <th>Email</th> -->
             <th>Salario</th>
             <th>Cargo</th>
             <th class="text-center">Acciones</th>
@@ -81,7 +80,7 @@
                   data-toggle="tooltip"
                   data-placement="top"
                   title="Ver"
-                  (click)="openModal('S', item)"
+                  [routerLink]="['/client-detail', item.id]"
                 >
                   <i class="simple-icon-eye"></i>
                 </button>
@@ -113,17 +112,18 @@
         <div class="text-center mt-3">
           <pagination-template #p="paginationApi" (pageChange)="onPageChange($event)">
             <div class="custom-pagination">
-              <div class="pagination-previous" [class.disabled]="p.isFirstPage()">
-                <span *ngIf="!p.isFirstPage()" (click)="p.previous()"><i class='simple-icon-arrow-left'></i></span>
+              <div class="pagination-previous" [class.disabled]="p.isFirstPage()" (click)="p.previous()">
+                <span *ngIf="!p.isFirstPage()"><i class='simple-icon-arrow-left'></i></span>
               </div>
-              <div class="page-number" *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
-                <span (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">{{ page.label }}</span>
+              <div class="page-number" *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value"
+                   (click)="p.setCurrent(page.value)">
+                <span *ngIf="p.getCurrent() !== page.value">{{ page.label }}</span>
                 <div *ngIf="p.getCurrent() === page.value">
                   <span>{{ page.label }}</span>
                 </div>
               </div>
-              <div class="pagination-next" [class.disabled]="p.isLastPage()">
-                <span *ngIf="!p.isLastPage()" (click)="p.next()"><i class='simple-icon-arrow-right'></i></span>
+              <div class="pagination-next" [class.disabled]="p.isLastPage()" (click)="p.next()">
+                <span *ngIf="!p.isLastPage()"><i class='simple-icon-arrow-right'></i></span>
               </div>
             </div>
           </pagination-template>

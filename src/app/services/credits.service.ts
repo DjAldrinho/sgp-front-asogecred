@@ -3,12 +3,12 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {environment} from 'src/environments/environment';
-import { AddCreditCommentaryForm } from '../interfaces/add-credit-commentary-form-interface';
-import { DepositForm } from '../interfaces/deposit-form.interface';
-import { NewCreditForm } from '../interfaces/new-credit-form.interface';
+import {AddCreditCommentaryForm} from '../interfaces/add-credit-commentary-form-interface';
+import {DepositForm} from '../interfaces/deposit-form.interface';
+import {NewCreditForm} from '../interfaces/new-credit-form.interface';
 import {Credit, Liquidate} from '../models/credit.model';
-import { BaseService } from './base.service';
-import { UserService } from './user.service';
+import {BaseService} from './base.service';
+import {UserService} from './user.service';
 
 const base_url = environment.base_url;
 
@@ -20,12 +20,14 @@ export class CreditsService {
   private section = 'credits';
 
   constructor(private http: HttpClient,
-    private baseService: BaseService,
-    private userService: UserService) {
+              private baseService: BaseService,
+              private userService: UserService) {
   }
 
   // tslint:disable-next-line:variable-name
-  getCredits(page?: number, per_page?: number): Observable<{ credits: Credit[], total: number }> {
+  getCredits(page?: number, per_page?: number,
+             accountId?: number, clientId?: number,
+             firstCoDebtorId?: number, secondCoDebtorId?: number): Observable<{ credits: Credit[], total: number }> {
 
     if (page == null) {
       page = 1;
@@ -33,8 +35,24 @@ export class CreditsService {
     if (per_page == null) {
       per_page = 10;
     }
+    let account = '';
+    if (accountId != null) {
+      account = `&account=${accountId}`;
+    }
+    let client = '';
+    if (clientId != null) {
+      client = `&client=${clientId}`;
+    }
+    let firstCoDebtor = '';
+    if (firstCoDebtorId != null) {
+      firstCoDebtor = `&first_co_debtor=${firstCoDebtorId}`;
+    }
+    let secondCoDebtor = '';
+    if (secondCoDebtorId != null) {
+      secondCoDebtor = `&second_co_debtor=${secondCoDebtorId}`;
+    }
 
-    const url = `${base_url}/credits/all?page=${page}&per_page=${per_page}`;
+    const url = `${base_url}/credits/all?page=${page}&per_page=${per_page}${account}${client}${firstCoDebtor}${secondCoDebtor}`;
     return this.http.get(url)
       .pipe(
         map((resp: any) => {
@@ -45,21 +63,22 @@ export class CreditsService {
       );
   }
 
-  getCreditById(id: number) : Observable<Credit> {
+  getCreditById(id: number): Observable<Credit> {
     return this.http.get(`${base_url}/credits/info/${id}`)
-    .pipe(
-      map((resp: any) => {
-        const credit: Credit = resp.credit;
-        return credit;
-      }),
-    );
+      .pipe(
+        map((resp: any) => {
+          const credit: Credit = resp.credit;
+          return credit;
+        }),
+      );
   }
 
-  getLiquidate(capital_value: number,interest: number, fee:number, start_date: string, other_value?:number, transport_value?:number): Observable<Liquidate> {
+  // tslint:disable-next-line:variable-name max-line-length
+  getLiquidate(capital_value: number, interest: number, fee: number, start_date: string, other_value?: number, transport_value?: number): Observable<Liquidate> {
     const body = {
       interest,
-      "other_value": other_value == null ? 0 : other_value,
-      "transport_value": transport_value == null ? 0 : transport_value,
+      'other_value': other_value == null ? 0 : other_value,
+      'transport_value': transport_value == null ? 0 : transport_value,
       capital_value,
       fee,
       start_date
@@ -81,7 +100,7 @@ export class CreditsService {
     return this.http.patch(`${base_url}/credits/cancel/${idCredit}`, {});
   }
 
-  approveCredit(idCredit: number, commentary : string, file: File): Observable<any> {
+  approveCredit(idCredit: number, commentary: string, file: File): Observable<any> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.userService.token}`,
       'Content-Type': 'multipart/form-data'
@@ -97,7 +116,8 @@ export class CreditsService {
     return this.http.post(`${base_url}/credits/deposit`, deposit);
   }
 
-  addCommentary(commentary: AddCreditCommentaryForm){
+  // tslint:disable-next-line:typedef
+  addCommentary(commentary: AddCreditCommentaryForm) {
     return this.http.post(`${base_url}/credits/add-commentary`, commentary);
   }
 

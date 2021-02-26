@@ -18,6 +18,7 @@ import { SuppliersComponent } from './suppliers/suppliers.component';
 import { UsersComponent } from './users/users.component';
 import {TransactionTypesComponent} from './transaction-types/transaction-types.component';
 import { DetailCreditComponent } from './credits/detail-credit/detail-credit.component';
+import {ClientDetailComponent} from './clients/client-detail/client-detail.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,7 @@ const routes: Routes = [
       {path: 'advisers', component: AdvisersComponent},
       {path: 'transaction-types', component: TransactionTypesComponent},
       {path: 'detail-credit/:id', component: DetailCreditComponent},
+      {path: 'client-detail/:id', component: ClientDetailComponent},
     ],
   },
 ];

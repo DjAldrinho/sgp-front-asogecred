@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Credit } from 'src/app/models/credit.model';
-import { Transaction } from 'src/app/models/transaction.model';
-import { CreditsService } from 'src/app/services/credits.service';
-import { TransactionsService } from 'src/app/services/transactions.service';
-import { SwalTool } from 'src/app/tools/swal.tool';
+import {Component, OnInit} from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MatDialog} from '@angular/material/dialog';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Credit} from 'src/app/models/credit.model';
+import {Transaction} from 'src/app/models/transaction.model';
+import {CreditsService} from 'src/app/services/credits.service';
+import {TransactionsService} from 'src/app/services/transactions.service';
+import {SwalTool} from 'src/app/tools/swal.tool';
 import Swal from 'sweetalert2';
-import { DepositCreditComponent } from '../deposit-credit/deposit-credit.component';
-import { ModalApproveCreditComponent } from '../modal-approve-credit/modal-approve-credit.component';
+import {DepositCreditComponent} from '../deposit-credit/deposit-credit.component';
+import {ModalApproveCreditComponent} from '../modal-approve-credit/modal-approve-credit.component';
 
 @Component({
   selector: 'app-detail-credit',
@@ -38,24 +38,24 @@ export class DetailCreditComponent implements OnInit {
 
 
   constructor(private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private creditsService: CreditsService,
-    private transactionService: TransactionsService,
-    private dialog: MatDialog,
-    private fb: FormBuilder,) {
-      this.pageIncomes = 1;
-      this.totalIncomes = 0;
-      this.pageExpenses = 1;
-      this.totalExpenses = 0;
-      this.max = 10;
-    }
+              private activatedRoute: ActivatedRoute,
+              private creditsService: CreditsService,
+              private transactionService: TransactionsService,
+              private dialog: MatDialog,
+              private fb: FormBuilder) {
+    this.pageIncomes = 1;
+    this.totalIncomes = 0;
+    this.pageExpenses = 1;
+    this.totalExpenses = 0;
+    this.max = 10;
+  }
 
   ngOnInit(): void {
     this.initForm();
     this.activatedRoute.params.subscribe(({id}) => {
       this.idCredit = id;
       this.getCredit(id);
-    })
+    });
   }
 
   private initForm(): void {
@@ -69,21 +69,21 @@ export class DetailCreditComponent implements OnInit {
   }
 
   addCreditCommentary(): void {
-    if(this.commentarysForm.valid){
+    if (this.commentarysForm.valid) {
       this.loadingCommentaryForm = true;
       const commentary = this.getFormField('commentary').value;
       const addCommentary = {
         credit_id: this.credit.id,
         commentary
-      }
+      };
       this.creditsService.addCommentary(addCommentary)
-      .subscribe(resp => {
-        this.loadingCommentaryForm = false;
-        SwalTool.onMessage('Observación agregada', `La observación fue agregada satisfactoriamente`);
-      }, err => {
-        this.loadingCommentaryForm = false;
-        SwalTool.onError('Error al agregar la observación');
-      });
+        .subscribe(resp => {
+          this.loadingCommentaryForm = false;
+          SwalTool.onMessage('Observación agregada', `La observación fue agregada satisfactoriamente`);
+        }, err => {
+          this.loadingCommentaryForm = false;
+          SwalTool.onError('Error al agregar la observación');
+        });
     }
   }
 
@@ -91,16 +91,16 @@ export class DetailCreditComponent implements OnInit {
   getCredit(id: number): void {
     this.loading = true;
     this.creditsService.getCreditById(id)
-    .subscribe(resp => {
-      this.credit = resp;
-      this.loading = false;
-      this.getFormField('commentary').setValue(this.credit.commentary);
-      this.getIncomes();
-      this.getExpenses();
-    }, err => {
-      this.loading = false;
-      this.router.navigateByUrl(`/dashboard`)
-    });
+      .subscribe(resp => {
+        this.credit = resp;
+        this.loading = false;
+        this.getFormField('commentary').setValue(this.credit.commentary);
+        this.getIncomes();
+        this.getExpenses();
+      }, err => {
+        this.loading = false;
+        this.router.navigateByUrl(`/dashboard`);
+      });
   }
 
   getIncomes(page?: number): void {
@@ -109,12 +109,12 @@ export class DetailCreditComponent implements OnInit {
       this.pageIncomes = 1;
     }
     this.transactionService.getTransactions(this.pageIncomes, this.max, null, this.idCredit, 'deposit,credit_payment')
-    .subscribe(resp => {
-      this.incomes = resp.transactions;
-      this.totalIncomes = resp.total;
-    }, err => {
-      SwalTool.onError('Error al cargar los ingresos del crédito');
-    });
+      .subscribe(resp => {
+        this.incomes = resp.transactions;
+        this.totalIncomes = resp.total;
+      }, err => {
+        SwalTool.onError('Error al cargar los ingresos del crédito');
+      });
   }
 
   onPageIncomesChange(page): void {
@@ -127,12 +127,12 @@ export class DetailCreditComponent implements OnInit {
       this.pageExpenses = 1;
     }
     this.transactionService.getTransactions(this.pageExpenses, this.max, null, this.idCredit, 'commission,credit,retire')
-    .subscribe(resp => {
-      this.expenses = resp.transactions;
-      this.totalExpenses = resp.total;
-    }, err => {
-      SwalTool.onError('Error al cargar los egresos del crédito');
-    });
+      .subscribe(resp => {
+        this.expenses = resp.transactions;
+        this.totalExpenses = resp.total;
+      }, err => {
+        SwalTool.onError('Error al cargar los egresos del crédito');
+      });
   }
 
   onPageExpensesChange(page): void {
@@ -158,8 +158,9 @@ export class DetailCreditComponent implements OnInit {
     return classBadge;
   }
 
-  approveRejectCredit(type: 'A'|'R'){
-    if(type == 'A'){
+  // tslint:disable-next-line:typedef
+  approveRejectCredit(type: 'A' | 'R') {
+    if (type == 'A') {
       const dialogRef = this.dialog.open(ModalApproveCreditComponent, {width: '50%', panelClass: 'card'});
       dialogRef.componentInstance.credit = this.credit;
       dialogRef.afterClosed().subscribe(result => {
@@ -167,7 +168,7 @@ export class DetailCreditComponent implements OnInit {
           this.getCredit(this.idCredit);
         }
       });
-    }else{
+    } else {
       Swal.fire({
         title: '¿Está seguro?',
         text: 'Está apunto de RECHAZAR el crédito',
@@ -178,19 +179,20 @@ export class DetailCreditComponent implements OnInit {
       }).then((result) => {
         if (result.value) {
           this.creditsService.rejectCredit(this.idCredit)
-          .subscribe(resp => {
-            console.log(resp);
-            this.getCredit(this.idCredit);
-            SwalTool.onMessage('Credito rechazado', `El crédito fue rechazado correctamente`);
-          }, err => {
-            SwalTool.onError('Error al rechazar el crédito');
-          });
+            .subscribe(resp => {
+              console.log(resp);
+              this.getCredit(this.idCredit);
+              SwalTool.onMessage('Credito rechazado', `El crédito fue rechazado correctamente`);
+            }, err => {
+              SwalTool.onError('Error al rechazar el crédito');
+            });
         }
       });
     }
   }
 
-  openModalDeposit(){
+  // tslint:disable-next-line:typedef
+  openModalDeposit() {
     const dialogRef = this.dialog.open(DepositCreditComponent, {width: '50%', panelClass: 'card'});
     dialogRef.componentInstance.credit = this.credit;
     dialogRef.afterClosed().subscribe(result => {

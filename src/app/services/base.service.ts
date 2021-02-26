@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
-import {UserService} from './user.service';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
@@ -12,7 +11,7 @@ export class BaseService {
 
   private base_url = environment.base_url;
 
-  constructor(private http: HttpClient, private userService: UserService) {
+  constructor(private http: HttpClient) {
   }
 
   // tslint:disable-next-line:variable-name
@@ -24,10 +23,10 @@ export class BaseService {
       per_page = 10;
     }
 
-    let search = ""
+    let search = '';
 
-    if(query != null){
-      search = `&search=${query}`
+    if (query != null) {
+      search = `&search=${query}`;
     }
 
     const url = all ? `${this.base_url}/${section}/all` : `${this.base_url}/${section}/all?page=${page}&per_page=${per_page}${search}`;
@@ -52,6 +51,10 @@ export class BaseService {
   delete(section: string, id: number): Observable<any> {
     const url = `${this.base_url}/${section}/delete/${id}`;
     return this.http.delete(url);
+  }
+
+  getPagination(url: string): Observable<any> {
+    return this.http.get(url);
   }
 
 }

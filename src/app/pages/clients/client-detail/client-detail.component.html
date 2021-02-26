@@ -1,0 +1,50 @@
+<div class="row mb-2 d-flex flex-row justify-content-between">
+  <h1 class="d-flex flex-row align-items-center">
+    <a [routerLink]="'/clients'" class="flex flex-row align-items-center mr-4 p-0">
+      <i class="simple-icon-arrow-left align-middle title-md"></i>
+    </a>
+    <span>Detalles del cliente</span>
+  </h1>
+</div>
+
+<div class="separator mb-5"></div>
+
+<div class="row flex-lg-row flex-column justify-content-between">
+
+  <app-card-client-detail
+    [client]="client"
+    [ngClass]="'col-xl-6 col-lg-12 mb-4'"></app-card-client-detail>
+
+  <app-table-transactions
+    (pageChange)="getLastTransactions($event)"
+    [ngClass]="'col-xl-6 col-lg-12 mb-4'"
+    [title]="'Ultimas transacciones'" [items]="lastTransactions"
+    [idPg]="'pg-deposits'"
+    [totalPaginate]="lastTransactionsPaginate"
+    [pagination]="true"></app-table-transactions>
+
+  <app-table-credits
+    (creditChange)="getCredits($event)"
+    [ngClass]="'col-xl-6 col-lg-12 mb-4'"
+    [title]="'Créditos'" [credits]="credits"
+    [idPg]="'pg-credits'"
+    [totalPaginate]="creditsPaginate"
+    [pagination]="true"></app-table-credits>
+
+  <app-table-credits
+    (creditChange)="getCreditsCoDebtor($event)"
+    [ngClass]="'col-xl-6 col-lg-12 mb-4'"
+    [title]="'Créditos Codeudor'" [credits]="creditsCoDebtor"
+    [idPg]="'pg-credits-co'"
+    [totalPaginate]="creditsCoDebtorPaginate"
+    [pagination]="true"></app-table-credits>
+
+  <app-table-credits
+    (creditChange)="getCreditsSecondCoDebtor($event)"
+    [ngClass]="'col-xl-6 col-lg-12 mb-4'"
+    [title]="'Créditos Segundo Codeudor'" [credits]="creditsSecondDebtor"
+    [idPg]="'pg-credits-secund'"
+    [totalPaginate]="creditsSecondDebtorPaginate"
+    [pagination]="true"></app-table-credits>
+
+</div>

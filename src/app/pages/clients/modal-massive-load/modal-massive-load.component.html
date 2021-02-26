@@ -1,0 +1,62 @@
+<div class="col-12">
+  <div>
+    <div>
+      <div class="mb-2 d-flex flex-row justify-content-between align-items-center">
+        <h5 class="mb-4">Cargar clientes</h5>
+        <div class="top-right-button-container">
+          <button
+            (click)="getTemplate()"
+            type="button"
+            class="btn btn-sm btn-outline-primary btn-lg top-right-button mr-1"
+            [disabled]="fileLoading"
+          >
+            {{fileText}}
+          </button>
+        </div>
+      </div>
+
+      <form
+        autocomplete="off"
+        (ngSubmit)="massiveLoad()"
+        [formGroup]="approveClientForm"
+      >
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="files">Archivo*</label>
+            <input
+              type="file"
+              class="form-control"
+              id="files"
+              formControlName="files"
+              (change)="onFileChange($event)"
+            />
+            <small
+              *ngIf="
+                getFormField('files').errors?.required &&
+                getFormField('files').touched
+              "
+              class="form-text text-danger"
+            >El archivo es requerido</small
+            >
+          </div>
+        </div>
+        <div class="form-row">
+          <button
+            type="submit"
+            class="btn btn-primary d-block mt-3"
+            [disabled]="!approveClientForm.valid || loading"
+          >
+            Cargar archivo
+          </button>
+          <button
+            type="button"
+            (click)="dialogRef.close()"
+            class="btn btn-light d-block mt-3 ml-1"
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

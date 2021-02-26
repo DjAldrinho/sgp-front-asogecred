@@ -2,11 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {combineLatest} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Credit} from 'src/app/models/credit.model';
-import { Dashboard } from 'src/app/models/dashboard.model';
+import {Dashboard} from 'src/app/models/dashboard.model';
 import {Transaction} from 'src/app/models/transaction.model';
 import {AccountsService} from 'src/app/services/accounts.service';
 import {CreditsService} from 'src/app/services/credits.service';
-import { DashboardService } from 'src/app/services/dashboard.service';
+import {DashboardService} from 'src/app/services/dashboard.service';
 import {TransactionsService} from 'src/app/services/transactions.service';
 import Swal from 'sweetalert2';
 
@@ -19,7 +19,8 @@ export class DashboardComponent implements OnInit {
 
   public transactions: Transaction[] = [];
   public credits: Credit[] = [];
-  public dashboard: Dashboard = new Dashboard("","0","0","0",0,0,0,0,0);
+  public dashboard: Dashboard = new Dashboard('', '0', '0', '0', 0, 0, 0, 0, 0);
+  public dataTable: any[];
 
   public fulldata = combineLatest([
     this.transactionService.getTransactions(1, 5),
@@ -47,10 +48,17 @@ export class DashboardComponent implements OnInit {
         this.transactions = resp.transactions.transactions;
         this.credits = resp.credits.credits;
         this.dashboard = resp.data_dashboard;
+        this.dataTable = [
+          {title: 'Ingresos del mes', value: this.dashboard.total_deposit, icon: 'iconsminds-upward', money: true},
+          {title: 'Egresos del mes', value: this.dashboard.total_retire, icon: 'iconsminds-downward', money: true},
+          {title: 'Créditos del mes', value: this.dashboard.total_credits, icon: 'iconsminds-diploma-2', money: false},
+          {title: 'Créditos activos', value: this.dashboard.active_credits, icon: 'simple-icon-book-open', money: false},
+          {title: 'Créditos atrasados', value: this.dashboard.expired_credits, icon: 'iconsminds-close', money: false}
+        ];
       }, err => {
-        console.log(err);
         Swal.fire('Error', 'Ha ocurrido un error inesperado', 'error');
       });
+
   }
 
   getAccounts(): void {
@@ -73,12 +81,34 @@ export class DashboardComponent implements OnInit {
         classBadge = 'badge badge-danger';
         break;
       }
+      case 'credit_payment': {
+        classBadge = 'badge badge-success';
+        break;
+      }
+      case 'commission': {
+        classBadge = 'badge badge-danger';
+        break;
+      }
       default: {
         classBadge = 'badge badge-primary';
         break;
       }
     }
     return classBadge;
+  }
+
+  getClassTitle(text: string): string {
+    let classTitle: string;
+    if (text.length <= 5) {
+      classTitle = 'lead text-center title-lg';
+    } else if (text.length > 5 && text.length <= 13) {
+      classTitle = 'lead text-center title-md';
+    } else if (text.length > 13) {
+      classTitle = 'lead text-center title-sm';
+    } else {
+      classTitle = 'lead text-center title-lg';
+    }
+    return classTitle;
   }
 
 }

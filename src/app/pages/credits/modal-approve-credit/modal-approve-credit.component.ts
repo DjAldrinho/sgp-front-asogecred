@@ -1,9 +1,9 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Credit } from 'src/app/models/credit.model';
-import { CreditsService } from 'src/app/services/credits.service';
-import { SwalTool } from 'src/app/tools/swal.tool';
+import {Component, Inject, Input, OnInit} from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {Credit} from 'src/app/models/credit.model';
+import {CreditsService} from 'src/app/services/credits.service';
+import {SwalTool} from 'src/app/tools/swal.tool';
 
 @Component({
   selector: 'app-modal-approve-credit',
@@ -12,18 +12,19 @@ import { SwalTool } from 'src/app/tools/swal.tool';
 })
 export class ModalApproveCreditComponent implements OnInit {
 
-  @Input() credit : Credit;
+  @Input() credit: Credit;
   public approveCreditForm: FormGroup;
-  public loading: boolean = false;
+  public loading = false;
   public fileToUpload: File;
 
   constructor(public dialogRef: MatDialogRef<ModalApproveCreditComponent>,
-    private fb: FormBuilder,
-    private creditsService: CreditsService,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+              private fb: FormBuilder,
+              private creditsService: CreditsService,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+  }
 
   ngOnInit(): void {
-    this.initForm()
+    this.initForm();
   }
 
   private initForm(): void {
@@ -49,13 +50,12 @@ export class ModalApproveCreditComponent implements OnInit {
     if (this.approveCreditForm.valid) {
       const commentary = this.getFormField('commentary').value;
       this.creditsService.approveCredit(this.credit.id, commentary, this.fileToUpload)
-      .subscribe(resp => {
-        console.log(resp);
-        SwalTool.onMessage('Credito aprobado', `El credito fue aprobado correctamente`);
-        this.dialogRef.close('YES');
-      }, err => {
-        SwalTool.onError('Error al aprobar el credito');
-      });
+        .subscribe(() => {
+          SwalTool.onMessage('Credito aprobado', `El credito fue aprobado correctamente`);
+          this.dialogRef.close('YES');
+        }, () => {
+          SwalTool.onError('Error al aprobar el credito');
+        });
     }
   }
 

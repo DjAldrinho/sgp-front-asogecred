@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {environment} from 'src/environments/environment';
 import {AccountForm} from '../interfaces/account-form.interface';
-import { TransactionForm } from '../interfaces/transaction-form.interface';
+import {TransactionForm} from '../interfaces/transaction-form.interface';
 import {Account} from '../models/account.model';
 
 const base_url = environment.base_url;
@@ -39,14 +39,14 @@ export class AccountsService {
       );
   }
 
-  getAccountById(id: number) : Observable<Account> {
+  getAccountById(id: number): Observable<Account> {
     return this.http.get(`${base_url}/accounts/get/${id}`)
-    .pipe(
-      map((resp: any) => {
-        const account: Account = resp.account;
-        return account;
-      }),
-    );
+      .pipe(
+        map((resp: any) => {
+          const account: Account = resp.account;
+          return account;
+        }),
+      );
   }
 
   createAccount(account: AccountForm): Observable<any> {

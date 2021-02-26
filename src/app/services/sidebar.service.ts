@@ -36,8 +36,10 @@ export class SidebarService {
       id: 'reports',
       title: 'Informes',
       icon: 'iconsminds-statistic',
-      url: '/persons',
-      items: []
+      url: '',
+      items: [
+        {title: 'Tipos de transacciones', icon: 'iconsminds-shuffle-3', url: 'persons'}
+      ]
     },
     {
       id: 'settings',
