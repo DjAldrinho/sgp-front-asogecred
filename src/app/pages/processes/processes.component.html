@@ -1,12 +1,12 @@
 <div class="mb-2">
-  <h1>Asesores</h1>
+  <h1>Procesos</h1>
   <div class="top-right-button-container">
     <button
       type="button"
       class="btn btn-outline-primary btn-lg top-right-button mr-1"
-      (click)="openModal('C')"
+      [routerLink]="['/new-process']"
     >
-      Nuevo asesor
+      Nuevo proceso
     </button>
   </div>
 </div>
@@ -26,6 +26,15 @@
   </a>
   <div class="collapse d-md-block" id="displayOptions">
     <div class="d-block d-md-inline-block">
+      <!-- <div class="btn-group float-md-left mr-1 mb-1">
+              <button class="btn btn-outline-dark btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Order By
+              </button>
+              <div class="dropdown-menu">
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+              </div>
+          </div> -->
       <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
         <label>
           <input placeholder="Buscar..." />
@@ -45,17 +54,21 @@
         <table class="table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Teléfono</th>
-              <th>Comisiones</th>
-              <th>Estado</th>
+              <th>No.</th>
+              <th>Abogado</th>
+              <th>Crédito</th>
+              <th>ID titular</th>
+              <th>Titular</th>
+              <th>Codeudor 1</th>
+              <th>Valor Demanda</th>
+              <th>Fecha Inicio</th>
               <th class="text-center">Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr
               *ngFor="
-                let adviser of advisers
+                let item of processes
                   | paginate
                     : {
                         itemsPerPage: max,
@@ -64,14 +77,14 @@
                       }
               "
             >
-              <td>{{ adviser.name }}</td>
-              <td>{{ adviser.phone }}</td>
-              <td>${{adviser.total_commissions}}</td>
-              <td>
-                <span [ngClass]="getClassBadge(adviser.status)">{{
-                  adviser.status | formatStatus
-                }}</span>
-              </td>
+              <td>{{ item.code }}</td>
+              <td>{{ item.lawyer.name | uppercase }}</td>
+              <td>{{ item.credit.code }}</td>
+              <td>{{ item.credit.debtor?.document_number }}</td>
+              <td>{{ item.credit.debtor?.name | uppercase }}</td>
+              <td>{{ item.credit.first_co_debtor?.name | uppercase }}</td>
+              <td>{{ item.demand_value | currency }}</td>
+              <td>{{ item.credit.start_date | date: 'yyyy-MM-dd' }}</td>
               <td class="text-center">
                 <div class="btn-group" role="group" aria-label="Basic example">
                   <button
@@ -80,29 +93,9 @@
                     data-toggle="tooltip"
                     data-placement="top"
                     title="Ver"
-                    [routerLink]="['/detail-adviser', adviser.id]"
+                    [routerLink]="['/detail-process', item.id]"
                   >
                     <i class="simple-icon-eye"></i>
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Editar"
-                    (click)="openModal('E', adviser)"
-                  >
-                    <i class="simple-icon-pencil"></i>
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-danger"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Eliminar"
-                    (click)="deleteAdviser(adviser)"
-                  >
-                    <i class="simple-icon-trash"></i>
                   </button>
                 </div>
               </td>

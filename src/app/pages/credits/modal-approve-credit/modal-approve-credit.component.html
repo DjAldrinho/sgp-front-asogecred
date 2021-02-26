@@ -9,12 +9,13 @@
       >
         <div class="form-row">
           <div class="form-group col-md-12">
-            <label for="files">Archivo*</label>
+            <label for="files">Archivos*</label>
             <input
               type="file"
               class="form-control"
               id="files"
               formControlName="files"
+              multiple
               (change)="onFileChange($event)"
             />
             <small

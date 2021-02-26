@@ -69,6 +69,27 @@
             </div>
           </div>
           <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="files">Archivos*</label>
+              <input
+                type="file"
+                class="form-control"
+                id="files"
+                formControlName="files"
+                multiple
+                (change)="onFileChange($event)"
+              />
+              <small
+                *ngIf="
+                  getFormField('files').errors?.required &&
+                  getFormField('files').touched
+                "
+                class="form-text text-danger"
+                >El archivo es requerido</small
+              >
+            </div>
+          </div>
+          <div class="form-row">
             <button
               type="submit"
               class="btn btn-primary d-block mt-3"

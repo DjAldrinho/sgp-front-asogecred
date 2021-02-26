@@ -15,7 +15,7 @@ export class ModalApproveCreditComponent implements OnInit {
   @Input() credit : Credit;
   public approveCreditForm: FormGroup;
   public loading: boolean = false;
-  public fileToUpload: File;
+  public filesToUpload: File[];
 
   constructor(public dialogRef: MatDialogRef<ModalApproveCreditComponent>,
     private fb: FormBuilder,
@@ -39,9 +39,10 @@ export class ModalApproveCreditComponent implements OnInit {
 
   onFileChange(event): void {
     if (event.target.files && event.target.files.length) {
-      const file = event.target.files[0];
-      this.approveCreditForm.patchValue({file});
-      this.fileToUpload = file;
+      const files = event.target.files;
+      this.approveCreditForm.patchValue({file: files});
+      this.filesToUpload = files;
+      console.log(this.filesToUpload);
     }
   }
 
@@ -49,7 +50,7 @@ export class ModalApproveCreditComponent implements OnInit {
     if (this.approveCreditForm.valid) {
       this.loading = true;
       const commentary = this.getFormField('commentary').value;
-      this.creditsService.approveCredit(this.credit.id, commentary, this.fileToUpload)
+      this.creditsService.approveCredit(this.credit.id, commentary, this.filesToUpload)
       .subscribe(resp => {
         this.loading = false;
         console.log(resp);

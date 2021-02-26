@@ -65,5 +65,6 @@ export class Totals {
   constructor(
     public total_deposit  : number,
     public total_retires  : number,
+    public total_commissions : number,
   ){}
 }

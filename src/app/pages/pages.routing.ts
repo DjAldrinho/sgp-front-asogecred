@@ -18,6 +18,10 @@ import { SuppliersComponent } from './suppliers/suppliers.component';
 import { UsersComponent } from './users/users.component';
 import {TransactionTypesComponent} from './transaction-types/transaction-types.component';
 import { DetailCreditComponent } from './credits/detail-credit/detail-credit.component';
+import { DetailAdviserComponent } from './advisers/detail-adviser/detail-adviser.component';
+import { ProcessesComponent } from './processes/processes.component';
+import { NewProcessComponent } from './processes/new-process/new-process.component';
+import { DetailProcessComponent } from './processes/detail-process/detail-process.component';
 
 const routes: Routes = [
   {
@@ -42,6 +46,10 @@ const routes: Routes = [
       {path: 'advisers', component: AdvisersComponent},
       {path: 'transaction-types', component: TransactionTypesComponent},
       {path: 'detail-credit/:id', component: DetailCreditComponent},
+      {path: 'detail-adviser/:id', component: DetailAdviserComponent},
+      {path: 'processes', component: ProcessesComponent},
+      {path: 'new-process', component: NewProcessComponent},
+      {path: 'detail-process/:id', component: DetailProcessComponent},
     ],
   },
 ];

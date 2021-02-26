@@ -23,6 +23,13 @@ export class SidebarService {
       items: []
     },
     {
+      id: 'processes',
+      title: 'Procesos',
+      icon: 'iconsminds-box-with-folders',
+      url: '/processes',
+      items: []
+    },
+    {
       id: 'persons',
       title: 'Personas',
       icon: 'iconsminds-business-man-woman',

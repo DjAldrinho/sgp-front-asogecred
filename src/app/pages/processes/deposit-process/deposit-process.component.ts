@@ -1,24 +1,24 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Credit } from 'src/app/models/credit.model';
-import { CreditsService } from 'src/app/services/credits.service';
+import { Process } from 'src/app/models/process.model';
+import { ProcessesService } from 'src/app/services/processes.service';
 import { SwalTool } from 'src/app/tools/swal.tool';
 
 @Component({
-  selector: 'app-deposit-credit',
-  templateUrl: './deposit-credit.component.html',
-  styleUrls: ['./deposit-credit.component.css']
+  selector: 'app-deposit-process',
+  templateUrl: './deposit-process.component.html',
+  styleUrls: ['./deposit-process.component.css']
 })
-export class DepositCreditComponent implements OnInit {
+export class DepositProcessComponent implements OnInit {
 
-  @Input() credit : Credit;
-  public newDepositForm: FormGroup;
+  @Input() process : Process;
+  public newDepositProcessForm: FormGroup;
   public loading: boolean = false;
 
-  constructor(public dialogRef: MatDialogRef<DepositCreditComponent>,
+  constructor(public dialogRef: MatDialogRef<DepositProcessComponent>,
     private fb: FormBuilder,
-    private creditsService: CreditsService,
+    private processesService: ProcessesService,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
@@ -26,28 +26,28 @@ export class DepositCreditComponent implements OnInit {
   }
 
   private initForm(): void {
-    this.newDepositForm = this.fb.group({
+    this.newDepositProcessForm = this.fb.group({
       value: ['', [Validators.required]],
     });
   }
 
   getFormField(field: string): AbstractControl {
-    return this.newDepositForm.get(field);
+    return this.newDepositProcessForm.get(field);
   }
 
   newDeposit(): void {
-    if (this.newDepositForm.valid) {
+    if (this.newDepositProcessForm.valid) {
       this.loading = true;
       const value = this.getFormField('value').value;
       const deposit = {
-        credit_id : this.credit.id,
+        process_id : this.process.id,
         value
       }
-      this.creditsService.depositCredit(deposit)
+      this.processesService.depositProcess(deposit)
       .subscribe(resp => {
         this.loading = false;
         console.log(resp);
-        SwalTool.onMessage('Abono agregado', `El abono se realizó correctamente`);
+        SwalTool.onMessage('Depósito agregado', `El depósito se realizó correctamente`);
         this.dialogRef.close('YES');
       }, err => {
         this.loading = false;

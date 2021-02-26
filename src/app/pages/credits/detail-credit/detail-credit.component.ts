@@ -48,7 +48,7 @@ export class DetailCreditComponent implements OnInit {
       this.totalIncomes = 0;
       this.pageExpenses = 1;
       this.totalExpenses = 0;
-      this.max = 10;
+      this.max = 5;
     }
 
   ngOnInit(): void {
@@ -138,7 +138,7 @@ export class DetailCreditComponent implements OnInit {
   }
 
   onPageExpensesChange(page): void {
-    this.getIncomes(page);
+    this.getExpenses(page);
   }
 
   getClassBadge(item: string): string {

@@ -1,0 +1,260 @@
+<h1 class="d-flex flex-row align-items-center">
+  <a
+    [routerLink]="'/processes'"
+    class="flex flex-row align-items-center mr-4 p-0"
+  >
+    <i class="simple-icon-arrow-left align-middle title-md"></i>
+  </a>
+  <span>Detalle del proceso</span>
+</h1>
+
+<div class="separator mb-5"></div>
+
+<div class="row mb-4" *ngIf="process">
+  <div class="col-12 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="mb-4">Información Básica</h5>
+        <form autocomplete="off">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>Titular</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                [value]="
+                  process?.credit.debtor?.document_number +
+                  ' ' +
+                  process?.credit.debtor?.name
+                "
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <label for="credit_id">Credito</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                [value]="process?.credit.code"
+              />
+            </div>
+          </div>
+
+          <!-- detalles del credito seleccionado -->
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>Codeudor 1</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                [value]="
+                  process?.credit.first_co_debtor?.document_number +
+                  ' ' +
+                  process?.credit.first_co_debtor?.name
+                "
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <label>Codeudor 2</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                [value]="
+                  process?.credit.second_co_debtor?.document_number +
+                  ' ' +
+                  process?.credit.second_co_debtor?.name
+                "
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label>Valor</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                [value]="'$' + process?.credit.liquidate.total_credit"
+              />
+            </div>
+            <div class="form-group col-md-4">
+              <label>Saldo crédito</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                [value]="process?.credit.payment | currency"
+              />
+            </div>
+            <div class="form-group col-md-4">
+              <label>Fecha de inicio</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                [value]="process?.credit.start_date | date: 'yyyy-MM-dd'"
+              />
+            </div>
+          </div>
+          <!-- fin de detalles del credito -->
+
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>Juzgado</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                [value]="process?.court"
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <label>Abogado</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                [value]="
+                  process?.lawyer.document_number + ' ' + process?.lawyer.name
+                "
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label>Valor Demanda</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                [value]="process?.demand_value | currency"
+              />
+            </div>
+            <div class="form-group col-md-4">
+              <label>Valor Honorarios</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                [value]="process?.fees_value | currency"
+              />
+            </div>
+            <div class="form-group col-md-4">
+              <label>Saldo</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                [value]="process?.payment | currency"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-4" *ngIf="process">
+  <div class="col-12 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <div>
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="">Depósitos realizados</h6>
+            <button
+              type="button"
+              class="btn btn-outline-primary btn-sm"
+              (click)="openModalDeposit()"
+              *ngIf="process.status === 'A'"
+            >
+              Nuevo depósito
+            </button>
+          </div>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Tipo</th>
+              <th>Valor</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let item of incomes
+                  | paginate
+                    : {
+                        itemsPerPage: max,
+                        currentPage: pageIncomes,
+                        totalItems: totalIncomes,
+                        id: 'incomes'
+                      }
+              "
+            >
+              <td>
+                <span class="badge pl-0 font-weight-bold font-badge">{{
+                  item.code
+                }}</span>
+              </td>
+              <td>
+                <span [ngClass]="getClassBadge(item.origin)">{{
+                  item.origin | formatTypeTransaction
+                }}</span>
+              </td>
+              <td>{{ item.value | currency }}</td>
+              <td>{{ item.created_at | date: "yyyy-MM-dd" }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="text-center mt-3">
+          <pagination-template
+            #pIncomes="paginationApi"
+            (pageChange)="onPageIncomesChange($event)"
+            id="incomes"
+          >
+            <div class="custom-pagination">
+              <div
+                class="pagination-previous"
+                [class.disabled]="pIncomes.isFirstPage()"
+              >
+                <span
+                  *ngIf="!pIncomes.isFirstPage()"
+                  (click)="pIncomes.previous()"
+                  ><i class="simple-icon-arrow-left"></i
+                ></span>
+              </div>
+              <div
+                class="page-number"
+                *ngFor="let page of pIncomes.pages"
+                [class.current]="pIncomes.getCurrent() === page.value"
+              >
+                <span
+                  (click)="pIncomes.setCurrent(page.value)"
+                  *ngIf="pIncomes.getCurrent() !== page.value"
+                  >{{ page.label }}</span
+                >
+                <div *ngIf="pIncomes.getCurrent() === page.value">
+                  <span>{{ page.label }}</span>
+                </div>
+              </div>
+              <div
+                class="pagination-next"
+                [class.disabled]="pIncomes.isLastPage()"
+              >
+                <span *ngIf="!pIncomes.isLastPage()" (click)="pIncomes.next()"
+                  ><i class="simple-icon-arrow-right"></i
+                ></span>
+              </div>
+            </div>
+          </pagination-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

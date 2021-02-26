@@ -15,6 +15,7 @@ export class RefinanceCreditComponent implements OnInit {
   @Input() credit : Credit;
   public refinanceCreditForm: FormGroup;
   public loading: boolean = false;
+  public filesToUpload: File[];
 
   constructor(public dialogRef: MatDialogRef<RefinanceCreditComponent>,
     private fb: FormBuilder,
@@ -29,12 +30,22 @@ export class RefinanceCreditComponent implements OnInit {
     this.refinanceCreditForm = this.fb.group({
       capital_value: [this.credit.capital_value, [Validators.required]],
       fee: [this.credit.fee, [Validators.required]],
-      transport_value: [this.credit.transport_value, [Validators.required]]
+      transport_value: [this.credit.transport_value, [Validators.required]],
+      files: ['', [Validators.required]],
     });
   }
 
   getFormField(field: string): AbstractControl {
     return this.refinanceCreditForm.get(field);
+  }
+
+  onFileChange(event): void {
+    if (event.target.files && event.target.files.length) {
+      const files = event.target.files;
+      this.refinanceCreditForm.patchValue({file: files});
+      this.filesToUpload = files;
+      console.log(this.filesToUpload);
+    }
   }
 
   refinanceCredit(): void {
@@ -44,7 +55,7 @@ export class RefinanceCreditComponent implements OnInit {
         credit_id : this.credit.id,
         ...this.refinanceCreditForm.value
       }
-      this.creditsService.refinanceCredit(refinance)
+      this.creditsService.refinanceCredit(refinance, this.filesToUpload)
       .subscribe((resp : any) => {
         this.loading = false;
         console.log(resp);
@@ -52,7 +63,7 @@ export class RefinanceCreditComponent implements OnInit {
         this.dialogRef.close('YES');
       }, err => {
         this.loading = false;
-        SwalTool.onError('Error', err.message);
+        SwalTool.onError('Error', err.error.message);
       });
     }
   }

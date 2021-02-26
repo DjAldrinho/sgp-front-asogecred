@@ -16,7 +16,7 @@ export class TransactionsService {
   }
 
   // tslint:disable-next-line:variable-name
-  getTransactions(page?: number, per_page?: number, account_id?: number, idCredit?: number, origin?: string): Observable<{ transactions: Transaction[], total: number }> {
+  getTransactions(page?: number, per_page?: number, account_id?: number, idCredit?: number, origin?: string, idProcess?: number): Observable<{ transactions: Transaction[], total: number }> {
 
     if (page == null) {
       page = 1;
@@ -40,7 +40,12 @@ export class TransactionsService {
       origins = `&origin=${origin}`;
     }
 
-    const url = `${base_url}/transactions/all?page=${page}&per_page=${per_page}${account}${credit}${origins}`;
+    let processUrl = "";
+    if(idProcess != null){
+      processUrl = `&process=${idProcess}`;
+    }
+
+    const url = `${base_url}/transactions/all?page=${page}&per_page=${per_page}${account}${credit}${origins}${processUrl}`;
     return this.http.get(url)
       .pipe(
         map((resp: any) => {

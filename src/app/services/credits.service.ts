@@ -1,13 +1,13 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {environment} from 'src/environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { AddCreditCommentaryForm } from '../interfaces/add-credit-commentary-form-interface';
 import { DepositForm } from '../interfaces/deposit-form.interface';
 import { NewCreditForm } from '../interfaces/new-credit-form.interface';
 import { RefinanceCreditForm } from '../interfaces/refinance-credit-form.interface';
-import {Credit, Liquidate} from '../models/credit.model';
+import { Credit, Liquidate } from '../models/credit.model';
 import { BaseService } from './base.service';
 import { UserService } from './user.service';
 
@@ -25,8 +25,7 @@ export class CreditsService {
     private userService: UserService) {
   }
 
-  // tslint:disable-next-line:variable-name
-  getCredits(page?: number, per_page?: number): Observable<{ credits: Credit[], total: number }> {
+  getCredits(page?: number, per_page?: number, adviser_id?: number, all: boolean = false, debtor_id?: number, status?: string): Observable<{ credits: Credit[], total: number }> {
 
     if (page == null) {
       page = 1;
@@ -35,28 +34,46 @@ export class CreditsService {
       per_page = 10;
     }
 
-    const url = `${base_url}/credits/all?page=${page}&per_page=${per_page}`;
+    let urlAdviser = "";
+
+    if (adviser_id != null) {
+      urlAdviser = `&adviser=${adviser_id}`
+    }
+
+    let debtorUrl = "";
+
+    if (debtor_id != null) {
+      debtorUrl = `&client=${debtor_id}`
+    }
+
+    let statusUrl = "";
+
+    if (status != null) {
+      statusUrl = `&status=${status}`
+    }
+
+    const url = all ? `${base_url}/credits/all?${urlAdviser}${debtorUrl}${statusUrl}` : `${base_url}/credits/all?page=${page}&per_page=${per_page}${urlAdviser}${debtorUrl}${statusUrl}`;
     return this.http.get(url)
       .pipe(
         map((resp: any) => {
           const credits: Credit[] = resp.credits.data;
           const total: number = resp.credits.total;
-          return {credits, total};
+          return { credits, total };
         })
       );
   }
 
-  getCreditById(id: number) : Observable<Credit> {
+  getCreditById(id: number): Observable<Credit> {
     return this.http.get(`${base_url}/credits/info/${id}`)
-    .pipe(
-      map((resp: any) => {
-        const credit: Credit = resp.credit;
-        return credit;
-      }),
-    );
+      .pipe(
+        map((resp: any) => {
+          const credit: Credit = resp.credit;
+          return credit;
+        }),
+      );
   }
 
-  getLiquidate(capital_value: number,interest: number, fee:number, start_date: string, other_value?:number, transport_value?:number): Observable<Liquidate> {
+  getLiquidate(capital_value: number, interest: number, fee: number, start_date: string, other_value?: number, transport_value?: number): Observable<Liquidate> {
     const body = {
       interest,
       "other_value": other_value == null ? 0 : other_value,
@@ -82,28 +99,42 @@ export class CreditsService {
     return this.http.patch(`${base_url}/credits/cancel/${idCredit}`, {});
   }
 
-  approveCredit(idCredit: number, commentary : string, file: File): Observable<any> {
+  approveCredit(idCredit: number, commentary: string, files: File[]): Observable<any> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.userService.token}`,
       'Content-Type': 'multipart/form-data'
     });
     const formData: FormData = new FormData();
-    formData.append('files', file);
+    for (let x = 0; x < files.length; x++) {
+      formData.append(`files[${x}]`, files[x]);
+    }
     formData.append('credit_id', `${idCredit}`);
     formData.append('commentary', commentary);
-    return this.http.post(`${base_url}/credits/approve`, formData, {headers});
+    return this.http.post(`${base_url}/credits/approve`, formData, { headers });
   }
 
   depositCredit(deposit: DepositForm): Observable<any> {
     return this.http.post(`${base_url}/credits/deposit`, deposit);
   }
 
-  addCommentary(commentary: AddCreditCommentaryForm): Observable<any>{
+  addCommentary(commentary: AddCreditCommentaryForm): Observable<any> {
     return this.http.post(`${base_url}/credits/add-commentary`, commentary);
   }
 
-  refinanceCredit(refinance: RefinanceCreditForm): Observable<any>{
-    return this.http.post(`${base_url}/credits/refinance`, refinance);
+  refinanceCredit(refinance: RefinanceCreditForm, files: File[]): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.userService.token}`,
+      'Content-Type': 'multipart/form-data'
+    });
+    const formData: FormData = new FormData();
+    for (let x = 0; x < files.length; x++) {
+      formData.append(`files[${x}]`, files[x]);
+    }
+    formData.append('credit_id', `${refinance.credit_id}`);
+    formData.append('capital_value', `${refinance.capital_value}`);
+    formData.append('fee', `${refinance.fee}`);
+    formData.append('transport_value', `${refinance.transport_value}`);
+    return this.http.post(`${base_url}/credits/refinance`, formData, { headers });
   }
 
 }

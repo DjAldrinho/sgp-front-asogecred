@@ -39,6 +39,11 @@ import { ModalApproveCreditComponent } from './credits/modal-approve-credit/moda
 import { DepositCreditComponent } from './credits/deposit-credit/deposit-credit.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { RefinanceCreditComponent } from './credits/refinance-credit/refinance-credit.component';
+import { DetailAdviserComponent } from './advisers/detail-adviser/detail-adviser.component';
+import { ProcessesComponent } from './processes/processes.component';
+import { NewProcessComponent } from './processes/new-process/new-process.component';
+import { DetailProcessComponent } from './processes/detail-process/detail-process.component';
+import { DepositProcessComponent } from './processes/deposit-process/deposit-process.component';
 
 
 @NgModule({
@@ -72,6 +77,11 @@ import { RefinanceCreditComponent } from './credits/refinance-credit/refinance-c
     ModalApproveCreditComponent,
     DepositCreditComponent,
     RefinanceCreditComponent,
+    DetailAdviserComponent,
+    ProcessesComponent,
+    NewProcessComponent,
+    DetailProcessComponent,
+    DepositProcessComponent,
   ],
   imports: [
     CommonModule,
