@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 .table {
-  margin-bottom: 0px !important;
+  margin-bottom: 0 !important;
 }
 
 .pointer {
@@ -88,6 +88,26 @@ estilos de la paginacion
   border: 1px solid #00365a !important;
   cursor: not-allowed !important;
 }
+
 /**
 fin lestilos de la paginacion
+ */
+
+/**
+estilos font size icon card
+ */
+.title-sm {
+  font-size: 0.8rem !important;
+}
+
+.title-md {
+  font-size: 1.2rem !important;
+}
+
+.title-lg {
+  font-size: 1.6rem !important;
+}
+
+/**
+fin font size icons card
  */

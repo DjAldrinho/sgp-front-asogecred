@@ -1,0 +1,7 @@
+<div class="card">
+  <div class="card-body text-center">
+    <i [ngClass]="icon"></i>
+    <p class="card-text font-weight-semibold mb-0">{{title}}</p>
+    <p [ngClass]="getClass(value.toString())">{{ money ? '$' : '' }}{{ value }}</p>
+  </div>
+</div>

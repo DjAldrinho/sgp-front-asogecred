@@ -1,0 +1,43 @@
+<div class="card d-flex flex-row mb-4">
+  <div class=" d-flex flex-grow-1 min-width-zero" *ngIf="account !== null">
+    <div
+      class="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero">
+      <div class="w-100 lead">
+        <div class="d-flex flex-column flex-lg-row justify-content-between">
+          <p class="list-item-heading mb-1 title-lg py-2 d-flex flex-column">
+            <small class="text-small mb-2">Cuenta:</small>
+            {{name}}
+          </p>
+          <p class="list-item-heading mb-1 title-sm py-2 d-flex flex-column align-items-end">
+            <span [ngClass]="getClassBadge(status)">
+                 {{status | formatStatus}}
+            </span>
+            <span class="title-md mt-2">
+              {{accountNumber}}
+            </span>
+          </p>
+        </div>
+        <div class="d-flex flex-column flex-lg-row justify-content-between">
+          <p class="list-item-heading mb-1 title-lg py-2 d-flex flex-column">
+            <small class="text-small mb-2">Saldo actual:</small>
+            {{value | currency}}
+          </p>
+          <p class="list-item-heading mb-1 title-lg py-2 d-flex flex-column align-items-end">
+            <small class="text-small mb-2">Saldo anterior:</small>
+            {{oldValue | currency}}
+          </p>
+        </div>
+        <div class="d-flex flex-column mt-4 flex-lg-row justify-content-between">
+          <p class="mb-2 text-muted text-small d-flex flex-column">
+            <small class="text-small mb-2">Creada:</small>
+            <small class="title-sm">{{created | date: "yyyy-MM-dd"}}</small>
+          </p>
+          <p class="mb-2 text-muted text-small d-flex flex-column align-items-end">
+            <small class="text-small mb-2">Actualizada:</small>
+            <small class="title-sm">{{updated | date: "yyyy-MM-dd"}}</small>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
