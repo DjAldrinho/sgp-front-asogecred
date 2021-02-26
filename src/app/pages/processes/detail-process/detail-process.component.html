@@ -77,7 +77,7 @@
                 type="text"
                 class="form-control"
                 readonly
-                [value]="'$' + process?.credit.liquidate.total_credit"
+                [value]="process?.credit.liquidate.total_credit | currency"
               />
             </div>
             <div class="form-group col-md-4">

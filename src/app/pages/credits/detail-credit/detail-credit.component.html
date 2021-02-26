@@ -229,19 +229,19 @@
           <div class="form-group col-md-3">
             <label>Valor Total Crédito</label>
             <p class="detail-credit-info text-right badge-info">
-              ${{ credit?.liquidate?.total_credit }}
+              {{ credit?.liquidate?.total_credit  | currency }}
             </p>
           </div>
           <div class="form-group col-md-3">
             <label>Valor Total Intereses</label>
             <p class="detail-credit-info text-right badge-info">
-              ${{ credit?.liquidate?.total_interest }}
+              {{ credit?.liquidate?.total_interest | currency }}
             </p>
           </div>
           <div class="form-group col-md-3">
             <label>Valor Cuota</label>
             <p class="detail-credit-info text-right badge-info">
-              ${{ credit.liquidate.fees[0].fee_value }}
+              {{ credit.liquidate.fees[0].fee_value | currency }}
             </p>
           </div>
           <div class="form-group col-md-3">
@@ -597,27 +597,27 @@
                 <td></td>
                 <td></td>
                 <td>
-                  <strong>${{ credit.liquidate.total_credit }}</strong>
+                  <strong>{{ credit.liquidate.total_credit | currency }}</strong>
                 </td>
               </tr>
               <tr *ngFor="let item of credit.liquidate.fees">
                 <td>{{ item.number }}</td>
                 <td>{{ item.start_date }}</td>
-                <td>${{ item.fee_value }}</td>
-                <td>${{ item.capital_fee }}</td>
-                <td>${{ item.interest_value }}</td>
-                <td>${{ item.capital_balance }}</td>
+                <td>{{ item.fee_value | currency }}</td>
+                <td>{{ item.capital_fee | currency }}</td>
+                <td>{{ item.interest_value | currency }}</td>
+                <td>{{ item.capital_balance | currency }}</td>
               </tr>
               <tr>
                 <th colspan="2">TOTALES</th>
                 <td>
-                  <strong>${{ credit.liquidate.total_credit }}</strong>
+                  <strong>{{ credit.liquidate.total_credit | currency }}</strong>
                 </td>
                 <td>
-                  <strong>${{ credit.liquidate.total_capital }}</strong>
+                  <strong>{{ credit.liquidate.total_capital | currency }}</strong>
                 </td>
                 <td>
-                  <strong>${{ credit.liquidate.total_interest }}</strong>
+                  <strong>{{ credit.liquidate.total_interest | currency }}</strong>
                 </td>
                 <td></td>
               </tr>

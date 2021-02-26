@@ -344,27 +344,27 @@
                 <td></td>
                 <td></td>
                 <td>
-                  <strong>${{ liquidate.total_credit }}</strong>
+                  <strong>{{ liquidate.total_credit | currency }}</strong>
                 </td>
               </tr>
               <tr *ngFor="let item of liquidate.fees">
                 <td>{{ item.number }}</td>
                 <td>{{ item.start_date }}</td>
-                <td>${{ item.fee_value }}</td>
-                <td>${{ item.capital_fee }}</td>
-                <td>${{ item.interest_value }}</td>
-                <td>${{ item.capital_balance }}</td>
+                <td>{{ item.fee_value | currency }}</td>
+                <td>{{ item.capital_fee | currency }}</td>
+                <td>{{ item.interest_value | currency }}</td>
+                <td>{{ item.capital_balance | currency }}</td>
               </tr>
               <tr>
                 <th colspan="2">TOTALES</th>
                 <td>
-                  <strong>${{ liquidate.total_credit }}</strong>
+                  <strong>{{ liquidate.total_credit | currency }}</strong>
                 </td>
                 <td>
-                  <strong>${{ liquidate.total_capital }}</strong>
+                  <strong>{{ liquidate.total_capital | currency }}</strong>
                 </td>
                 <td>
-                  <strong>${{ liquidate.total_interest }}</strong>
+                  <strong>{{ liquidate.total_interest | currency }}</strong>
                 </td>
                 <td></td>
               </tr>

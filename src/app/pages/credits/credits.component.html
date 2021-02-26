@@ -89,7 +89,7 @@
               <td>{{ item.debtor?.document_number }}</td>
               <td>{{ item.debtor?.name | uppercase }}</td>
               <td>{{ item.first_co_debtor?.name | uppercase }}</td>
-              <td>${{ item.liquidate.total_credit }}</td>
+              <td>{{ item.liquidate.total_credit | currency }}</td>
               <td>{{ item.payment | currency }}</td>
               <td>{{ item.fee }}</td>
               <td class="text-center">
