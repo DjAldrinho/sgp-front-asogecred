@@ -1,0 +1,19 @@
+.table-box {
+  width: 100%;
+}
+
+.table-box > .card{
+  max-width: 100% !important;
+}
+
+@media (max-width: 757px) {
+  .table-box {
+    width: 100%;
+  }
+}
+
+@media (max-width: 575px) {
+  .table-box {
+    width: 100%;
+  }
+}

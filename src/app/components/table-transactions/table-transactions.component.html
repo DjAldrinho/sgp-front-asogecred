@@ -1,0 +1,81 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title d-flex flex-row justify-content-between align-items-center">
+      <span>{{title}}</span>
+      <span *ngIf="total" class="d-flex flex-column justify-content-end align-items-end">
+        <small class="text-small">Total:</small>
+        ${{total}}
+      </span>
+    </h5>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>No.</th>
+        <th>Tipo</th>
+        <th>Valor</th>
+        <th>Fecha</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of items |
+                        paginate: {
+                          id: idPg,
+                          itemsPerPage: max,
+                          currentPage: page,
+                          totalItems: totalPaginate
+                        }
+      ">
+        <td>
+          <span class="badge pl-0 font-weight-bold font-badge">{{ item.code }}</span>
+        </td>
+        <td>
+                <span [ngClass]="getClassBadge(item.origin)">
+                  {{item.origin | formatTypeTransaction}}
+                </span>
+        </td>
+        <td>{{ item.value | currency }}</td>
+        <td>{{ getDate(item) | date: "yyyy-MM-dd" }}</td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="text-center mt-3" *ngIf="pagination">
+      <pagination-template
+        [id]="idPg"
+        #p="paginationApi"
+        (pageChange)="onPageChange($event)"
+        maxSize="{{maxSize}}"
+      >
+        <div class="custom-pagination">
+          <div
+            class="pagination-previous"
+            [class.disabled]="p.isFirstPage()" (click)="p.previous()"
+          >
+                <span *ngIf="!p.isFirstPage()"
+                ><i class="simple-icon-arrow-left"></i
+                ></span>
+          </div>
+          <div
+            class="page-number"
+            *ngFor="let page of p.pages"
+            [class.current]="p.getCurrent() === page.value"
+            (click)="p.setCurrent(page.value)"
+          >
+                <span
+
+                  *ngIf="p.getCurrent() !== page.value"
+                >{{ page.label }}</span
+                >
+            <div *ngIf="p.getCurrent() === page.value">
+              <span>{{ page.label }}</span>
+            </div>
+          </div>
+          <div class="pagination-next" [class.disabled]="p.isLastPage()" (click)="p.next()">
+                <span *ngIf="!p.isLastPage()"
+                ><i class="simple-icon-arrow-right"></i
+                ></span>
+          </div>
+        </div>
+      </pagination-template>
+    </div>
+  </div>
+</div>
