@@ -1,12 +1,12 @@
 <div class="mb-2">
-  <h1>Créditos</h1>
+  <h1>Procesos</h1>
   <div class="top-right-button-container">
     <button
       type="button"
       class="btn btn-outline-primary btn-lg top-right-button mr-1"
-      [routerLink]="['/new-credit']"
+      [routerLink]="['/new-process']"
     >
-      Nuevo crédito
+      Nuevo proceso
     </button>
   </div>
 </div>
@@ -27,14 +27,14 @@
   <div class="collapse d-md-block" id="displayOptions">
     <div class="d-block d-md-inline-block">
       <!-- <div class="btn-group float-md-left mr-1 mb-1">
-            <button class="btn btn-outline-dark btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Order By
-            </button>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-            </div>
-        </div> -->
+              <button class="btn btn-outline-dark btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Order By
+              </button>
+              <div class="dropdown-menu">
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+              </div>
+          </div> -->
       <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
         <label>
           <input placeholder="Buscar..." />
@@ -55,22 +55,22 @@
           <thead>
             <tr>
               <th>No.</th>
-              <th>Tipo</th>
-              <th>Fecha Inicio</th>
               <th>Estado</th>
+              <th>Abogado</th>
+              <th>Crédito</th>
               <th>ID titular</th>
               <th>Titular</th>
               <th>Codeudor 1</th>
-              <th>Valor</th>
+              <th>Valor Demanda</th>
               <th>Saldo</th>
-              <th>Cuotas</th>
+              <th>Fecha Inicio</th>
               <th class="text-center">Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr
               *ngFor="
-                let item of credits
+                let item of processes
                   | paginate
                     : {
                         itemsPerPage: max,
@@ -80,18 +80,15 @@
               "
             >
               <td>{{ item.code }}</td>
-              <td>{{ item.credit_type.name | uppercase }}</td>
-              <td>{{ item.start_date | date: "yyyy-MM-dd" }}</td>
-              <td *ngIf="!item.refinanced">{{ item.status | formatStatus }}</td>
-              <td *ngIf="item.refinanced">
-                <span class="badge badge-info">REFINANCIADO</span>
-              </td>
-              <td>{{ item.debtor?.document_number }}</td>
-              <td>{{ item.debtor?.name | uppercase }}</td>
-              <td>{{ item.first_co_debtor?.name | uppercase }}</td>
-              <td>{{ item.liquidate.total_credit | currency }}</td>
+              <td>{{ item.status | formatStatus }}</td>
+              <td>{{ item.lawyer.name | uppercase }}</td>
+              <td>{{ item.credit.code }}</td>
+              <td>{{ item.credit.debtor?.document_number }}</td>
+              <td>{{ item.credit.debtor?.name | uppercase }}</td>
+              <td>{{ item.credit.first_co_debtor?.name | uppercase }}</td>
+              <td>{{ item.demand_value | currency }}</td>
               <td>{{ item.payment | currency }}</td>
-              <td>{{ item.fee }}</td>
+              <td>{{ item.credit.start_date | date: 'yyyy-MM-dd' }}</td>
               <td class="text-center">
                 <div class="btn-group" role="group" aria-label="Basic example">
                   <button
@@ -100,7 +97,7 @@
                     data-toggle="tooltip"
                     data-placement="top"
                     title="Ver"
-                    [routerLink]="['/detail-credit', item.id]"
+                    [routerLink]="['/detail-process', item.id]"
                   >
                     <i class="simple-icon-eye"></i>
                   </button>

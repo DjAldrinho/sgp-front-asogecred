@@ -1,0 +1,147 @@
+<div class="mb-2">
+  <h1 class="d-flex flex-row align-items-center">
+    <a
+      [routerLink]="'/advisers'"
+      class="flex flex-row align-items-center mr-4 p-0"
+    >
+      <i class="simple-icon-arrow-left align-middle title-md"></i>
+    </a>
+    <span>Detalles de asesor</span>
+  </h1>
+</div>
+
+<div class="separator mb-5"></div>
+
+<div class="row mb-4" *ngIf="adviser">
+  <div class="col-12 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="name">Nombre</label>
+            <input
+              id="name"
+              class="form-control"
+              readonly
+              [value]="adviser.name"
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="phone">Telefono</label>
+            <input
+              id="phone"
+              class="form-control"
+              readonly
+              [value]="adviser.phone"
+            />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="created_at">Fecha de creación</label>
+            <input
+              id="created_at"
+              class="form-control"
+              readonly
+              [value]="adviser.created_at | date: 'yyy-MM-dd'"
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="total_commissions">Total comisiones</label>
+            <input
+              id="total_commissions"
+              class="form-control"
+              readonly
+              [value]="'$' + adviser.total_commissions"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-4" *ngIf="adviser">
+  <div class="col-12 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="mb-4">Creditos</h5>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Fecha Inicio</th>
+              <th>Estado</th>
+              <th>Valor</th>
+              <th>% comisión</th>
+              <th>Comisión</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let item of credits
+                  | paginate
+                    : {
+                        itemsPerPage: max,
+                        currentPage: page,
+                        totalItems: total
+                      }
+              "
+            >
+              <td>{{ item.code }}</td>
+              <td>{{ item.start_date | date: "yyyy-MM-dd" }}</td>
+              <td *ngIf="!item.refinanced">{{ item.status | formatStatus }}</td>
+              <td *ngIf="item.refinanced">
+                <span class="badge badge-info">REFINANCIADO</span>
+              </td>
+              <td>${{ item.liquidate.total_credit }}</td>
+              <th>%{{ item.commission }}</th>
+              <td>{{ item.totals.total_commissions | currency }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="text-center mt-3">
+          <pagination-template
+            #p="paginationApi"
+            (pageChange)="onPageChange($event)"
+          >
+            <div class="custom-pagination">
+              <div
+                class="pagination-previous"
+                [class.disabled]="p.isFirstPage()"
+                (click)="p.previous()"
+              >
+                <span *ngIf="!p.isFirstPage()"
+                  ><i class="simple-icon-arrow-left"></i
+                ></span>
+              </div>
+              <div
+                class="page-number"
+                *ngFor="let page of p.pages"
+                [class.current]="p.getCurrent() === page.value"
+                (click)="p.setCurrent(page.value)"
+              >
+                <span *ngIf="p.getCurrent() !== page.value">{{
+                  page.label
+                }}</span>
+                <div *ngIf="p.getCurrent() === page.value">
+                  <span>{{ page.label }}</span>
+                </div>
+              </div>
+              <div
+                class="pagination-next"
+                [class.disabled]="p.isLastPage()"
+                (click)="p.next()"
+              >
+                <span *ngIf="!p.isLastPage()"
+                  ><i class="simple-icon-arrow-right"></i
+                ></span>
+              </div>
+            </div>
+          </pagination-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,247 @@
+<h1 class="d-flex flex-row align-items-center">
+  <a
+    [routerLink]="'/processes'"
+    class="flex flex-row align-items-center mr-4 p-0"
+  >
+    <i class="simple-icon-arrow-left align-middle title-md"></i>
+  </a>
+  <span>Nuevo proceso</span>
+</h1>
+
+<div class="separator mb-5"></div>
+
+<div class="row mb-4">
+  <div class="col-12 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="mb-4">Información Básica</h5>
+        <form
+          autocomplete="off"
+          (ngSubmit)="addNewProcess()"
+          [formGroup]="addNewProcessForm"
+        >
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="debtor_id">Titular</label>
+              <input
+                type="text"
+                class="form-control"
+                id="debtor_id"
+                placeholder="Nombre o documento del titular"
+                formControlName="debtor_id"
+                [matAutocomplete]="debtorComplete"
+              />
+              <mat-autocomplete
+                #debtorComplete="matAutocomplete"
+                [displayWith]="showDebtorCodebtors"
+                (optionSelected)="selectDebtor($event.option.value)"
+              >
+                <mat-option *ngFor="let debtor of debtors" [value]="debtor">
+                  {{ debtor.document_number }} {{ debtor.name | uppercase }}
+                </mat-option>
+              </mat-autocomplete>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="credit_id">Credito*</label>
+              <select
+                id="credit_id"
+                class="form-control"
+                formControlName="credit_id"
+              >
+                <option selected value="">Seleccione...</option>
+                <option [value]="item.id" *ngFor="let item of credits">
+                  {{ item.code }}
+                </option>
+              </select>
+              <small
+                *ngIf="
+                  getFormField('credit_id').errors?.required &&
+                  getFormField('credit_id').touched
+                "
+                class="form-text text-danger"
+                >El crédito es requerido</small
+              >
+            </div>
+          </div>
+
+          <!-- detalles del credito seleccionado -->
+          <div class="form-row" *ngIf="selectedCredit">
+            <div class="form-group col-md-6">
+              <label>Codeudor 1</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                [value]="
+                  selectedCredit?.first_co_debtor?.document_number +
+                  ' ' +
+                  selectedCredit?.first_co_debtor?.name
+                "
+              />
+            </div>
+            <div class="form-group col-md-6">
+                <label>Codeudor 2</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  readonly
+                  [value]="
+                    selectedCredit?.second_co_debtor?.document_number +
+                    ' ' +
+                    selectedCredit?.second_co_debtor?.name
+                  "
+                />
+              </div>
+          </div>
+          <div class="form-row" *ngIf="selectedCredit">
+            <div class="form-group col-md-4">
+              <label>Valor</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                [value]="'$' + selectedCredit?.liquidate.total_credit"
+              />
+            </div>
+            <div class="form-group col-md-4">
+              <label>Saldo</label>
+              <input
+                type="text"
+                class="form-control"
+                readonly
+                [value]="selectedCredit?.payment | currency"
+              />
+            </div>
+            <div class="form-group col-md-4">
+                <label>Fecha de inicio</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  readonly
+                  [value]="selectedCredit?.start_date | date: 'yyyy-MM-dd'"
+                />
+            </div>
+          </div>
+          <!-- fin de detalles del credito -->
+
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="court">Juzgado*</label>
+              <select
+                id="court"
+                class="form-control"
+                formControlName="court"
+              >
+                <option selected value="">Seleccione...</option>
+                <option value="POR DEFINIR">POR DEFINIR</option>
+                <option value="JUZGADO CUARTO">JUZGADO CUARTO</option>
+                <option value="JUZGADO DECIMO">JUZGADO DECIMO</option>
+                <option value="JUZGADO NOVENO">JUZGADO NOVENO</option>
+                <option value="JUZGADO OCTAVO">JUZGADO OCTAVO</option>
+                <option value="JUZGADO PRIMERO">JUZGADO PRIMERO</option>
+                <option value="JUZGADO QUINTO">JUZGADO QUINTO</option>
+                <option value="JUZGADO SEGUNDO">JUZGADO SEGUNDO</option>
+                <option value="JUZGADO SEPTIMO">JUZGADO SEPTIMO</option>
+                <option value="JUZGADO SEXTO">JUZGADO SEXTO</option>
+                <option value="JUZGADO SEXTO CIVIL MUNICIPA">JUZGADO SEXTO CIVIL MUNICIPAL</option>
+                <option value="JUZGADO TERCERO">JUZGADO TERCERO</option>
+              </select>
+              <small
+                *ngIf="
+                  getFormField('court').errors?.required &&
+                  getFormField('court').touched
+                "
+                class="form-text text-danger"
+                >El juzgado es requerido</small
+              >
+            </div>
+            <div class="form-group col-md-6">
+              <label for="lawyer_id">Abogado*</label>
+              <input
+                type="text"
+                class="form-control"
+                id="lawyer_id"
+                placeholder="Nombre o documento del abogado"
+                formControlName="lawyer_id"
+                [matAutocomplete]="lawyerComplete"
+              />
+              <mat-autocomplete
+                #lawyerComplete="matAutocomplete"
+                [displayWith]="showLawyers"
+                (optionSelected)="selectLawyer($event.option.value)"
+              >
+                <mat-option *ngFor="let lawyer of lawyers" [value]="lawyer">
+                  {{ lawyer.document_number }} {{ lawyer.name | uppercase }}
+                </mat-option>
+              </mat-autocomplete>
+              <small
+                *ngIf="
+                  getFormField('lawyer_id').errors?.required &&
+                  getFormField('lawyer_id').touched
+                "
+                class="form-text text-danger"
+                >El abogado es requerido</small
+              >
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="demand_value">Valor Demanda*</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="demand_value"
+                  formControlName="demand_value"
+                  mask="separator.2"
+                  thousandSeparator="."
+                />
+                <small
+                  *ngIf="
+                    getFormField('demand_value').errors?.required &&
+                    getFormField('demand_value').touched
+                  "
+                  class="form-text text-danger"
+                  >El valor de la demanda es requerida</small
+                >
+              </div>
+              <div class="form-group col-md-6">
+                <label for="fees_value">Valor Honorarios*</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="fees_value"
+                  formControlName="fees_value"
+                  mask="separator.2"
+                  thousandSeparator="."
+                />
+                <small
+                  *ngIf="
+                    getFormField('fees_value').errors?.required &&
+                    getFormField('fees_value').touched
+                  "
+                  class="form-text text-danger"
+                  >El valor de los honoraios son requeridos</small
+                >
+              </div>
+          </div>
+          <div class="form-row">
+            <button
+              type="submit"
+              class="btn btn-primary d-block mt-3 ml-1"
+              [disabled]="!addNewProcessForm.valid || loading"
+            >
+              Guardar
+            </button>
+            <button
+              type="button"
+              class="btn btn-light d-block mt-3 ml-1"
+              [routerLink]="['/processes']"
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

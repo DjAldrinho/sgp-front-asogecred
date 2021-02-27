@@ -10,6 +10,7 @@ import {SwalTool} from 'src/app/tools/swal.tool';
 import Swal from 'sweetalert2';
 import {DepositCreditComponent} from '../deposit-credit/deposit-credit.component';
 import {ModalApproveCreditComponent} from '../modal-approve-credit/modal-approve-credit.component';
+import {RefinanceCreditComponent} from '../refinance-credit/refinance-credit.component';
 
 @Component({
   selector: 'app-detail-credit',
@@ -47,7 +48,7 @@ export class DetailCreditComponent implements OnInit {
     this.totalIncomes = 0;
     this.pageExpenses = 1;
     this.totalExpenses = 0;
-    this.max = 10;
+    this.max = 5;
   }
 
   ngOnInit(): void {
@@ -97,7 +98,7 @@ export class DetailCreditComponent implements OnInit {
         this.getFormField('commentary').setValue(this.credit.commentary);
         this.getIncomes();
         this.getExpenses();
-      }, err => {
+      }, () => {
         this.loading = false;
         this.router.navigateByUrl(`/dashboard`);
       });
@@ -112,7 +113,7 @@ export class DetailCreditComponent implements OnInit {
       .subscribe(resp => {
         this.incomes = resp.transactions;
         this.totalIncomes = resp.total;
-      }, err => {
+      }, () => {
         SwalTool.onError('Error al cargar los ingresos del crédito');
       });
   }
@@ -130,13 +131,13 @@ export class DetailCreditComponent implements OnInit {
       .subscribe(resp => {
         this.expenses = resp.transactions;
         this.totalExpenses = resp.total;
-      }, err => {
+      }, () => {
         SwalTool.onError('Error al cargar los egresos del crédito');
       });
   }
 
   onPageExpensesChange(page): void {
-    this.getIncomes(page);
+    this.getExpenses(page);
   }
 
   getClassBadge(item: string): string {
@@ -159,8 +160,8 @@ export class DetailCreditComponent implements OnInit {
   }
 
   // tslint:disable-next-line:typedef
-  approveRejectCredit(type: 'A' | 'R') {
-    if (type == 'A') {
+  approveRejectCredit(type: 'A'|'R'): void{
+    if (type === 'A') {
       const dialogRef = this.dialog.open(ModalApproveCreditComponent, {width: '50%', panelClass: 'card'});
       dialogRef.componentInstance.credit = this.credit;
       dialogRef.afterClosed().subscribe(result => {
@@ -183,7 +184,7 @@ export class DetailCreditComponent implements OnInit {
               console.log(resp);
               this.getCredit(this.idCredit);
               SwalTool.onMessage('Credito rechazado', `El crédito fue rechazado correctamente`);
-            }, err => {
+            }, () => {
               SwalTool.onError('Error al rechazar el crédito');
             });
         }
@@ -192,8 +193,18 @@ export class DetailCreditComponent implements OnInit {
   }
 
   // tslint:disable-next-line:typedef
-  openModalDeposit() {
+  openModalDeposit(): void{
     const dialogRef = this.dialog.open(DepositCreditComponent, {width: '50%', panelClass: 'card'});
+    dialogRef.componentInstance.credit = this.credit;
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'YES') {
+        this.getCredit(this.idCredit);
+      }
+    });
+  }
+
+  openModalRefinanceCredit(): void{
+    const dialogRef = this.dialog.open(RefinanceCreditComponent, {width: '50%', panelClass: 'card'});
     dialogRef.componentInstance.credit = this.credit;
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'YES') {

@@ -19,6 +19,11 @@ import { UsersComponent } from './users/users.component';
 import {TransactionTypesComponent} from './transaction-types/transaction-types.component';
 import { DetailCreditComponent } from './credits/detail-credit/detail-credit.component';
 import {ClientDetailComponent} from './clients/client-detail/client-detail.component';
+import { DetailAdviserComponent } from './advisers/detail-adviser/detail-adviser.component';
+import { ProcessesComponent } from './processes/processes.component';
+import { NewProcessComponent } from './processes/new-process/new-process.component';
+import { DetailProcessComponent } from './processes/detail-process/detail-process.component';
+import { DetailLawyerComponent } from './lawyers/detail-lawyer/detail-lawyer.component';
 
 const routes: Routes = [
   {
@@ -30,20 +35,27 @@ const routes: Routes = [
       {path: '', component: DashboardComponent},
       {path: 'persons', component: PersonsComponent},
       {path: 'lawyers', component: LawyersComponent},
+      {path: 'detail-lawyer/:id', component: DetailLawyerComponent},
       {path: 'profile', component: ProfileComponent},
       {path: 'clients', component: ClientsComponent},
       {path: 'accounts', component: AccountsComponent},
       {path: 'suppliers', component: SuppliersComponent},
       {path: 'detail-account/:id', component: ChangeAccountComponent},
+      {path: 'suppliers', component: SuppliersComponent},
       {path: 'users', component: UsersComponent},
       {path: 'credits', component: CreditsComponent},
       {path: 'new-credit', component: NewCreditComponent},
+      {path: 'detail-credit/:id', component: DetailCreditComponent},
       {path: 'payrolls', component: PayrollsComponent},
       {path: 'credit-types', component: CreditTypesComponent},
       {path: 'advisers', component: AdvisersComponent},
+      {path: 'detail-adviser/:id', component: DetailAdviserComponent},
       {path: 'transaction-types', component: TransactionTypesComponent},
       {path: 'detail-credit/:id', component: DetailCreditComponent},
       {path: 'client-detail/:id', component: ClientDetailComponent},
+      {path: 'processes', component: ProcessesComponent},
+      {path: 'new-process', component: NewProcessComponent},
+      {path: 'detail-process/:id', component: DetailProcessComponent},
     ],
   },
 ];

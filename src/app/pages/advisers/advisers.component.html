@@ -28,7 +28,7 @@
     <div class="d-block d-md-inline-block">
       <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
         <label>
-          <input placeholder="Buscar..."/>
+          <input placeholder="Buscar..." />
         </label>
       </div>
     </div>
@@ -44,16 +44,17 @@
       <div class="card-body">
         <table class="table">
           <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Teléfono</th>
-            <th>Estado</th>
-            <th class="text-center">Acciones</th>
-          </tr>
+            <tr>
+              <th>Nombre</th>
+              <th>Teléfono</th>
+              <th>Comisiones</th>
+              <th>Estado</th>
+              <th class="text-center">Acciones</th>
+            </tr>
           </thead>
           <tbody>
-          <tr
-            *ngFor="
+            <tr
+              *ngFor="
                 let adviser of advisers
                   | paginate
                     : {
@@ -62,45 +63,50 @@
                         totalItems: total
                       }
               "
-          >
-            <td>{{ adviser.name }}</td>
-            <td>{{ adviser.phone }}</td>
-            <td><span [ngClass]="getClassBadge(adviser.status)">{{ adviser.status | formatStatus }}</span></td>
-            <td class="text-center">
-              <div class="btn-group" role="group" aria-label="Basic example">
-                <button
-                  type="button"
-                  class="btn btn-info"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title="Ver"
-                  (click)="openModal('S', adviser)"
-                >
-                  <i class="simple-icon-eye"></i>
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title="Editar"
-                  (click)="openModal('E', adviser)"
-                >
-                  <i class="simple-icon-pencil"></i>
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-danger"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title="Eliminar"
-                  (click)="deleteAdviser(adviser)"
-                >
-                  <i class="simple-icon-trash"></i>
-                </button>
-              </div>
-            </td>
-          </tr>
+            >
+              <td>{{ adviser.name }}</td>
+              <td>{{ adviser.phone }}</td>
+              <td>${{adviser.total_commissions}}</td>
+              <td>
+                <span [ngClass]="getClassBadge(adviser.status)">{{
+                  adviser.status | formatStatus
+                }}</span>
+              </td>
+              <td class="text-center">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                  <button
+                    type="button"
+                    class="btn btn-info"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Ver"
+                    [routerLink]="['/detail-adviser', adviser.id]"
+                  >
+                    <i class="simple-icon-eye"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Editar"
+                    (click)="openModal('E', adviser)"
+                  >
+                    <i class="simple-icon-pencil"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Eliminar"
+                    (click)="deleteAdviser(adviser)"
+                  >
+                    <i class="simple-icon-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
         <div class="text-center mt-3">
@@ -112,28 +118,32 @@
               <div
                 class="pagination-previous"
                 [class.disabled]="p.isFirstPage()"
+                (click)="p.previous()"
               >
-                <span *ngIf="!p.isFirstPage()" (click)="p.previous()"
-                ><i class="simple-icon-arrow-left"></i
+                <span *ngIf="!p.isFirstPage()"
+                  ><i class="simple-icon-arrow-left"></i
                 ></span>
               </div>
               <div
                 class="page-number"
                 *ngFor="let page of p.pages"
                 [class.current]="p.getCurrent() === page.value"
+                (click)="p.setCurrent(page.value)"
               >
-                <span
-                  (click)="p.setCurrent(page.value)"
-                  *ngIf="p.getCurrent() !== page.value"
-                >{{ page.label }}</span
-                >
+                <span *ngIf="p.getCurrent() !== page.value">{{
+                  page.label
+                }}</span>
                 <div *ngIf="p.getCurrent() === page.value">
                   <span>{{ page.label }}</span>
                 </div>
               </div>
-              <div class="pagination-next" [class.disabled]="p.isLastPage()">
-                <span *ngIf="!p.isLastPage()" (click)="p.next()"
-                ><i class="simple-icon-arrow-right"></i
+              <div
+                class="pagination-next"
+                [class.disabled]="p.isLastPage()"
+                (click)="p.next()"
+              >
+                <span *ngIf="!p.isLastPage()"
+                  ><i class="simple-icon-arrow-right"></i
                 ></span>
               </div>
             </div>

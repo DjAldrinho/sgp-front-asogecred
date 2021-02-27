@@ -1,0 +1,112 @@
+<div class="col-12">
+    <div>
+      <div>
+        <h5 class="mb-4">Nuevo abono</h5>
+        <form
+          autocomplete="off"
+          (ngSubmit)="refinanceCredit()"
+          [formGroup]="refinanceCreditForm"
+        >
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="capital_value">Valor capital*</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="capital_value"
+                id="capital_value"
+                mask="separator.2"
+                thousandSeparator="."
+              />
+              <small
+                *ngIf="
+                  getFormField('capital_value').errors?.required &&
+                  getFormField('capital_value').touched
+                "
+                class="form-text text-danger"
+                >El valor capital es requerido</small
+              >
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="fee">Meses Plazo*</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="fee"
+                id="fee"
+              />
+              <small
+                *ngIf="
+                  getFormField('fee').errors?.required &&
+                  getFormField('fee').touched
+                "
+                class="form-text text-danger"
+                >El numero de cuotas es requerido</small
+              >
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="transport_value">Valor transporte*</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="transport_value"
+                id="transport_value"
+                mask="separator.2"
+                thousandSeparator="."
+              />
+              <small
+                *ngIf="
+                  getFormField('transport_value').errors?.required &&
+                  getFormField('transport_value').touched
+                "
+                class="form-text text-danger"
+                >El valor del transporte es requerido</small
+              >
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="files">Archivos*</label>
+              <input
+                type="file"
+                class="form-control"
+                id="files"
+                formControlName="files"
+                multiple
+                (change)="onFileChange($event)"
+              />
+              <small
+                *ngIf="
+                  getFormField('files').errors?.required &&
+                  getFormField('files').touched
+                "
+                class="form-text text-danger"
+                >El archivo es requerido</small
+              >
+            </div>
+          </div>
+          <div class="form-row">
+            <button
+              type="submit"
+              class="btn btn-primary d-block mt-3"
+              [disabled]="!refinanceCreditForm.valid || loading"
+            >
+              Refinanciar
+            </button>
+            <button
+              type="button"
+              (click)="dialogRef.close()"
+              class="btn btn-light d-block mt-3 ml-1"
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

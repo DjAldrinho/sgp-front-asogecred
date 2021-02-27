@@ -5,12 +5,15 @@
 <div class="separator mb-5"></div>
 
 <!-- aprobar rechazar credito -->
-<div class="row mb-4" *ngIf="credit && credit.status === 'P'">
+<div
+  class="row mb-4"
+  *ngIf="credit && (credit.status === 'P' || credit.status === 'A')"
+>
   <div class="col-12 mb-4">
     <div class="card">
       <div class="card-body">
         <h5 class="mb-3">Acciones del credito</h5>
-        <div class="form-row">
+        <div class="form-row" *ngIf="credit.status === 'P'">
           <button
             type="submit"
             class="btn btn-primary d-block ml-1"
@@ -24,6 +27,15 @@
             (click)="approveRejectCredit('R')"
           >
             Rechazar
+          </button>
+        </div>
+        <div class="form-row" *ngIf="credit.status === 'A'">
+          <button
+            type="submit"
+            class="btn btn-primary d-block ml-1"
+            (click)="openModalRefinanceCredit()"
+          >
+            Refinanciar
           </button>
         </div>
       </div>
@@ -98,7 +110,7 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-4">
-              <label for="second_co_debtor">Codudor 2</label>
+              <label for="second_co_debtor">Codeudor 2</label>
               <input
                 type="text"
                 class="form-control"
@@ -209,24 +221,27 @@
           <span class="badge badge-info">{{
             credit.status | formatStatus
           }}</span>
+          <span class="badge badge-info m-1" *ngIf="credit.refinanced"
+            >REFINANCIADO</span
+          >
         </h5>
         <div class="form-row">
           <div class="form-group col-md-3">
             <label>Valor Total Crédito</label>
             <p class="detail-credit-info text-right badge-info">
-              ${{ credit?.liquidate?.total_credit }}
+              {{ credit?.liquidate?.total_credit  | currency }}
             </p>
           </div>
           <div class="form-group col-md-3">
             <label>Valor Total Intereses</label>
             <p class="detail-credit-info text-right badge-info">
-              ${{ credit?.liquidate?.total_interest }}
+              {{ credit?.liquidate?.total_interest | currency }}
             </p>
           </div>
           <div class="form-group col-md-3">
             <label>Valor Cuota</label>
             <p class="detail-credit-info text-right badge-info">
-              ${{ credit.liquidate.fees[0].fee_value }}
+              {{ credit.liquidate.fees[0].fee_value | currency }}
             </p>
           </div>
           <div class="form-group col-md-3">
@@ -289,7 +304,8 @@
                               : {
                                   itemsPerPage: max,
                                   currentPage: pageExpenses,
-                                  totalItems: totalExpenses
+                                  totalItems: totalExpenses,
+                                  id: 'expenses'
                                 }
                         "
                       >
@@ -311,37 +327,44 @@
                   </table>
                   <div class="text-center mt-3">
                     <pagination-template
-                      #p="paginationApi"
+                      #pExpenses="paginationApi"
                       (pageChange)="onPageExpensesChange($event)"
+                      id="expenses"
                     >
                       <div class="custom-pagination">
                         <div
                           class="pagination-previous"
-                          [class.disabled]="p.isFirstPage()"
+                          [class.disabled]="pExpenses.isFirstPage()"
                         >
-                          <span *ngIf="!p.isFirstPage()" (click)="p.previous()"
+                          <span
+                            *ngIf="!pExpenses.isFirstPage()"
+                            (click)="pExpenses.previous()"
                             ><i class="simple-icon-arrow-left"></i
                           ></span>
                         </div>
                         <div
                           class="page-number"
-                          *ngFor="let page of p.pages"
-                          [class.current]="p.getCurrent() === page.value"
+                          *ngFor="let page of pExpenses.pages"
+                          [class.current]="
+                            pExpenses.getCurrent() === page.value
+                          "
                         >
                           <span
-                            (click)="p.setCurrent(page.value)"
-                            *ngIf="p.getCurrent() !== page.value"
+                            (click)="pExpenses.setCurrent(page.value)"
+                            *ngIf="pExpenses.getCurrent() !== page.value"
                             >{{ page.label }}</span
                           >
-                          <div *ngIf="p.getCurrent() === page.value">
+                          <div *ngIf="pExpenses.getCurrent() === page.value">
                             <span>{{ page.label }}</span>
                           </div>
                         </div>
                         <div
                           class="pagination-next"
-                          [class.disabled]="p.isLastPage()"
+                          [class.disabled]="pExpenses.isLastPage()"
                         >
-                          <span *ngIf="!p.isLastPage()" (click)="p.next()"
+                          <span
+                            *ngIf="!pExpenses.isLastPage()"
+                            (click)="pExpenses.next()"
                             ><i class="simple-icon-arrow-right"></i
                           ></span>
                         </div>
@@ -391,7 +414,8 @@
                               : {
                                   itemsPerPage: max,
                                   currentPage: pageIncomes,
-                                  totalItems: totalIncomes
+                                  totalItems: totalIncomes,
+                                  id: 'incomes'
                                 }
                         "
                       >
@@ -413,37 +437,42 @@
                   </table>
                   <div class="text-center mt-3">
                     <pagination-template
-                      #p="paginationApi"
+                      #pIncomes="paginationApi"
                       (pageChange)="onPageIncomesChange($event)"
+                      id="incomes"
                     >
                       <div class="custom-pagination">
                         <div
                           class="pagination-previous"
-                          [class.disabled]="p.isFirstPage()"
+                          [class.disabled]="pIncomes.isFirstPage()"
                         >
-                          <span *ngIf="!p.isFirstPage()" (click)="p.previous()"
+                          <span
+                            *ngIf="!pIncomes.isFirstPage()"
+                            (click)="pIncomes.previous()"
                             ><i class="simple-icon-arrow-left"></i
                           ></span>
                         </div>
                         <div
                           class="page-number"
-                          *ngFor="let page of p.pages"
-                          [class.current]="p.getCurrent() === page.value"
+                          *ngFor="let page of pIncomes.pages"
+                          [class.current]="pIncomes.getCurrent() === page.value"
                         >
                           <span
-                            (click)="p.setCurrent(page.value)"
-                            *ngIf="p.getCurrent() !== page.value"
+                            (click)="pIncomes.setCurrent(page.value)"
+                            *ngIf="pIncomes.getCurrent() !== page.value"
                             >{{ page.label }}</span
                           >
-                          <div *ngIf="p.getCurrent() === page.value">
+                          <div *ngIf="pIncomes.getCurrent() === page.value">
                             <span>{{ page.label }}</span>
                           </div>
                         </div>
                         <div
                           class="pagination-next"
-                          [class.disabled]="p.isLastPage()"
+                          [class.disabled]="pIncomes.isLastPage()"
                         >
-                          <span *ngIf="!p.isLastPage()" (click)="p.next()"
+                          <span
+                            *ngIf="!pIncomes.isLastPage()"
+                            (click)="pIncomes.next()"
                             ><i class="simple-icon-arrow-right"></i
                           ></span>
                         </div>
@@ -472,13 +501,32 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>Descripción</th>
               <th>Nombre archivo</th>
               <th>Fecha anexado</th>
-              <th>Acciones</th>
+              <th class="text-center">Acciones</th>
             </tr>
           </thead>
-          <tbody></tbody>
+          <tbody>
+            <tr *ngFor="let item of credit.documents">
+              <td>{{ item.document_file_url }}</td>
+              <td>{{ item.created_at | date: "yyyy-MM-dd" }}</td>
+              <td class="text-center">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                  <a
+                    type="button"
+                    class="btn btn-info"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Ver"
+                    [href]="item.document_file_url"
+                    target="_blank"
+                  >
+                    <i class="simple-icon-eye"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
@@ -549,27 +597,27 @@
                 <td></td>
                 <td></td>
                 <td>
-                  <strong>${{ credit.liquidate.total_credit }}</strong>
+                  <strong>{{ credit.liquidate.total_credit | currency }}</strong>
                 </td>
               </tr>
               <tr *ngFor="let item of credit.liquidate.fees">
                 <td>{{ item.number }}</td>
                 <td>{{ item.start_date }}</td>
-                <td>${{ item.fee_value }}</td>
-                <td>${{ item.capital_fee }}</td>
-                <td>${{ item.interest_value }}</td>
-                <td>${{ item.capital_balance }}</td>
+                <td>{{ item.fee_value | currency }}</td>
+                <td>{{ item.capital_fee | currency }}</td>
+                <td>{{ item.interest_value | currency }}</td>
+                <td>{{ item.capital_balance | currency }}</td>
               </tr>
               <tr>
                 <th colspan="2">TOTALES</th>
                 <td>
-                  <strong>${{ credit.liquidate.total_credit }}</strong>
+                  <strong>{{ credit.liquidate.total_credit | currency }}</strong>
                 </td>
                 <td>
-                  <strong>${{ credit.liquidate.total_capital }}</strong>
+                  <strong>{{ credit.liquidate.total_capital | currency }}</strong>
                 </td>
                 <td>
-                  <strong>${{ credit.liquidate.total_interest }}</strong>
+                  <strong>{{ credit.liquidate.total_interest | currency }}</strong>
                 </td>
                 <td></td>
               </tr>

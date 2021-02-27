@@ -4,6 +4,10 @@ import {Observable} from 'rxjs';
 import {Adviser} from '../models/adviser.model';
 import {AdviserInterface} from '../interfaces/adviser.interface';
 import {map} from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+
+const base_url = environment.base_url;
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +15,7 @@ import {map} from 'rxjs/operators';
 export class AdvisersService {
   private section = 'advisers';
 
-  constructor(private baseService: BaseService) {
+  constructor(private baseService: BaseService, private http: HttpClient) {
   }
 
   // tslint:disable-next-line:variable-name
@@ -24,6 +28,16 @@ export class AdvisersService {
           return {advisers, total};
         })
       );
+  }
+
+  getAdviserById(id: number) : Observable<Adviser> {
+    return this.http.get(`${base_url}/advisers/info/${id}`)
+    .pipe(
+      map((resp: any) => {
+        const adviser: Adviser = resp.adviser;
+        return adviser;
+      }),
+    );
   }
 
   createAdviser({name, phone}: AdviserInterface): Observable<any> {

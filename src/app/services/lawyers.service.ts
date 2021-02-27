@@ -16,8 +16,7 @@ export class LawyersService {
   constructor(private http: HttpClient, private userService: UserService) {
   }
 
-  // tslint:disable-next-line:variable-name
-  getLawyers(page?: number, per_page?: number): Observable<{ lawyers: Lawyer[], total: number }> {
+  getLawyers(page?: number, per_page?: number, query?: string, all: boolean = false): Observable<{ lawyers: Lawyer[], total: number }> {
     if (page == null) {
       page = 1;
     }
@@ -25,7 +24,13 @@ export class LawyersService {
       per_page = 10;
     }
 
-    const url = `${base_url}/lawyers/all?page=${page}&per_page=${per_page}`;
+    let search = ""
+
+    if(query != null){
+      search = `&search=${query}`
+    }
+
+    const url = all ? `${base_url}/lawyers/all?${search}` : `${base_url}/lawyers/all?page=${page}&per_page=${per_page}${search}`;
     return this.http.get(url)
       .pipe(
         map((resp: any) => {
@@ -33,6 +38,16 @@ export class LawyersService {
           const total: number = resp.lawyers.total;
           return {lawyers, total};
         })
+      );
+  }
+
+  getLawyerById(id: number): Observable<Lawyer> {
+    return this.http.get(`${base_url}/lawyers/info/${id}`)
+      .pipe(
+        map((resp: any) => {
+          const lawyer: Lawyer = resp.lawyer;
+          return lawyer;
+        }),
       );
   }
 

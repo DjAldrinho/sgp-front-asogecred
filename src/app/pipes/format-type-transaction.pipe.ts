@@ -14,7 +14,7 @@ export class FormatTypeTransactionPipe implements PipeTransform {
         formatedType = 'CRÉDITO';
         break;
       case 'deposit':
-        formatedType = 'DEPOSITO';
+        formatedType = 'DEPÓSITO';
         break;
       case 'retire':
         formatedType = 'RETIRO';
@@ -24,7 +24,10 @@ export class FormatTypeTransactionPipe implements PipeTransform {
         break;
       case 'credit_payment':
         formatedType = 'ABONO';
-          break;
+        break;
+      case 'process_payment':
+        formatedType = 'DEPÓSITO PROCESO';
+        break;
       default:
         formatedType = 'NO TIPO';
         break;
