@@ -16,21 +16,21 @@ export class LawyersService {
   constructor(private http: HttpClient, private userService: UserService) {
   }
 
-  getLawyers(page?: number, per_page?: number, query?: string, all: boolean = false): Observable<{ lawyers: Lawyer[], total: number }> {
+  getLawyers(page?: number, perPage?: number, query?: string, all: boolean = false): Observable<{ lawyers: Lawyer[], total: number }> {
     if (page == null) {
       page = 1;
     }
-    if (per_page == null) {
-      per_page = 10;
+    if (perPage == null) {
+      perPage = 10;
     }
 
-    let search = ""
+    let search = '';
 
-    if(query != null){
-      search = `&search=${query}`
+    if (query != null) {
+      search = `&search=${query}`;
     }
 
-    const url = all ? `${base_url}/lawyers/all?${search}` : `${base_url}/lawyers/all?page=${page}&per_page=${per_page}${search}`;
+    const url = all ? `${base_url}/lawyers/all?${search}` : `${base_url}/lawyers/all?page=${page}&per_page=${perPage}${search}`;
     return this.http.get(url)
       .pipe(
         map((resp: any) => {

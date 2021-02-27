@@ -1,0 +1,127 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title d-flex flex-row justify-content-between align-items-center">
+      <span>{{title}}</span>
+      <span *ngIf="totalPaginate" class="d-flex flex-column justify-content-end align-items-end">
+        <small class="text-small">Total de procesos:</small>
+        {{totalPaginate}}
+      </span>
+    </h5>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>No.</th>
+        <th>Estado</th>
+        <th>Abogado</th>
+        <th>Crédito</th>
+        <th>ID titular</th>
+        <th>Titular</th>
+        <th>Codeudor 1</th>
+        <th>Valor Demanda</th>
+        <th>Saldo</th>
+        <th>Fecha Inicio</th>
+        <th class="text-center">Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr
+        *ngFor="let item of items |
+                      paginate: {
+                        id: idPg,
+                        itemsPerPage: max,
+                        currentPage: page,
+                        totalItems: totalPaginate
+                      }
+      ">
+        <td>
+          <span class="badge pl-0 font-weight-bold font-badge">{{ item.code }}</span>
+        </td>
+        <td>
+          <span [ngClass]="getClassBadge(item.status)">{{ item.status | formatStatus }}</span>
+        </td>
+        <td class="font-badge font-weight-bold">
+          <a [routerLink]="['/detail-lawyer', item.lawyer.id]">
+            {{ item.lawyer.name | uppercase }}
+          </a>
+        </td>
+        <td>
+          <a [routerLink]="['/detail-credit', item.credit.id]">
+            <span class="badge badge-secondary">{{ item.credit.code }}</span>
+          </a>
+        </td>
+        <td>
+              <span class="badge font-badge">
+                {{ item.credit.debtor?.document_number }}
+              </span>
+        </td>
+        <td class="font-badge font-weight-bold">
+          <a [routerLink]="['/client-detail', item.credit.debtor?.id]">
+            {{ item.credit.debtor?.name | uppercase }}
+          </a>
+        </td>
+        <td class="font-badge font-weight-bold">
+          <a [routerLink]="['/client-detail', item.credit.first_co_debtor?.id]">
+            {{ item.credit.first_co_debtor?.name | uppercase }}
+          </a>
+        </td>
+        <td>{{ item.demand_value | currency }}</td>
+        <td>{{ item.payment | currency }}</td>
+        <td class="font-badge-lg text-nowrap">{{ item.credit.start_date | date: 'yyyy-MM-dd' }}</td>
+        <td class="text-center">
+          <div class="btn-group m-0 p-0" role="group" aria-label="Basic example">
+            <button
+              type="button"
+              class="btn btn-info px-3 py-1"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="Ver"
+              [routerLink]="['/detail-process', item.id]"
+            >
+              <i class="simple-icon-eye m-0 p-0"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="text-center mt-3" *ngIf="pagination">
+      <pagination-template
+        [id]="idPg"
+        #p="paginationApi"
+        (pageChange)="onPageChange($event)"
+        maxSize="{{maxSize}}"
+      >
+        <div class="custom-pagination">
+          <div
+            class="pagination-previous"
+            [class.disabled]="p.isFirstPage()" (click)="p.previous()"
+          >
+                <span *ngIf="!p.isFirstPage()"
+                ><i class="simple-icon-arrow-left"></i
+                ></span>
+          </div>
+          <div
+            class="page-number"
+            *ngFor="let page of p.pages"
+            [class.current]="p.getCurrent() === page.value"
+            (click)="p.setCurrent(page.value)"
+          >
+                <span
+
+                  *ngIf="p.getCurrent() !== page.value"
+                >{{ page.label }}</span
+                >
+            <div *ngIf="p.getCurrent() === page.value">
+              <span>{{ page.label }}</span>
+            </div>
+          </div>
+          <div class="pagination-next" [class.disabled]="p.isLastPage()" (click)="p.next()">
+                <span *ngIf="!p.isLastPage()"
+                ><i class="simple-icon-arrow-right"></i
+                ></span>
+          </div>
+        </div>
+      </pagination-template>
+    </div>
+  </div>
+</div>

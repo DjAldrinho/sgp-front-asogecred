@@ -42,6 +42,10 @@
             <small class="title-sm">{{updated | date: "yyyy-MM-dd"}}</small>
           </p>
         </div>
+        <div class="mt-4 d-flex flex-column" *ngIf="sign">
+          <small class="text-muted text-small mb-2">Firma:</small>
+          <img [src]="sign" class="card-img img-thumbnail w-25 h-25"/>
+        </div>
       </div>
     </div>
   </div>

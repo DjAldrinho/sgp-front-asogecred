@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { TypeModal } from 'src/app/enums/modals.enum';
-import { User } from 'src/app/models/user.model';
-import { UsersService } from 'src/app/services/users.service';
-import { SwalTool } from 'src/app/tools/swal.tool';
-import { AddEditUserComponent } from './add-edit-user/add-edit-user.component';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {TypeModal} from 'src/app/enums/modals.enum';
+import {User} from 'src/app/models/user.model';
+import {UsersService} from 'src/app/services/users.service';
+import {SwalTool} from 'src/app/tools/swal.tool';
+import {AddEditUserComponent} from './add-edit-user/add-edit-user.component';
 
 @Component({
   selector: 'app-users',
@@ -20,7 +20,7 @@ export class UsersComponent implements OnInit {
   public max: number;
 
   constructor(private usersService: UsersService,
-    private dialog: MatDialog,) { 
+              private dialog: MatDialog,) {
     this.page = 1;
     this.total = 0;
     this.max = 10;
@@ -74,6 +74,10 @@ export class UsersComponent implements OnInit {
         this.getUsers(this.page);
       }
     });
+  }
+
+  getClassBadge(item: boolean): string {
+    return item ? 'badge badge-warning' : 'badge badge-primary';
   }
 
 }

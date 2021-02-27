@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Client } from 'src/app/models/client.model';
-import { Credit } from 'src/app/models/credit.model';
-import { Lawyer } from 'src/app/models/lawyer.model';
-import { ClientsService } from 'src/app/services/clients.service';
-import { CreditsService } from 'src/app/services/credits.service';
-import { LawyersService } from 'src/app/services/lawyers.service';
-import { ProcessesService } from 'src/app/services/processes.service';
-import { SwalTool } from 'src/app/tools/swal.tool';
+import {Component, OnInit} from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {Client} from 'src/app/models/client.model';
+import {Credit} from 'src/app/models/credit.model';
+import {Lawyer} from 'src/app/models/lawyer.model';
+import {ClientsService} from 'src/app/services/clients.service';
+import {CreditsService} from 'src/app/services/credits.service';
+import {LawyersService} from 'src/app/services/lawyers.service';
+import {ProcessesService} from 'src/app/services/processes.service';
+import {SwalTool} from 'src/app/tools/swal.tool';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -19,18 +19,19 @@ import Swal from 'sweetalert2';
 export class NewProcessComponent implements OnInit {
 
   public addNewProcessForm: FormGroup;
-  public loading: boolean = false;
+  public loading = false;
   public debtors: Client[] = [];
   public credits: Credit[] = [];
   public selectedCredit: Credit;
   public lawyers: Lawyer[] = [];
 
   constructor(private processesService: ProcessesService,
-    private fb: FormBuilder,
-    private router: Router,
-    private clientsService: ClientsService,
-    private creditsService: CreditsService,
-    private lawyersService: LawyersService) { }
+              private fb: FormBuilder,
+              private router: Router,
+              private clientsService: ClientsService,
+              private creditsService: CreditsService,
+              private lawyersService: LawyersService) {
+  }
 
   ngOnInit(): void {
     this.initForm();
@@ -47,13 +48,13 @@ export class NewProcessComponent implements OnInit {
     });
 
     this.getFormField('debtor_id').valueChanges.subscribe(value => {
-      if(!this.getFormField('debtor_id').errors?.required){
+      if (!this.getFormField('debtor_id').errors?.required) {
         this.getDebtors(value);
       }
     });
 
     this.getFormField('lawyer_id').valueChanges.subscribe(value => {
-      if(!this.getFormField('lawyer_id').errors?.required){
+      if (!this.getFormField('lawyer_id').errors?.required) {
         this.getLawyers(value);
       }
     });
@@ -69,11 +70,11 @@ export class NewProcessComponent implements OnInit {
   }
 
   showDebtorCodebtors(debtor: Client): string | Client {
-    return debtor ? `${debtor.document_number} ${debtor.name}`.toUpperCase()  : debtor;
+    return debtor ? `${debtor.document_number} ${debtor.name}`.toUpperCase() : debtor;
   }
 
   showLawyers(lawyer: Lawyer): string | Lawyer {
-    return lawyer ? `${lawyer.document_number} ${lawyer.name}`.toUpperCase()  : lawyer;
+    return lawyer ? `${lawyer.document_number} ${lawyer.name}`.toUpperCase() : lawyer;
   }
 
   selectDebtor(debtor: Client): void {
@@ -86,44 +87,46 @@ export class NewProcessComponent implements OnInit {
 
   getDebtors(query: string): void {
     this.clientsService.getClients(1, 20, query, true)
-    .subscribe((data) => {
-      this.debtors = data.clients; 
-    }, err => {
-      Swal.fire('Error', 'Error buscando clientes', 'error');
-    });
+      .subscribe((data) => {
+        this.debtors = data.clients;
+      }, () => {
+        Swal.fire('Error', 'Error buscando clientes', 'error');
+      });
   }
 
   getLawyers(query: string): void {
     this.lawyersService.getLawyers(1, 20, query, true)
-    .subscribe((data) => {
-      this.lawyers = data.lawyers; 
-    }, err => {
-      Swal.fire('Error', 'Error buscando abogados', 'error');
-    });
+      .subscribe((data) => {
+        this.lawyers = data.lawyers;
+      }, () => {
+        Swal.fire('Error', 'Error buscando abogados', 'error');
+      });
   }
 
-  getCreditsByDebtor(debtor_id: number): void{
+  getCreditsByDebtor(debtorId: number): void {
     this.getFormField('credit_id').disable();
     this.credits = [];
-    this.creditsService.getCredits(0,0, null, true, debtor_id, 'A')
-    .subscribe((data) => {
-      this.getFormField('credit_id').enable();
-      this.credits = data.credits; 
-      console.log({data});
-    }, err => {
-      this.credits = [];
-      Swal.fire('Error', 'Error cargando los creditos del cliente', 'error');
-    });
+    this.creditsService.getCredits(0, 0, null, debtorId, null, null, null, true, 'A')
+      .subscribe((data) => {
+        this.getFormField('credit_id').enable();
+        this.credits = data.credits;
+      }, () => {
+        this.credits = [];
+        Swal.fire('Error', 'Error cargando los creditos del cliente', 'error');
+      });
   }
 
   addNewProcess(): void {
-    if(this.addNewProcessForm.valid){
+    if (this.addNewProcessForm.valid) {
       this.loading = true;
-      console.log(this.addNewProcessForm.value);
+      // tslint:disable-next-line:variable-name
       const lawyer_id = this.getFormField('lawyer_id').value;
+      // tslint:disable-next-line:variable-name
       const credit_id = this.getFormField('credit_id').value;
       const court = this.getFormField('court').value;
+      // tslint:disable-next-line:variable-name
       const demand_value = this.getFormField('demand_value').value;
+      // tslint:disable-next-line:variable-name
       const fees_value = this.getFormField('fees_value').value;
 
       const process = {
@@ -132,18 +135,17 @@ export class NewProcessComponent implements OnInit {
         court,
         demand_value,
         fees_value
-      }
+      };
 
       this.processesService.createProcess(process)
-      .subscribe((data) => {
-        this.loading = false;
-        this.router.navigateByUrl(`/processes`);
-        SwalTool.onMessage('Proceso creado', `El proceso fue creado correctamente`);
-      }, err => {
-        console.log(err);
-        this.loading = false;
-        Swal.fire('Error', err.error.message, 'error');
-      });
+        .subscribe(() => {
+          this.loading = false;
+          this.router.navigateByUrl(`/processes`);
+          SwalTool.onMessage('Proceso creado', `El proceso fue creado correctamente`);
+        }, err => {
+          this.loading = false;
+          Swal.fire('Error', err.error.message, 'error');
+        });
     }
   }
 

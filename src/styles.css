@@ -111,3 +111,11 @@ estilos font size icon card
 /**
 fin font size icons card
  */
+
+.font-badge {
+  font-size: 82% !important;
+}
+
+.font-badge-lg {
+  font-size: 92% !important;
+}

@@ -17,6 +17,7 @@ export class CardClientDetailComponent implements OnInit, OnChanges {
   public email = '';
   public phone = '';
   public position = 'Cargo';
+  public sign = '';
   public salary: string | number = 0;
   public created: Date | string;
   public updated: Date | string;
@@ -30,7 +31,6 @@ export class CardClientDetailComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.client !== undefined) {
-      console.log('llego la info', this.client);
       this.name = this.client.name;
       this.documentType = this.client.document_type;
       this.documentNumber = this.client.document_number;
@@ -41,10 +41,18 @@ export class CardClientDetailComponent implements OnInit, OnChanges {
       this.status = this.client.status;
       this.created = this.client.created_at ? this.client.created_at : '';
       this.updated = this.client.updated_at ? this.client.updated_at : '';
+      this.sign = this.verifySign(this.client.sign);
       if (this.client.client_type !== null) {
         this.clientTypes = JSON.parse(this.client.client_type);
       }
     }
+  }
+
+  verifySign(sign: string): string {
+    if (sign.search('placeholder.com')) {
+      return this.client.sign;
+    }
+    return sign;
   }
 
   getClassBadge(item: string): string {

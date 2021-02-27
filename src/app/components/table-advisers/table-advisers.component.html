@@ -1,17 +1,9 @@
 <div class="card">
   <div class="card-body">
     <h5 class="card-title d-flex flex-row justify-content-between align-items-center">
-      <span *ngIf="!total || !totalPaginate">{{title}}</span>
-      <span *ngIf="total && totalPaginate" class="d-flex flex-column justify-content-end align-items-start">
-        <span>{{title}}</span>
-        <small class="text-small">Total de transacciones: {{totalPaginate}}</small>
-      </span>
-      <span *ngIf="total" class="d-flex flex-column justify-content-end align-items-end">
-        <small class="text-small">Valor total:</small>
-        ${{total}}
-      </span>
-      <span *ngIf="!total && totalPaginate" class="d-flex flex-column justify-content-end align-items-end">
-        <small class="text-small">Total de transacciones:</small>
+      <span>{{title}}</span>
+      <span *ngIf="totalPaginate" class="d-flex flex-column justify-content-end align-items-end">
+        <small class="text-small">Total de créditos:</small>
         {{totalPaginate}}
       </span>
     </h5>
@@ -19,30 +11,41 @@
       <thead>
       <tr>
         <th>No.</th>
-        <th>Tipo</th>
-        <th>Valor</th>
-        <th>Fecha</th>
+        <th>Fecha Inicio</th>
+        <th>Estado</th>
+        <th class="text-right">Valor</th>
+        <th class="text-right">% comisión</th>
+        <th class="text-right">Comisión</th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let item of items |
-                        paginate: {
-                          id: idPg,
-                          itemsPerPage: max,
-                          currentPage: page,
-                          totalItems: totalPaginate
-                        }
-      ">
+      <tr
+        *ngFor="
+                let item of credits
+                  | paginate
+                    : {
+                        id: idPg,
+                        itemsPerPage: max,
+                        currentPage: page,
+                        totalItems: totalPaginate
+                      }
+              "
+      >
         <td>
-          <span class="badge pl-0 font-weight-bold font-badge">{{ item.code }}</span>
+          <a [routerLink]="['/detail-credit', item.id]">
+            <span class="badge badge-secondary">{{ item.code }}</span>
+          </a>
         </td>
-        <td>
-                <span [ngClass]="getClassBadge(item.origin)">
-                  {{item.origin | formatTypeTransaction}}
-                </span>
+        <td>{{ item.start_date | date: "yyyy-MM-dd" }}</td>
+        <td *ngIf="!item.refinanced">
+          <span [ngClass]="getClassBadge(item.status)">{{ item.status | formatStatus }}</span>
         </td>
-        <td>{{ item.value | currency }}</td>
-        <td>{{ getDate(item) | date: "yyyy-MM-dd" }}</td>
+        <td *ngIf="item.refinanced">
+          <span class="badge badge-info">REFINANCIADO</span>
+        </td>
+        <td class="text-right">{{ item.liquidate.total_credit | currency }}</td>
+        <th class="text-right">%{{ item.commission }}</th>
+        <td class="text-right">{{ item.totals.total_commissions | currency }}</td>
       </tr>
       </tbody>
     </table>
@@ -51,7 +54,6 @@
         [id]="idPg"
         #p="paginationApi"
         (pageChange)="onPageChange($event)"
-        maxSize="{{maxSize}}"
       >
         <div class="custom-pagination">
           <div

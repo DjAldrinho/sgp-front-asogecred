@@ -151,6 +151,22 @@ export class DetailCreditComponent implements OnInit {
         classBadge = 'badge badge-danger';
         break;
       }
+      case 'credit_payment': {
+        classBadge = 'badge badge-success';
+        break;
+      }
+      case 'commission': {
+        classBadge = 'badge badge-danger';
+        break;
+      }
+      case 'process_payment': {
+        classBadge = 'badge badge-success';
+        break;
+      }
+      case 'credit': {
+        classBadge = 'badge badge-primary';
+        break;
+      }
       default: {
         classBadge = 'badge badge-primary';
         break;
@@ -160,7 +176,7 @@ export class DetailCreditComponent implements OnInit {
   }
 
   // tslint:disable-next-line:typedef
-  approveRejectCredit(type: 'A'|'R'): void{
+  approveRejectCredit(type: 'A' | 'R'): void {
     if (type === 'A') {
       const dialogRef = this.dialog.open(ModalApproveCreditComponent, {width: '50%', panelClass: 'card'});
       dialogRef.componentInstance.credit = this.credit;
@@ -193,7 +209,7 @@ export class DetailCreditComponent implements OnInit {
   }
 
   // tslint:disable-next-line:typedef
-  openModalDeposit(): void{
+  openModalDeposit(): void {
     const dialogRef = this.dialog.open(DepositCreditComponent, {width: '50%', panelClass: 'card'});
     dialogRef.componentInstance.credit = this.credit;
     dialogRef.afterClosed().subscribe(result => {
@@ -203,7 +219,7 @@ export class DetailCreditComponent implements OnInit {
     });
   }
 
-  openModalRefinanceCredit(): void{
+  openModalRefinanceCredit(): void {
     const dialogRef = this.dialog.open(RefinanceCreditComponent, {width: '50%', panelClass: 'card'});
     dialogRef.componentInstance.credit = this.credit;
     dialogRef.afterClosed().subscribe(result => {
@@ -211,6 +227,42 @@ export class DetailCreditComponent implements OnInit {
         this.getCredit(this.idCredit);
       }
     });
+  }
+
+  // tslint:disable-next-line:adjacent-overload-signatures
+  getClassBadgeState(item: string): string {
+    let classBadge: string;
+    switch (item) {
+      case 'P': {
+        classBadge = 'badge badge-warning';
+        break;
+      }
+      case 'A': {
+        classBadge = 'badge badge-success';
+        break;
+      }
+      case 'F': {
+        classBadge = 'badge badge-secondary';
+        break;
+      }
+      case 'I': {
+        classBadge = 'badge badge-danger';
+        break;
+      }
+      case 'C': {
+        classBadge = 'badge badge-danger';
+        break;
+      }
+      default: {
+        classBadge = 'badge badge-primary';
+        break;
+      }
+    }
+    return classBadge;
+  }
+
+  getDocument(url: string): boolean {
+    return !!(url.search('.jpg') || url.search('.png'));
   }
 
 }

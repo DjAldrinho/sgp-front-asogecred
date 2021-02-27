@@ -46,4 +46,35 @@ export class CreditsComponent implements OnInit {
     this.getCredits(page);
   }
 
+  getClassBadge(item: string): string {
+    let classBadge: string;
+    switch (item) {
+      case 'P': {
+        classBadge = 'badge badge-warning';
+        break;
+      }
+      case 'A': {
+        classBadge = 'badge badge-success';
+        break;
+      }
+      case 'F': {
+        classBadge = 'badge badge-secondary';
+        break;
+      }
+      case 'I': {
+        classBadge = 'badge badge-danger';
+        break;
+      }
+      case 'C': {
+        classBadge = 'badge badge-danger';
+        break;
+      }
+      default: {
+        classBadge = 'badge badge-primary';
+        break;
+      }
+    }
+    return classBadge;
+  }
+
 }

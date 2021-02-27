@@ -4,8 +4,8 @@ import {Observable} from 'rxjs';
 import {Adviser} from '../models/adviser.model';
 import {AdviserInterface} from '../interfaces/adviser.interface';
 import {map} from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import {environment} from 'src/environments/environment';
+import {HttpClient} from '@angular/common/http';
 
 const base_url = environment.base_url;
 
@@ -30,14 +30,14 @@ export class AdvisersService {
       );
   }
 
-  getAdviserById(id: number) : Observable<Adviser> {
+  getAdviserById(id: number): Observable<Adviser> {
     return this.http.get(`${base_url}/advisers/info/${id}`)
-    .pipe(
-      map((resp: any) => {
-        const adviser: Adviser = resp.adviser;
-        return adviser;
-      }),
-    );
+      .pipe(
+        map((resp: any) => {
+          const adviser: Adviser = resp.adviser;
+          return adviser;
+        }),
+      );
   }
 
   createAdviser({name, phone}: AdviserInterface): Observable<any> {

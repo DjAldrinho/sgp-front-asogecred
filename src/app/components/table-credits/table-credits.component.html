@@ -1,6 +1,12 @@
 <div class="card">
   <div class="card-body">
-    <h5 class="card-title">{{title}}</h5>
+    <h5 class="card-title d-flex flex-row justify-content-between align-items-center">
+      <span>{{title}}</span>
+      <span *ngIf="totalPaginate" class="d-flex flex-column justify-content-end align-items-end">
+        <small class="text-small">Total de créditos:</small>
+        {{totalPaginate}}
+      </span>
+    </h5>
     <table class="table">
       <thead>
       <tr>

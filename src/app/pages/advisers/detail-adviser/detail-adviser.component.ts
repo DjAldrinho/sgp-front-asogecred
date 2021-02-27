@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Adviser } from 'src/app/models/adviser.model';
-import { Credit } from 'src/app/models/credit.model';
-import { AdvisersService } from 'src/app/services/advisers.service';
-import { CreditsService } from 'src/app/services/credits.service';
-import { SwalTool } from 'src/app/tools/swal.tool';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Adviser} from 'src/app/models/adviser.model';
+import {Credit} from 'src/app/models/credit.model';
+import {AdvisersService} from 'src/app/services/advisers.service';
+import {CreditsService} from 'src/app/services/credits.service';
+import {SwalTool} from 'src/app/tools/swal.tool';
 
 @Component({
   selector: 'app-detail-adviser',
@@ -20,14 +20,14 @@ export class DetailAdviserComponent implements OnInit {
   public max: number;
   public credits: Credit[] = [];
 
-  constructor( private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private advisersService: AdvisersService,
-    private creditsService: CreditsService) {
-      this.page = 1;
-      this.total = 0;
-      this.max = 10;
-    }
+  constructor(private router: Router,
+              private activatedRoute: ActivatedRoute,
+              private advisersService: AdvisersService,
+              private creditsService: CreditsService) {
+    this.page = 1;
+    this.total = 0;
+    this.max = 10;
+  }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(({id}) => {
@@ -38,13 +38,13 @@ export class DetailAdviserComponent implements OnInit {
 
   getAdviser(id: number): void {
     this.advisersService.getAdviserById(id)
-    .subscribe(resp => {
-      this.adviser = resp;
-      console.log(this.adviser);
-      this.getCredits();
-    }, err => {
-      this.router.navigateByUrl(`/dashboard`)
-    });
+      .subscribe(resp => {
+        this.adviser = resp;
+        console.log(this.adviser);
+        this.getCredits();
+      }, () => {
+        this.router.navigateByUrl(`/dashboard`);
+      });
   }
 
   getCredits(page?: number, query?: string): void {
@@ -53,13 +53,12 @@ export class DetailAdviserComponent implements OnInit {
       this.page = 1;
     }
     this.creditsService.getCredits(this.page, this.max, this.idAdviser)
-    .subscribe(resp => {
-      this.credits = resp.credits;
-      this.total = resp.total;
-      console.log(this.credits);
-    }, err => {
-      SwalTool.onError('Error al cargar los créditos');
-    });
+      .subscribe(resp => {
+        this.credits = resp.credits;
+        this.total = resp.total;
+      }, () => {
+        SwalTool.onError('Error al cargar los créditos');
+      });
   }
 
 

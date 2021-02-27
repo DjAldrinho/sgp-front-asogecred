@@ -1,15 +1,15 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
-import { AddCreditCommentaryForm } from '../interfaces/add-credit-commentary-form-interface';
-import { DepositForm } from '../interfaces/deposit-form.interface';
-import { NewCreditForm } from '../interfaces/new-credit-form.interface';
-import { RefinanceCreditForm } from '../interfaces/refinance-credit-form.interface';
-import { Credit, Liquidate } from '../models/credit.model';
-import { BaseService } from './base.service';
-import { UserService } from './user.service';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {environment} from 'src/environments/environment';
+import {AddCreditCommentaryForm} from '../interfaces/add-credit-commentary-form-interface';
+import {DepositForm} from '../interfaces/deposit-form.interface';
+import {NewCreditForm} from '../interfaces/new-credit-form.interface';
+import {RefinanceCreditForm} from '../interfaces/refinance-credit-form.interface';
+import {Credit, Liquidate} from '../models/credit.model';
+import {BaseService} from './base.service';
+import {UserService} from './user.service';
 
 const base_url = environment.base_url;
 
@@ -21,20 +21,21 @@ export class CreditsService {
   private section = 'credits';
 
   constructor(private http: HttpClient,
-    private baseService: BaseService,
-    private userService: UserService) {
+              private baseService: BaseService,
+              private userService: UserService) {
   }
 
   // tslint:disable-next-line:variable-name
-  getCredits(page?: number, per_page?: number,
+  getCredits(page?: number, perPage?: number,
              accountId?: number, clientId?: number,
-             firstCoDebtorId?: number, secondCoDebtorId?: number): Observable<{ credits: Credit[], total: number }> {
+             firstCoDebtorId?: number, secondCoDebtorId?: number,
+             adviserId?: number, all: boolean = false, status?: string): Observable<{ credits: Credit[], total: number }> {
 
     if (page == null) {
       page = 1;
     }
-    if (per_page == null) {
-      per_page = 10;
+    if (perPage == null) {
+      perPage = 10;
     }
     let account = '';
     if (accountId != null) {
@@ -53,7 +54,20 @@ export class CreditsService {
       secondCoDebtor = `&second_co_debtor=${secondCoDebtorId}`;
     }
 
-    const url = `${base_url}/credits/all?page=${page}&per_page=${per_page}${account}${client}${firstCoDebtor}${secondCoDebtor}`;
+    let adviser = '';
+    if (adviserId != null) {
+      adviser = `&adviser=${adviserId}`;
+    }
+
+    let statusUrl = '';
+    if (status != null) {
+      statusUrl = `&status=${status}`;
+    }
+
+    const url = all
+      ? `${base_url}/credits/all?${account}${client}${firstCoDebtor}${secondCoDebtor}${adviser}${statusUrl}`
+      // tslint:disable-next-line:max-line-length
+      : `${base_url}/credits/all?page=${page}&per_page=${perPage}${account}${client}${firstCoDebtor}${secondCoDebtor}${adviser}${statusUrl}`;
     return this.http.get(url)
       .pipe(
         map((resp: any) => {
@@ -78,8 +92,8 @@ export class CreditsService {
   getLiquidate(capital_value: number, interest: number, fee: number, start_date: string, other_value?: number, transport_value?: number): Observable<Liquidate> {
     const body = {
       interest,
-      "other_value": other_value == null ? 0 : other_value,
-      "transport_value": transport_value == null ? 0 : transport_value,
+      'other_value': other_value == null ? 0 : other_value,
+      'transport_value': transport_value == null ? 0 : transport_value,
       capital_value,
       fee,
       start_date
@@ -112,7 +126,7 @@ export class CreditsService {
     }
     formData.append('credit_id', `${idCredit}`);
     formData.append('commentary', commentary);
-    return this.http.post(`${base_url}/credits/approve`, formData, { headers });
+    return this.http.post(`${base_url}/credits/approve`, formData, {headers});
   }
 
   depositCredit(deposit: DepositForm): Observable<any> {
@@ -137,7 +151,7 @@ export class CreditsService {
     formData.append('capital_value', `${refinance.capital_value}`);
     formData.append('fee', `${refinance.fee}`);
     formData.append('transport_value', `${refinance.transport_value}`);
-    return this.http.post(`${base_url}/credits/refinance`, formData, { headers });
+    return this.http.post(`${base_url}/credits/refinance`, formData, {headers});
   }
 
 }

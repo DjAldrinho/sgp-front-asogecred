@@ -19,7 +19,7 @@ export class ClientsService {
   }
 
   // tslint:disable-next-line:variable-name
-  getClients(page?: number, per_page?: number, query?: string): Observable<{ clients: Client[], total: number }> {
+  getClients(page?: number, per_page?: number, query?: string, all: boolean = false): Observable<{ clients: Client[], total: number }> {
 
     if (page == null) {
       page = 1;
@@ -33,8 +33,7 @@ export class ClientsService {
     if (query != null) {
       search = `&search=${query}`;
     }
-
-    const url = `${base_url}/clients/all?page=${page}&per_page=${per_page}${search}`;
+    const url = all ? `${base_url}/clients/all?${search}` : `${base_url}/clients/all?page=${page}&per_page=${per_page}${search}`;
     return this.http.get(url)
       .pipe(
         map((resp: any) => {

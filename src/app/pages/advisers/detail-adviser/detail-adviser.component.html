@@ -62,86 +62,11 @@
 </div>
 
 <div class="row mb-4" *ngIf="adviser">
-  <div class="col-12 mb-4">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="mb-4">Creditos</h5>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>No.</th>
-              <th>Fecha Inicio</th>
-              <th>Estado</th>
-              <th>Valor</th>
-              <th>% comisión</th>
-              <th>Comisión</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              *ngFor="
-                let item of credits
-                  | paginate
-                    : {
-                        itemsPerPage: max,
-                        currentPage: page,
-                        totalItems: total
-                      }
-              "
-            >
-              <td>{{ item.code }}</td>
-              <td>{{ item.start_date | date: "yyyy-MM-dd" }}</td>
-              <td *ngIf="!item.refinanced">{{ item.status | formatStatus }}</td>
-              <td *ngIf="item.refinanced">
-                <span class="badge badge-info">REFINANCIADO</span>
-              </td>
-              <td>${{ item.liquidate.total_credit }}</td>
-              <th>%{{ item.commission }}</th>
-              <td>{{ item.totals.total_commissions | currency }}</td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="text-center mt-3">
-          <pagination-template
-            #p="paginationApi"
-            (pageChange)="onPageChange($event)"
-          >
-            <div class="custom-pagination">
-              <div
-                class="pagination-previous"
-                [class.disabled]="p.isFirstPage()"
-                (click)="p.previous()"
-              >
-                <span *ngIf="!p.isFirstPage()"
-                  ><i class="simple-icon-arrow-left"></i
-                ></span>
-              </div>
-              <div
-                class="page-number"
-                *ngFor="let page of p.pages"
-                [class.current]="p.getCurrent() === page.value"
-                (click)="p.setCurrent(page.value)"
-              >
-                <span *ngIf="p.getCurrent() !== page.value">{{
-                  page.label
-                }}</span>
-                <div *ngIf="p.getCurrent() === page.value">
-                  <span>{{ page.label }}</span>
-                </div>
-              </div>
-              <div
-                class="pagination-next"
-                [class.disabled]="p.isLastPage()"
-                (click)="p.next()"
-              >
-                <span *ngIf="!p.isLastPage()"
-                  ><i class="simple-icon-arrow-right"></i
-                ></span>
-              </div>
-            </div>
-          </pagination-template>
-        </div>
-      </div>
-    </div>
-  </div>
+  <app-table-advisers
+    (creditAdviserChange)="getCredits($event)"
+    [ngClass]="'col-12 mb-4'"
+    [title]="'Creditos comisionados'" [credits]="credits"
+    [idPg]="'pg-advisers'"
+    [totalPaginate]="total"
+    [pagination]="true"></app-table-advisers>
 </div>

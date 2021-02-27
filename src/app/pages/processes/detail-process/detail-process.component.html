@@ -179,9 +179,9 @@
           <thead>
             <tr>
               <th>No.</th>
-              <th>Tipo</th>
-              <th>Valor</th>
-              <th>Fecha</th>
+              <th class="text-center">Tipo</th>
+              <th class="text-right">Valor</th>
+              <th class="text-right">Fecha</th>
             </tr>
           </thead>
           <tbody>
@@ -198,17 +198,17 @@
               "
             >
               <td>
-                <span class="badge pl-0 font-weight-bold font-badge">{{
-                  item.code
-                }}</span>
+                <span class="badge pl-0 font-weight-bold font-badge">
+                  {{item.code}}
+                </span>
               </td>
-              <td>
-                <span [ngClass]="getClassBadge(item.origin)">{{
-                  item.origin | formatTypeTransaction
-                }}</span>
+              <td class="text-center">
+                <span [ngClass]="getClassBadge(item.origin)">
+                  {{item.origin | formatTypeTransaction}}
+                </span>
               </td>
-              <td>{{ item.value | currency }}</td>
-              <td>{{ item.created_at | date: "yyyy-MM-dd" }}</td>
+              <td class="text-right">{{ item.value | currency }}</td>
+              <td class="text-right">{{ item.created_at | date: "yyyy-MM-dd" }}</td>
             </tr>
           </tbody>
         </table>

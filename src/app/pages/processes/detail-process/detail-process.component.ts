@@ -94,6 +94,22 @@ export class DetailProcessComponent implements OnInit {
         classBadge = 'badge badge-danger';
         break;
       }
+      case 'credit_payment': {
+        classBadge = 'badge badge-success';
+        break;
+      }
+      case 'commission': {
+        classBadge = 'badge badge-danger';
+        break;
+      }
+      case 'process_payment': {
+        classBadge = 'badge badge-success';
+        break;
+      }
+      case 'credit': {
+        classBadge = 'badge badge-primary';
+        break;
+      }
       default: {
         classBadge = 'badge badge-primary';
         break;

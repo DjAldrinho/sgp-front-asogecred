@@ -64,6 +64,14 @@ export class TableTransactionsComponent implements OnInit {
         classBadge = 'badge badge-danger';
         break;
       }
+      case 'process_payment': {
+        classBadge = 'badge badge-success';
+        break;
+      }
+      case 'credit': {
+        classBadge = 'badge badge-primary';
+        break;
+      }
       default: {
         classBadge = 'badge badge-primary';
         break;

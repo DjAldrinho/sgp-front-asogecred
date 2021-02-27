@@ -35,7 +35,7 @@
   <app-table-transactions
     (pageChange)="getDeposits($event)"
     [ngClass]="'col-xl-6 col-lg-12 mb-4'"
-    [title]="'Ultimos depositos'" [items]="deposits"
+    [title]="'Depositos'" [items]="deposits"
     [idPg]="'pg-deposits'" [total]="depositsTotal"
     [totalPaginate]="depositsPaginate"
     [pagination]="true"></app-table-transactions>
@@ -43,7 +43,7 @@
   <app-table-transactions
     (pageChange)="getRetires($event)"
     [ngClass]="'col-xl-6 col-lg-12 mb-4'"
-    [title]="'Ultimos retiros'" [items]="retires"
+    [title]="'Retiros'" [items]="retires"
     [idPg]="'pg-retires'" [total]="retiresTotal"
     [totalPaginate]="retiresPaginate"
     [pagination]="true"></app-table-transactions>

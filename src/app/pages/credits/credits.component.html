@@ -26,18 +26,9 @@
   </a>
   <div class="collapse d-md-block" id="displayOptions">
     <div class="d-block d-md-inline-block">
-      <!-- <div class="btn-group float-md-left mr-1 mb-1">
-            <button class="btn btn-outline-dark btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Order By
-            </button>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-            </div>
-        </div> -->
       <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
         <label>
-          <input placeholder="Buscar..." />
+          <input placeholder="Buscar..."/>
         </label>
       </div>
     </div>
@@ -51,25 +42,32 @@
   <div class="col-12 mb-4">
     <div class="card">
       <div class="card-body">
+        <h5 class="card-title d-flex flex-row justify-content-between align-items-center">
+          <span></span>
+          <span *ngIf="total" class="d-flex flex-column justify-content-end align-items-end">
+            <small class="text-small">Total de créditos:</small>
+            {{total}}
+          </span>
+        </h5>
         <table class="table">
           <thead>
-            <tr>
-              <th>No.</th>
-              <th>Tipo</th>
-              <th>Fecha Inicio</th>
-              <th>Estado</th>
-              <th>ID titular</th>
-              <th>Titular</th>
-              <th>Codeudor 1</th>
-              <th>Valor</th>
-              <th>Saldo</th>
-              <th>Cuotas</th>
-              <th class="text-center">Acciones</th>
-            </tr>
+          <tr>
+            <th>No.</th>
+            <th>Tipo</th>
+            <th>Fecha Inicio</th>
+            <th>Estado</th>
+            <th>ID titular</th>
+            <th>Titular</th>
+            <th>Codeudor 1</th>
+            <th>Valor</th>
+            <th>Saldo</th>
+            <th>Cuotas</th>
+            <th class="text-center">Acciones</th>
+          </tr>
           </thead>
           <tbody>
-            <tr
-              *ngFor="
+          <tr
+            *ngFor="
                 let item of credits
                   | paginate
                     : {
@@ -78,35 +76,51 @@
                         totalItems: total
                       }
               "
-            >
-              <td>{{ item.code }}</td>
-              <td>{{ item.credit_type.name | uppercase }}</td>
-              <td>{{ item.start_date | date: "yyyy-MM-dd" }}</td>
-              <td *ngIf="!item.refinanced">{{ item.status | formatStatus }}</td>
-              <td *ngIf="item.refinanced">
-                <span class="badge badge-info">REFINANCIADO</span>
-              </td>
-              <td>{{ item.debtor?.document_number }}</td>
-              <td>{{ item.debtor?.name | uppercase }}</td>
-              <td>{{ item.first_co_debtor?.name | uppercase }}</td>
-              <td>{{ item.liquidate.total_credit | currency }}</td>
-              <td>{{ item.payment | currency }}</td>
-              <td>{{ item.fee }}</td>
-              <td class="text-center">
-                <div class="btn-group" role="group" aria-label="Basic example">
-                  <button
-                    type="button"
-                    class="btn btn-info"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Ver"
-                    [routerLink]="['/detail-credit', item.id]"
-                  >
-                    <i class="simple-icon-eye"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
+          >
+            <td>
+              <span class="badge pl-0 font-weight-bold font-badge">{{ item.code }}</span>
+            </td>
+            <td class="text-center">
+              <span class="badge bg-light font-badge text-wrap">{{ item.credit_type.name | uppercase }}</span>
+            </td>
+            <td class="font-badge-lg text-nowrap">{{ item.start_date | date: "yyyy-MM-dd" }}</td>
+            <td *ngIf="!item.refinanced">
+              <span [ngClass]="getClassBadge(item.status)">{{ item.status | formatStatus }}</span>
+            </td>
+            <td *ngIf="item.refinanced">
+              <span class="badge badge-info">REFINANCIADO</span>
+            </td>
+            <td>
+              <span class="badge font-weight-bold font-badge-lg">{{ item.debtor?.document_number }}</span>
+            </td>
+            <td class="font-badge font-weight-bold">
+              <a [routerLink]="['/client-detail', item.debtor?.id]">
+                {{ item.debtor?.name | uppercase }}
+              </a>
+            </td>
+            <td class="font-badge font-weight-bold">
+              <a [routerLink]="['/client-detail', item.first_co_debtor?.id]">
+                {{ item.first_co_debtor?.name | uppercase }}
+              </a>
+            </td>
+            <td>{{ item.liquidate.total_credit | currency }}</td>
+            <td>{{ item.payment | currency }}</td>
+            <td>{{ item.fee }}</td>
+            <td class="text-center">
+              <div class="btn-group m-0 p-0" role="group" aria-label="Basic example">
+                <button
+                  type="button"
+                  class="btn btn-info px-3 py-1"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Ver"
+                  [routerLink]="['/detail-credit', item.id]"
+                >
+                  <i class="simple-icon-eye"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
           </tbody>
         </table>
         <div class="text-center mt-3">
@@ -121,7 +135,7 @@
                 (click)="p.previous()"
               >
                 <span *ngIf="!p.isFirstPage()"
-                  ><i class="simple-icon-arrow-left"></i
+                ><i class="simple-icon-arrow-left"></i
                 ></span>
               </div>
               <div
@@ -132,7 +146,7 @@
               >
                 <span *ngIf="p.getCurrent() !== page.value">{{
                   page.label
-                }}</span>
+                  }}</span>
                 <div *ngIf="p.getCurrent() === page.value">
                   <span>{{ page.label }}</span>
                 </div>
@@ -143,7 +157,7 @@
                 (click)="p.next()"
               >
                 <span *ngIf="!p.isLastPage()"
-                  ><i class="simple-icon-arrow-right"></i
+                ><i class="simple-icon-arrow-right"></i
                 ></span>
               </div>
             </div>
