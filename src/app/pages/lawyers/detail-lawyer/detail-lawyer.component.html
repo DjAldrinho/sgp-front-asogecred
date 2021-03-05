@@ -10,59 +10,21 @@
 
 <div class="separator mb-5"></div>
 
-<div class="row mb-4" *ngIf="lawyer">
-  <div class="col-12 mb-4">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="mb-4">Información Básica</h5>
-        <form autocomplete="off">
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label>Nombre</label>
-              <input
-                type="text"
-                class="form-control"
-                readonly
-                [value]="lawyer?.name"
-              />
-            </div>
-            <div class="form-group col-md-6">
-              <label for="credit_id">Número de documento</label>
-              <input
-                type="text"
-                class="form-control"
-                readonly
-                [value]="lawyer?.document_number"
-              />
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label>Email</label>
-              <input
-                type="text"
-                class="form-control"
-                readonly
-                [value]="lawyer?.email"
-              />
-            </div>
-            <div class="form-group col-md-6">
-              <label>Teléfono o Celular</label>
-              <input
-                type="text"
-                class="form-control"
-                readonly
-                [value]="lawyer?.phone"
-              />
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+<div class="row flex-lg-row flex-column justify-content-between" *ngIf="lawyer">
+  <app-card-lawyer-detail
+    [ngClass]="'col-xl-6 col-lg-12 mb-4'"
+    [lawyer]="lawyer"></app-card-lawyer-detail>
+
+  <app-table-credits
+    *ngIf="creditsPaginate"
+    [ngClass]="'col-xl-6 col-lg-12 mb-4'"
+    [title]="'Créditos'" [credits]="credits"
+    [idPg]="'pg-credits'"
+    [totalPaginate]="creditsPaginate"
+    [pagination]="true"></app-table-credits>
 </div>
 
-<div class="row mb-4" *ngIf="processes">
+<div class="row mb-4" *ngIf="totalProcesses">
   <app-table-processes
     (processChange)="getProcesses($event)"
     [ngClass]="'col-12 mb-4'"

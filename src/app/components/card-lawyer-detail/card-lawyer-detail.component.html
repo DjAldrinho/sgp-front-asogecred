@@ -1,16 +1,11 @@
 <div class="card d-flex flex-row mb-4">
-  <div class=" d-flex flex-grow-1 min-width-zero" *ngIf="client !== undefined">
+  <div class=" d-flex flex-grow-1 min-width-zero" *ngIf="lawyer !== undefined">
     <div
       class="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero">
       <div class="w-100 lead">
         <div class="d-flex flex-column flex-lg-row justify-content-between">
           <p class="list-item-heading font-weight-bold mb-1 title-md py-2 d-flex flex-column">
             {{name}}
-            <small class="title-sm my-3 d-flex flex-row justify-content-start">
-              <span *ngFor="let type of clientTypes" class="badge badge-pill mr-3 badge-primary text-uppercase">
-                 {{type | formatClientType}}
-              </span>
-            </small>
           </p>
           <p class="list-item-heading mb-1 title-lg py-2 d-flex flex-column align-items-end">
             <small class="title-sm mb-3">
@@ -18,8 +13,6 @@
                  {{status | formatStatus}}
               </span>
             </small>
-            {{salary | currency}}
-            <small class="title-sm mt-2">{{position}}</small>
           </p>
         </div>
         <div class="d-flex flex-column flex-lg-row justify-content-between">
@@ -42,9 +35,9 @@
             <small class="title-sm">{{updated | date: "yyyy-MM-dd"}}</small>
           </p>
         </div>
-        <div class="mt-4 d-flex flex-column" *ngIf="sign">
-          <small class="text-muted text-small mb-2">Firma:</small>
-          <img [src]="sign" class="card-img img-thumbnail w-25 h-25"/>
+        <div class="mt-4 d-flex flex-column" *ngIf="professionalCard">
+          <small class="text-muted text-small mb-2">Tarjeta profesional:</small>
+          <img [src]="professionalCard" class="card-img img-thumbnail w-25 h-25"/>
         </div>
       </div>
     </div>

@@ -2,8 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
-import {SwalTool} from '../tools/swal.tool';
-import {catchError, delay, map} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +20,8 @@ export class BlobService {
   }
 
   // @ts-ignore
-  getFile(url: string, fileName: string): Observable<any> {
-    const route = `${this.base_url}${url}`;
+  getFile(url: string, fileName: string, notBase: boolean = false): Observable<any> {
+    const route = notBase ? url : `${this.base_url}${url}`;
     return this.http.get(route, {responseType: 'blob'})
       .pipe(
         map((blob) => {

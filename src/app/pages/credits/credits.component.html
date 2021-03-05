@@ -12,28 +12,230 @@
 </div>
 
 <!-- buscador -->
-<div class="mb-2">
-  <a
-    class="btn pt-0 pl-0 d-inline-block d-md-none"
-    data-toggle="collapse"
-    href="#displayOptions"
-    role="button"
-    aria-expanded="true"
-    aria-controls="displayOptions"
-  >
-    Display Options
-    <i class="simple-icon-arrow-down align-middle"></i>
-  </a>
-  <div class="collapse d-md-block" id="displayOptions">
-    <div class="d-block d-md-inline-block">
-      <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-        <label>
-          <input placeholder="Buscar..."/>
-        </label>
+<form
+  autocomplete="off"
+  (ngSubmit)="creditsFilter()"
+  [formGroup]="searchCreditForm"
+  class="m-0 p-0 w-100"
+>
+
+  <div class="mb-2 d-flex flex-row">
+
+    <div class="collapse dont-collapse-sm mr-3" id="displayOptionsState">
+      <div class="d-block d-md-inline-block">
+        <label for="searchAdviser">Filtar por estado</label>
+        <div class="search-sm d-inline-blockfloat-md-left mr-1 mb-1 align-top">
+          <input class="form-control"
+                 placeholder="estado"
+                 formControlName="stateId"
+                 [matAutocomplete]="stateComplete"
+                 id="searchState">
+          <mat-autocomplete
+            #stateComplete="matAutocomplete"
+            [displayWith]="showStates"
+          >
+            <mat-option *ngFor="let state of states" [value]="state">
+              {{  state.name | lowercase }}
+            </mat-option>
+          </mat-autocomplete>
+        </div>
       </div>
     </div>
+
+    <div class="collapse dont-collapse-sm w-25 mr-3" id="displayOptionsAdviser">
+      <div class="d-block d-md-inline-block w-100">
+        <label for="searchAdviser">Filtar por asesor</label>
+        <div class="search-sm d-inline-block w-100 float-md-left mr-1 mb-1 align-top">
+          <input class="form-control w-100"
+                 placeholder="asesor"
+                 formControlName="adviserId"
+                 [matAutocomplete]="adviserComplete"
+                 id="searchAdviser">
+          <mat-autocomplete
+            #adviserComplete="matAutocomplete"
+            [displayWith]="showAdvisers"
+          >
+            <mat-option *ngFor="let adviser of advisers" [value]="adviser">
+              {{  adviser.name | lowercase }}
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapse dont-collapse-sm mr-3" id="displayDateInitial">
+      <div class="d-block d-md-inline-block">
+        <div class="d-inline-block float-md-left mr-1 mb-1 align-top">
+          <label for="dateInitial">Fecha de inicio</label>
+          <input
+            type="date"
+            class="form-control"
+            id="dateInitial"
+            formControlName="dateInitial"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="collapse dont-collapse-sm mr-3" id="displayDateFinal">
+      <div class="d-block d-md-inline-block">
+        <div class="d-inline-block float-md-left mr-1 mb-1 align-top">
+          <label for="dateFinal">Fecha final</label>
+          <input
+            type="date"
+            class="form-control"
+            id="dateFinal"
+            formControlName="dateFinal"
+          />
+        </div>
+      </div>
+    </div>
+
   </div>
-</div>
+
+  <div class="mb-2 d-flex flex-row">
+
+    <div class="collapse dont-collapse-sm w-25 mr-3" id="displayOptionsAccount">
+      <div class="d-block d-md-inline-block w-100">
+        <label for="dateFinal">Filtar por cuenta</label>
+        <div class="search-sm d-inline-block w-100 float-md-left mr-1 mb-1 align-top">
+          <input class="form-control w-100"
+                 placeholder="cuenta"
+                 formControlName="accountId"
+                 [matAutocomplete]="accountComplete"
+                 id="searchAccount">
+          <mat-autocomplete
+            #accountComplete="matAutocomplete"
+            [displayWith]="showAccounts"
+          >
+            <mat-option *ngFor="let account of accounts" [value]="account">
+              {{  account.account_number }} {{ account.name | lowercase }}
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapse dont-collapse-sm w-25 mr-3" id="displayOptionsClient">
+      <div class="d-block d-md-inline-block w-100">
+        <label for="dateFinal">Filtar por cliente</label>
+        <div class="search-sm d-inline-block w-100 float-md-left mr-1 mb-1 align-top">
+          <input class="form-control w-100"
+                 placeholder="cliente"
+                 formControlName="clientId"
+                 [matAutocomplete]="clientComplete"
+                 id="searchClient">
+          <mat-autocomplete
+            #clientComplete="matAutocomplete"
+            [displayWith]="showDebtorCodebtors"
+          >
+            <mat-option *ngFor="let client of clients" [value]="client">
+              {{ client.document_number }} {{ client.name | lowercase }}
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapse dont-collapse-sm w-25 mr-3" id="displayOptionsCodebtor">
+      <div class="d-block d-md-inline-block w-100">
+        <label for="dateFinal">Filtar por codeudor</label>
+        <div class="search-sm d-inline-block w-100 float-md-left mr-1 mb-1 align-top">
+          <input class="form-control w-100"
+                 placeholder="codeudor"
+                 formControlName="firstCoDebtor"
+                 [matAutocomplete]="firstCoDebtorComplete"
+                 id="searchDebtor">
+          <mat-autocomplete
+            #firstCoDebtorComplete="matAutocomplete"
+            [displayWith]="showDebtorCodebtors"
+          >
+            <mat-option *ngFor="let firstCoDebtor of firstCoDebtors" [value]="firstCoDebtor">
+              {{ firstCoDebtor.document_number }} {{ firstCoDebtor.name | lowercase }}
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapse dont-collapse-sm w-25 mr-3" id="displayOptionsSecondCodebtor">
+      <div class="d-block d-md-inline-block w-100">
+        <label for="dateFinal">Filtar por 2° codeudor</label>
+        <div class="search-sm d-inline-block w-100 float-md-left mr-1 mb-1 align-top">
+          <input class="form-control w-100"
+                 placeholder="2° codeudor"
+                 formControlName="secondCoDebtor"
+                 [matAutocomplete]="secondCoDebtorComplete"
+                 id="searchCodebtor">
+          <mat-autocomplete
+            #secondCoDebtorComplete="matAutocomplete"
+            [displayWith]="showDebtorCodebtors"
+          >
+            <mat-option *ngFor="let secondCoDebtor of secondCoDebtors" [value]="secondCoDebtor">
+              {{ secondCoDebtor.document_number }} {{ secondCoDebtor.name | lowercase }}
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="my-2 d-flex flex-row">
+
+    <div class="collapse d-flex flex-column mr-3" id="displayOptionsItems">
+      <div class="d-block d-md-inline-block">
+        <div class="btn-group float-md-left mr-1 mb-1">
+          <button class="btn btn-outline-dark btn-xs dropdown-toggle"
+                  type="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+            {{max}} items
+          </button>
+          <ul class="dropdown-menu">
+            <li class="dropdown-item" (click)="setItems(5)">5 items</li>
+            <li class="dropdown-item" (click)="setItems(10)">10 items</li>
+            <li class="dropdown-item" (click)="setItems(25)">25 items</li>
+            <li class="dropdown-item" (click)="setItems(50)">50 items</li>
+            <li class="dropdown-item" (click)="setItems(100)">100 items</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row mr-3">
+      <button
+        type="submit"
+        class="btn btn-primary d-block btn-xs"
+      >
+        Filtrar créditos
+      </button>
+    </div>
+
+    <div class="form-row mr-3">
+      <button
+        [disabled]="pdfLoading"
+        (click)="getReport()"
+        type="button"
+        class="btn btn-danger d-block btn-xs"
+      >
+        {{pdfText}}
+      </button>
+    </div>
+
+    <div class="form-row">
+      <button
+        [disabled]="excelLoading"
+        (click)="getReport('excel')"
+        type="button"
+        class="btn btn-success d-block btn-xs"
+      >
+        {{excelText}}
+      </button>
+    </div>
+
+  </div>
+
+</form>
 <!-- fin buscador -->
 
 <div class="separator mb-5"></div>
@@ -53,15 +255,15 @@
           <thead>
           <tr>
             <th>No.</th>
-            <th>Tipo</th>
-            <th>Fecha Inicio</th>
+            <th class="text-center">Tipo</th>
+            <th class="text-center">Fecha Inicio</th>
             <th>Estado</th>
-            <th>ID titular</th>
+            <!--<th>ID titular</th>-->
             <th>Titular</th>
             <th>Codeudor 1</th>
-            <th>Valor</th>
-            <th>Saldo</th>
-            <th>Cuotas</th>
+            <th class="text-right">Valor</th>
+            <th class="text-right">Saldo</th>
+            <th class="text-right">Cuotas</th>
             <th class="text-center">Acciones</th>
           </tr>
           </thead>
@@ -90,9 +292,9 @@
             <td *ngIf="item.refinanced">
               <span class="badge badge-info">REFINANCIADO</span>
             </td>
-            <td>
+            <!--<td>
               <span class="badge font-weight-bold font-badge-lg">{{ item.debtor?.document_number }}</span>
-            </td>
+            </td>-->
             <td class="font-badge font-weight-bold">
               <a [routerLink]="['/client-detail', item.debtor?.id]">
                 {{ item.debtor?.name | uppercase }}
@@ -103,9 +305,9 @@
                 {{ item.first_co_debtor?.name | uppercase }}
               </a>
             </td>
-            <td>{{ item.liquidate.total_credit | currency }}</td>
-            <td>{{ item.payment | currency }}</td>
-            <td>{{ item.fee }}</td>
+            <td class="font-badge-lg text-right">{{ item.liquidate.total_credit | currency }}</td>
+            <td class="font-badge-lg text-right">{{ item.payment | currency }}</td>
+            <td class="text-right">{{ item.fee }}</td>
             <td class="text-center">
               <div class="btn-group m-0 p-0" role="group" aria-label="Basic example">
                 <button

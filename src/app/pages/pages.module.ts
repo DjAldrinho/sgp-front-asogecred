@@ -54,6 +54,8 @@ import { DepositProcessComponent } from './processes/deposit-process/deposit-pro
 import { DetailLawyerComponent } from './lawyers/detail-lawyer/detail-lawyer.component';
 import {TableProcessesComponent} from '../components/table-processes/table-processes.component';
 import {TableAdvisersComponent} from '../components/table-advisers/table-advisers.component';
+import {CardLawyerDetailComponent} from '../components/card-lawyer-detail/card-lawyer-detail.component';
+import {CardAdviserDetailComponent} from '../components/card-adviser-detail/card-adviser-detail.component';
 
 
 @NgModule({
@@ -101,7 +103,9 @@ import {TableAdvisersComponent} from '../components/table-advisers/table-adviser
     DepositProcessComponent,
     DetailLawyerComponent,
     TableProcessesComponent,
-    TableAdvisersComponent
+    TableAdvisersComponent,
+    CardLawyerDetailComponent,
+    CardAdviserDetailComponent
   ],
   imports: [
     CommonModule,
@@ -123,7 +127,9 @@ import {TableAdvisersComponent} from '../components/table-advisers/table-adviser
     CardDetailComponent,
     CardClientDetailComponent,
     TableProcessesComponent,
-    TableAdvisersComponent
+    TableAdvisersComponent,
+    CardLawyerDetailComponent,
+    CardAdviserDetailComponent
   ],
   providers: [
     {

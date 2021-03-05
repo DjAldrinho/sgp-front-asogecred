@@ -5,6 +5,7 @@ import {Credit} from 'src/app/models/credit.model';
 import {AdvisersService} from 'src/app/services/advisers.service';
 import {CreditsService} from 'src/app/services/credits.service';
 import {SwalTool} from 'src/app/tools/swal.tool';
+import {TransactionsService} from '../../../services/transactions.service';
 
 @Component({
   selector: 'app-detail-adviser',
@@ -19,11 +20,14 @@ export class DetailAdviserComponent implements OnInit {
   public total: number;
   public max: number;
   public credits: Credit[] = [];
+  public transactions: any[] = [];
+  public transactionsPaginate: number;
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
               private advisersService: AdvisersService,
-              private creditsService: CreditsService) {
+              private creditsService: CreditsService,
+              private transactionService: TransactionsService) {
     this.page = 1;
     this.total = 0;
     this.max = 10;
@@ -33,6 +37,7 @@ export class DetailAdviserComponent implements OnInit {
     this.activatedRoute.params.subscribe(({id}) => {
       this.idAdviser = id;
       this.getAdviser(this.idAdviser);
+      this.getTransactions(this.page);
     });
   }
 
@@ -40,7 +45,6 @@ export class DetailAdviserComponent implements OnInit {
     this.advisersService.getAdviserById(id)
       .subscribe(resp => {
         this.adviser = resp;
-        console.log(this.adviser);
         this.getCredits();
       }, () => {
         this.router.navigateByUrl(`/dashboard`);
@@ -61,6 +65,16 @@ export class DetailAdviserComponent implements OnInit {
       });
   }
 
+  getTransactions(page: number): void {
+    this.transactionService.getTransactions(page, 5, null,
+      null, null, null, null, null, this.idAdviser)
+      .subscribe(resp => {
+        this.transactions = resp.transactions;
+        this.transactionsPaginate = resp.total;
+      }, () => {
+        SwalTool.onError('Error al cargar las transacciones');
+      });
+  }
 
   onPageChange(page): void {
     this.getCredits(page);

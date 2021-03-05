@@ -9,6 +9,7 @@ import {CreditsService} from 'src/app/services/credits.service';
 import {DashboardService} from 'src/app/services/dashboard.service';
 import {TransactionsService} from 'src/app/services/transactions.service';
 import Swal from 'sweetalert2';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -36,7 +37,8 @@ export class DashboardComponent implements OnInit {
     })
   );
 
-  constructor(private accountService: AccountsService,
+  constructor(private router: Router,
+              private accountService: AccountsService,
               private transactionService: TransactionsService,
               private creditsService: CreditsService,
               private dashboardService: DashboardService) {
@@ -49,16 +51,21 @@ export class DashboardComponent implements OnInit {
         this.credits = resp.credits.credits;
         this.dashboard = resp.data_dashboard;
         this.dataTable = [
-          {title: 'Ingresos del mes', value: this.dashboard.total_deposit, icon: 'iconsminds-upward', money: true},
-          {title: 'Egresos del mes', value: this.dashboard.total_retire, icon: 'iconsminds-downward', money: true},
-          {title: 'Créditos del mes', value: this.dashboard.total_credits, icon: 'iconsminds-diploma-2', money: false},
-          {title: 'Créditos activos', value: this.dashboard.active_credits, icon: 'simple-icon-book-open', money: false},
-          {title: 'Créditos atrasados', value: this.dashboard.expired_credits, icon: 'iconsminds-close', money: false}
+          {title: 'Ingresos del mes', value: this.dashboard.total_deposit, icon: 'iconsminds-upward', money: true, type: null},
+          {title: 'Egresos del mes', value: this.dashboard.total_retire, icon: 'iconsminds-downward', money: true, type: null},
+          {title: 'Créditos del mes', value: this.dashboard.total_credits, icon: 'iconsminds-diploma-2', money: false, type: 'ofTheMonth'},
+          {title: 'Créditos activos', value: this.dashboard.active_credits, icon: 'simple-icon-book-open', money: false, type: 'assets'},
+          {title: 'Créditos atrasados', value: this.dashboard.expired_credits, icon: 'iconsminds-close', money: false, type: 'overdue'}
         ];
-      }, err => {
+      }, () => {
         Swal.fire('Error', 'Ha ocurrido un error inesperado', 'error');
       });
+  }
 
+  getCredits(type?: string): void {
+    if (type !== null) {
+      this.router.navigate(['/credits'], {queryParams: {dashboard: type}});
+    }
   }
 
   getAccounts(): void {

@@ -14,11 +14,11 @@
         <th>Estado</th>
         <th>Abogado</th>
         <th>Crédito</th>
-        <th>ID titular</th>
+        <!--<th>ID titular</th>-->
         <th>Titular</th>
         <th>Codeudor 1</th>
-        <th>Valor Demanda</th>
-        <th>Saldo</th>
+        <th class="text-right">Valor Demanda</th>
+        <th class="text-right">Saldo</th>
         <th>Fecha Inicio</th>
         <th class="text-center">Acciones</th>
       </tr>
@@ -49,11 +49,11 @@
             <span class="badge badge-secondary">{{ item.credit.code }}</span>
           </a>
         </td>
-        <td>
+        <!--<td>
               <span class="badge font-badge">
                 {{ item.credit.debtor?.document_number }}
               </span>
-        </td>
+        </td>-->
         <td class="font-badge font-weight-bold">
           <a [routerLink]="['/client-detail', item.credit.debtor?.id]">
             {{ item.credit.debtor?.name | uppercase }}
@@ -64,8 +64,8 @@
             {{ item.credit.first_co_debtor?.name | uppercase }}
           </a>
         </td>
-        <td>{{ item.demand_value | currency }}</td>
-        <td>{{ item.payment | currency }}</td>
+        <td class="text-right font-badge-lg">{{ item.demand_value | currency }}</td>
+        <td class="text-right font-badge-lg">{{ item.payment | currency }}</td>
         <td class="font-badge-lg text-nowrap">{{ item.credit.start_date | date: 'yyyy-MM-dd' }}</td>
         <td class="text-center">
           <div class="btn-group m-0 p-0" role="group" aria-label="Basic example">

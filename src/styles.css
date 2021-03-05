@@ -119,3 +119,7 @@ fin font size icons card
 .font-badge-lg {
   font-size: 92% !important;
 }
+
+span.mat-option-text{
+  font-size: 0.9rem !important;
+}

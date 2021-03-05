@@ -59,15 +59,15 @@ export class CardClientDetailComponent implements OnInit, OnChanges {
     let classBadge: string;
     switch (item) {
       case 'A': {
-        classBadge = 'badge badge-success';
+        classBadge = 'badge badge-outline-success';
         break;
       }
       case 'I': {
-        classBadge = 'badge badge-danger';
+        classBadge = 'badge badge-outline-danger';
         break;
       }
       default: {
-        classBadge = 'badge badge-primary';
+        classBadge = 'badge badge-outline-primary';
         break;
       }
     }

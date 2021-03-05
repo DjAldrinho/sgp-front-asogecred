@@ -17,7 +17,8 @@ export class DetailLawyerComponent implements OnInit {
   private idLawyer: number;
   public loading = false;
   public max: number;
-
+  public credits: any[] = [];
+  public creditsPaginate = 0;
   public processes: Process[] = [];
   public pageProcesses: number;
   public totalProcesses: number;
@@ -25,7 +26,7 @@ export class DetailLawyerComponent implements OnInit {
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
               private processesService: ProcessesService,
-              private lawyersService: LawyersService,) {
+              private lawyersService: LawyersService) {
     this.pageProcesses = 1;
     this.totalProcesses = 0;
     this.max = 5;
@@ -44,9 +45,8 @@ export class DetailLawyerComponent implements OnInit {
       .subscribe(resp => {
         this.lawyer = resp;
         this.loading = false;
-        console.log(this.lawyer);
         this.getProcesses(this.pageProcesses);
-      }, err => {
+      }, () => {
         this.loading = false;
         this.router.navigateByUrl(`/dashboard`);
       });
@@ -61,8 +61,7 @@ export class DetailLawyerComponent implements OnInit {
       .subscribe(resp => {
         this.processes = resp.processes;
         this.totalProcesses = resp.total;
-        console.log(this.processes);
-      }, err => {
+      }, () => {
         SwalTool.onError('Error al cargar los procesos');
       });
   }

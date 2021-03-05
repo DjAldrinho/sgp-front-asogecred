@@ -11,8 +11,8 @@
       <thead>
       <tr>
         <th>No.</th>
-        <th>Valor</th>
-        <th>Cuotas</th>
+        <th class="text-right">Valor</th>
+        <th class="text-right">Cuotas</th>
         <th>Fecha</th>
       </tr>
       </thead>
@@ -30,8 +30,8 @@
             <span class="badge badge-secondary">{{ credit.code }}</span>
           </a>
         </td>
-        <td>{{ credit.capital_value | currency }}</td>
-        <td>{{ credit.fee }}</td>
+        <td class="text-right">{{ credit.capital_value | currency }}</td>
+        <td class="text-right">{{ credit.fee }}</td>
         <td>{{ getDate(credit) | date: "yyyy-MM-dd" }}</td>
       </tr>
       </tbody>

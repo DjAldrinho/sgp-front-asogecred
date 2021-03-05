@@ -18,7 +18,7 @@ export class TransactionsService {
   getTransactions(
     page?: number, perPage?: number, accountId?: number,
     creditId?: number, origin?: string, clientId?: number,
-    userId?: number, idProcess?: number): Observable<{ transactions: Transaction[], total: number }> {
+    userId?: number, processId?: number, adviserId?: number): Observable<{ transactions: Transaction[], total: number }> {
 
     if (page == null) {
       page = 1;
@@ -52,11 +52,16 @@ export class TransactionsService {
       user = `&user=${userId}`;
     }
 
-    let processUrl = '';
-    if (idProcess != null) {
-      processUrl = `&process=${idProcess}`;
+    let process = '';
+    if (processId != null) {
+      process = `&process=${processId}`;
     }
-    const url = `${base_url}/transactions/all?page=${page}&per_page=${perPage}${account}${credit}${origins}${client}${user}${processUrl}`;
+
+    let adviser = '';
+    if (adviserId != null) {
+      adviser = `&adviser=${adviserId}`;
+    }
+    const url = `${base_url}/transactions/all?page=${page}&per_page=${perPage}${account}${credit}${origins}${client}${user}${process}${adviser}`;
     return this.http.get(url)
       .pipe(
         map((resp: any) => {

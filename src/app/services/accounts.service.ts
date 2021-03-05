@@ -17,17 +17,17 @@ export class AccountsService {
   constructor(private http: HttpClient) {
   }
 
-  getAccounts(page?: number, per_page?: number, all: boolean = false): Observable<{ accounts: Account[], total: number }> {
+  getAccounts(page?: number, perPage?: number, all: boolean = false): Observable<{ accounts: Account[], total: number }> {
 
     let url: string;
     if (page == null) {
       page = 1;
     }
-    if (per_page == null) {
-      per_page = 10;
+    if (perPage == null) {
+      perPage = 10;
     }
 
-    url = all ? `${base_url}/accounts/all` : `${base_url}/accounts/all?page=${page}&per_page=${per_page}`;
+    url = all ? `${base_url}/accounts/all` : `${base_url}/accounts/all?page=${page}&per_page=${perPage}`;
 
     return this.http.get(url)
       .pipe(

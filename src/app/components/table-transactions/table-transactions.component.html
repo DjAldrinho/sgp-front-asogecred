@@ -20,7 +20,7 @@
       <tr>
         <th>No.</th>
         <th>Tipo</th>
-        <th>Valor</th>
+        <th class="text-right">Valor</th>
         <th>Fecha</th>
       </tr>
       </thead>
@@ -37,12 +37,12 @@
           <span class="badge pl-0 font-weight-bold font-badge">{{ item.code }}</span>
         </td>
         <td>
-                <span [ngClass]="getClassBadge(item.origin)">
-                  {{item.origin | formatTypeTransaction}}
-                </span>
+          <span [ngClass]="getClassBadge(item.origin)">
+            {{item.origin | formatTypeTransaction}}
+          </span>
         </td>
-        <td>{{ item.value | currency }}</td>
-        <td>{{ getDate(item) | date: "yyyy-MM-dd" }}</td>
+        <td class="text-right">{{ item.value | currency }}</td>
+        <td class="font-badge-lg">{{ getDate(item) | date: "yyyy-MM-dd" }}</td>
       </tr>
       </tbody>
     </table>

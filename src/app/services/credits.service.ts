@@ -29,7 +29,8 @@ export class CreditsService {
   getCredits(page?: number, perPage?: number,
              accountId?: number, clientId?: number,
              firstCoDebtorId?: number, secondCoDebtorId?: number,
-             adviserId?: number, all: boolean = false, status?: string): Observable<{ credits: Credit[], total: number }> {
+             adviserId?: number, all: boolean = false,
+             status?: string, date?: string, refinanced?: boolean): Observable<{ credits: Credit[], total: number }> {
 
     if (page == null) {
       page = 1;
@@ -53,21 +54,27 @@ export class CreditsService {
     if (secondCoDebtorId != null) {
       secondCoDebtor = `&second_co_debtor=${secondCoDebtorId}`;
     }
-
     let adviser = '';
     if (adviserId != null) {
       adviser = `&adviser=${adviserId}`;
     }
-
     let statusUrl = '';
     if (status != null) {
       statusUrl = `&status=${status}`;
     }
+    let dateUrl = '';
+    if (date != null) {
+      dateUrl = `&${date}`;
+    }
+    let refinancedUrl = '';
+    if (refinanced != null) {
+      refinancedUrl = `&refinanced=${refinanced}`;
+    }
 
     const url = all
-      ? `${base_url}/credits/all?${account}${client}${firstCoDebtor}${secondCoDebtor}${adviser}${statusUrl}`
+      ? `${base_url}/credits/all?${account}${client}${firstCoDebtor}${secondCoDebtor}${adviser}${statusUrl}${dateUrl}${refinancedUrl}`
       // tslint:disable-next-line:max-line-length
-      : `${base_url}/credits/all?page=${page}&per_page=${perPage}${account}${client}${firstCoDebtor}${secondCoDebtor}${adviser}${statusUrl}`;
+      : `${base_url}/credits/all?page=${page}&per_page=${perPage}${account}${client}${firstCoDebtor}${secondCoDebtor}${adviser}${statusUrl}${dateUrl}${refinancedUrl}`;
     return this.http.get(url)
       .pipe(
         map((resp: any) => {
@@ -88,12 +95,16 @@ export class CreditsService {
       );
   }
 
-  // tslint:disable-next-line:variable-name max-line-length
-  getLiquidate(capital_value: number, interest: number, fee: number, start_date: string, other_value?: number, transport_value?: number): Observable<Liquidate> {
+  // tslint:disable-next-line:variable-name
+  getLiquidate(capital_value: number, interest: number,
+               // tslint:disable-next-line:variable-name
+               fee: number, start_date: string, other_value?: number,
+               // tslint:disable-next-line:variable-name
+               transport_value?: number): Observable<Liquidate> {
     const body = {
       interest,
-      'other_value': other_value == null ? 0 : other_value,
-      'transport_value': transport_value == null ? 0 : transport_value,
+      other_value: other_value == null ? 0 : other_value,
+      transport_value: transport_value == null ? 0 : transport_value,
       capital_value,
       fee,
       start_date
