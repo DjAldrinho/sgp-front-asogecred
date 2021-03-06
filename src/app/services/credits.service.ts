@@ -165,4 +165,12 @@ export class CreditsService {
     return this.http.post(`${base_url}/credits/refinance`, formData, {headers});
   }
 
+  urlReportCredit(idCredit: number): string {
+    return `${base_url}/report/creditReport/${idCredit}`;
+  }
+
+  urlPeaceSaveCredit(idCredit: number): string {
+    return `${base_url}/report/peace/${idCredit}`;
+  }
+
 }

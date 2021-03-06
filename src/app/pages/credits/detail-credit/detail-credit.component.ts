@@ -4,7 +4,9 @@ import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Credit} from 'src/app/models/credit.model';
 import {Transaction} from 'src/app/models/transaction.model';
+import { BlobService } from 'src/app/services/blob.service';
 import {CreditsService} from 'src/app/services/credits.service';
+import { ReportsService } from 'src/app/services/reports.service';
 import {TransactionsService} from 'src/app/services/transactions.service';
 import {SwalTool} from 'src/app/tools/swal.tool';
 import Swal from 'sweetalert2';
@@ -37,11 +39,18 @@ export class DetailCreditComponent implements OnInit {
   public commentarysForm: FormGroup;
   public loadingCommentaryForm: boolean = false;
 
+  public peaceSaveText = 'Descargar paz y salvo';
+  public peaceSaveLoading = false;
+  public creditReportText = 'Descargar reporte';
+  public creditReportLoading = false;
+
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
               private creditsService: CreditsService,
               private transactionService: TransactionsService,
+              private reportService: ReportsService,
+              private blobService: BlobService,
               private dialog: MatDialog,
               private fb: FormBuilder) {
     this.pageIncomes = 1;
@@ -263,6 +272,40 @@ export class DetailCreditComponent implements OnInit {
 
   getDocument(url: string): boolean {
     return !!(url.search('.jpg') || url.search('.png'));
+  }
+
+  downloadReportCredit(): void {
+    this.creditReportLoading = true;
+    this.creditReportText = "Descargando...";
+    const url = this.creditsService.urlReportCredit(this.credit.id);
+    this.blobService.getFile(url, `reporte-credito-${this.credit.code}.pdf`, true)
+    .subscribe(() => {
+      setTimeout(() => {
+        this.creditReportLoading = false;
+        this.creditReportText = "Descargar reporte";
+      }, 500);
+    }, () => {
+      this.creditReportLoading = false;
+      this.creditReportText = "Descargar reporte";
+      SwalTool.onError('Error al descargar el reporte');
+    });
+  }
+
+  downloadPeaceSaveCredit(): void {
+    this.peaceSaveLoading = true;
+    this.peaceSaveText = "Descargando...";
+    const url = this.creditsService.urlPeaceSaveCredit(this.credit.id);
+    this.blobService.getFile(url, `paz-y-salvo-credito-${this.credit.code}.pdf`, true)
+    .subscribe(() => {
+      setTimeout(() => {
+        this.peaceSaveLoading = false;
+        this.peaceSaveText = "Descargar paz y salvo";
+      }, 500);
+    }, () => {
+      this.peaceSaveLoading = false;
+      this.peaceSaveText = "Descargar paz y salvo";
+      SwalTool.onError('Error al descargar el paz y salvo');
+    });
   }
 
 }

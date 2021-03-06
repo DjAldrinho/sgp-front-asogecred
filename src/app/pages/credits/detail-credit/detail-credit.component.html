@@ -1,6 +1,9 @@
 <div class="row mb-2 d-flex flex-row justify-content-between">
   <h1 class="d-flex flex-row align-items-center">
-    <a [routerLink]="'/credits'" class="flex flex-row align-items-center mr-4 p-0">
+    <a
+      [routerLink]="'/credits'"
+      class="flex flex-row align-items-center mr-4 p-0"
+    >
       <i class="simple-icon-arrow-left align-middle title-md"></i>
     </a>
     <span>Detalles del crédito</span>
@@ -17,7 +20,7 @@
   <div class="col-12 mb-4">
     <div class="card">
       <div class="card-body">
-        <h5 class="mb-3">Acciones del credito</h5>
+        <h5 class="mb-3">Acciones del crédito</h5>
         <div class="form-row" *ngIf="credit.status === 'P'">
           <button
             type="submit"
@@ -48,6 +51,40 @@
   </div>
 </div>
 <!-- fin aprobar rechazar credito -->
+
+<!-- descargar paz y salvo y reporte de credito -->
+<div
+  class="row mb-4"
+  *ngIf="credit && credit.status != 'P' && credit.status != 'C'"
+>
+  <div class="col-12 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="mb-3">Descargas del crédito</h5>
+        <div class="form-row">
+          <button
+            type="button"
+            class="btn btn-primary d-block ml-1"
+            (click)="downloadReportCredit()"
+            [disabled]="creditReportLoading"
+          >
+            {{ creditReportText }}
+          </button>
+          <button
+            *ngIf="!credit.refinanced && credit.payment <= 0"
+            type="button"
+            class="btn btn-primary d-block ml-1"
+            (click)="downloadPeaceSaveCredit()"
+            [disabled]="peaceSaveLoading"
+          >
+            {{ peaceSaveText }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- fin de descargas -->
 
 <!-- detalles basicos del crédito -->
 <div class="row mb-4" *ngIf="credit">
@@ -121,9 +158,11 @@
                 class="form-control"
                 readonly
                 [value]="
-                  credit?.second_co_debtor?.document_number?credit?.second_co_debtor?.document_number:'' +
-                  ' ' +
-                  credit?.second_co_debtor?.name?credit?.second_co_debtor?.name:''
+                  credit?.second_co_debtor?.document_number
+                    ? credit?.second_co_debtor?.document_number
+                    : '' + ' ' + credit?.second_co_debtor?.name
+                    ? credit?.second_co_debtor?.name
+                    : ''
                 "
               />
             </div>
@@ -224,7 +263,7 @@
         <h5 class="mb-4 list-item-heading">
           Estado del Crédito :
           <span [ngClass]="getClassBadgeState(credit.status)">
-            {{credit.status | formatStatus}}
+            {{ credit.status | formatStatus }}
           </span>
           <span class="badge badge-info m-1" *ngIf="credit.refinanced">
             REFINANCIADO
@@ -234,7 +273,7 @@
           <div class="form-group col-md-3">
             <label>Valor Total Crédito</label>
             <p class="detail-credit-info text-right badge-info">
-              {{ credit?.liquidate?.total_credit  | currency }}
+              {{ credit?.liquidate?.total_credit | currency }}
             </p>
           </div>
           <div class="form-group col-md-3">
@@ -283,7 +322,6 @@
             </p>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -297,10 +335,12 @@
       <app-table-transactions
         (pageChange)="getExpenses($event)"
         [ngClass]="'col-xl-6 col-lg-12 mb-4'"
-        [title]="'Egresos'" [items]="expenses"
+        [title]="'Egresos'"
+        [items]="expenses"
         [idPg]="'pg-expenses'"
         [totalPaginate]="totalExpenses"
-        [pagination]="true"></app-table-transactions>
+        [pagination]="true"
+      ></app-table-transactions>
       <!-- fin de tabla de egresos -->
 
       <!-- tabla de abonos -->
@@ -308,10 +348,12 @@
         *ngIf="credit.status === 'F'"
         (pageChange)="getIncomes($event)"
         [ngClass]="'col-xl-6 col-lg-12 mb-4'"
-        [title]="'Abonos realizados'" [items]="incomes"
+        [title]="'Abonos realizados'"
+        [items]="incomes"
         [idPg]="'pg-incomes'"
         [totalPaginate]="totalIncomes"
-        [pagination]="true"></app-table-transactions>
+        [pagination]="true"
+      ></app-table-transactions>
 
       <div *ngIf="credit.status !== 'F'" class="col-xl-6 col-lg-12 mb-4">
         <div class="mb-4">
@@ -334,40 +376,39 @@
               </div>
               <table class="table">
                 <thead>
-                <tr>
-                  <th>No.</th>
-                  <th>Tipo</th>
-                  <th>Valor</th>
-                  <th>Fecha</th>
-                </tr>
+                  <tr>
+                    <th>No.</th>
+                    <th>Tipo</th>
+                    <th>Valor</th>
+                    <th>Fecha</th>
+                  </tr>
                 </thead>
                 <tbody>
-                <tr
-                  *ngFor="
-                          let item of incomes
-                            | paginate
-                              : {
-                                  itemsPerPage: max,
-                                  currentPage: pageIncomes,
-                                  totalItems: totalIncomes,
-                                  id: 'incomes'
-                                }
-                        "
-                >
-                  <td>
-                          <span
-                            class="badge pl-0 font-weight-bold font-badge"
-                          >{{ item.code }}</span
-                          >
-                  </td>
-                  <td>
-                          <span [ngClass]="getClassBadge(item.origin)">{{
-                            item.origin | formatTypeTransaction
-                            }}</span>
-                  </td>
-                  <td>{{ item.value | currency }}</td>
-                  <td>{{ item.created_at | date: "yyyy-MM-dd" }}</td>
-                </tr>
+                  <tr
+                    *ngFor="
+                      let item of incomes
+                        | paginate
+                          : {
+                              itemsPerPage: max,
+                              currentPage: pageIncomes,
+                              totalItems: totalIncomes,
+                              id: 'incomes'
+                            }
+                    "
+                  >
+                    <td>
+                      <span class="badge pl-0 font-weight-bold font-badge">{{
+                        item.code
+                      }}</span>
+                    </td>
+                    <td>
+                      <span [ngClass]="getClassBadge(item.origin)">{{
+                        item.origin | formatTypeTransaction
+                      }}</span>
+                    </td>
+                    <td>{{ item.value | currency }}</td>
+                    <td>{{ item.created_at | date: "yyyy-MM-dd" }}</td>
+                  </tr>
                 </tbody>
               </table>
               <div class="text-center mt-3">
@@ -381,22 +422,22 @@
                       class="pagination-previous"
                       [class.disabled]="pIncomes.isFirstPage()"
                     >
-                          <span
-                            *ngIf="!pIncomes.isFirstPage()"
-                            (click)="pIncomes.previous()"
-                          ><i class="simple-icon-arrow-left"></i
-                          ></span>
+                      <span
+                        *ngIf="!pIncomes.isFirstPage()"
+                        (click)="pIncomes.previous()"
+                        ><i class="simple-icon-arrow-left"></i
+                      ></span>
                     </div>
                     <div
                       class="page-number"
                       *ngFor="let page of pIncomes.pages"
                       [class.current]="pIncomes.getCurrent() === page.value"
                     >
-                          <span
-                            (click)="pIncomes.setCurrent(page.value)"
-                            *ngIf="pIncomes.getCurrent() !== page.value"
-                          >{{ page.label }}</span
-                          >
+                      <span
+                        (click)="pIncomes.setCurrent(page.value)"
+                        *ngIf="pIncomes.getCurrent() !== page.value"
+                        >{{ page.label }}</span
+                      >
                       <div *ngIf="pIncomes.getCurrent() === page.value">
                         <span>{{ page.label }}</span>
                       </div>
@@ -405,11 +446,11 @@
                       class="pagination-next"
                       [class.disabled]="pIncomes.isLastPage()"
                     >
-                          <span
-                            *ngIf="!pIncomes.isLastPage()"
-                            (click)="pIncomes.next()"
-                          ><i class="simple-icon-arrow-right"></i
-                          ></span>
+                      <span
+                        *ngIf="!pIncomes.isLastPage()"
+                        (click)="pIncomes.next()"
+                        ><i class="simple-icon-arrow-right"></i
+                      ></span>
                     </div>
                   </div>
                 </pagination-template>
@@ -433,39 +474,46 @@
         <h5 class="mb-4">Documentos Anexos del Crédito</h5>
         <table class="table table-striped">
           <thead>
-          <tr>
-            <th>Archivo</th>
-            <th>Fecha anexado</th>
-            <th class="text-center">Acciones</th>
-          </tr>
+            <tr>
+              <th>Archivo</th>
+              <th>Fecha anexado</th>
+              <th class="text-center">Acciones</th>
+            </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let item of credit.documents">
-            <td>
-              <img *ngIf="getDocument(item.document_file_url)"
-                   [src]="item.document_file_url"
-                   class="img-thumbnail" width="50px"/>
-              {{!getDocument(item.document_file_url) ? item.document_file_url : ''}}
-            </td>
-            <td>
-              {{ item.created_at | date: "yyyy-MM-dd" }}
-            </td>
-            <td class="text-center">
-              <div class="btn-group" role="group" aria-label="Basic example">
-                <a
-                  type="button"
-                  class="btn btn-info"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title="Ver"
-                  [href]="item.document_file_url"
-                  target="_blank"
-                >
-                  <i class="simple-icon-eye"></i>
-                </a>
-              </div>
-            </td>
-          </tr>
+            <tr *ngFor="let item of credit.documents">
+              <td>
+                <img
+                  *ngIf="getDocument(item.document_file_url)"
+                  [src]="item.document_file_url"
+                  class="img-thumbnail"
+                  width="50px"
+                />
+                {{
+                  !getDocument(item.document_file_url)
+                    ? item.document_file_url
+                    : ""
+                }}
+              </td>
+              <td>
+                {{ item.created_at | date: "yyyy-MM-dd" }}
+              </td>
+              <td class="text-center">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                  <a
+                    type="button"
+                    class="btn btn-info"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Ver"
+                    [href]="item.document_file_url"
+                    target="_blank"
+                  >
+                    <i class="simple-icon-eye"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -520,47 +568,55 @@
         <div class="mt-4" *ngIf="credit.liquidate">
           <table class="table table-striped">
             <thead>
-            <tr>
-              <th>No.</th>
-              <th>Fecha vencimiento</th>
-              <th>Valor cuota</th>
-              <th>Valor capital</th>
-              <th>Valor intereses</th>
-              <th>Saldo capital</th>
-            </tr>
+              <tr>
+                <th>No.</th>
+                <th>Fecha vencimiento</th>
+                <th>Valor cuota</th>
+                <th>Valor capital</th>
+                <th>Valor intereses</th>
+                <th>Saldo capital</th>
+              </tr>
             </thead>
             <tbody>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>
-                <strong>{{ credit.liquidate.total_credit | currency }}</strong>
-              </td>
-            </tr>
-            <tr *ngFor="let item of credit.liquidate.fees">
-              <td>{{ item.number }}</td>
-              <td>{{ item.start_date }}</td>
-              <td>{{ item.fee_value | currency }}</td>
-              <td>{{ item.capital_fee | currency }}</td>
-              <td>{{ item.interest_value | currency }}</td>
-              <td>{{ item.capital_balance | currency }}</td>
-            </tr>
-            <tr>
-              <th colspan="2">TOTALES</th>
-              <td>
-                <strong>{{ credit.liquidate.total_credit | currency }}</strong>
-              </td>
-              <td>
-                <strong>{{ credit.liquidate.total_capital | currency }}</strong>
-              </td>
-              <td>
-                <strong>{{ credit.liquidate.total_interest | currency }}</strong>
-              </td>
-              <td></td>
-            </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                  <strong>{{
+                    credit.liquidate.total_credit | currency
+                  }}</strong>
+                </td>
+              </tr>
+              <tr *ngFor="let item of credit.liquidate.fees">
+                <td>{{ item.number }}</td>
+                <td>{{ item.start_date }}</td>
+                <td>{{ item.fee_value | currency }}</td>
+                <td>{{ item.capital_fee | currency }}</td>
+                <td>{{ item.interest_value | currency }}</td>
+                <td>{{ item.capital_balance | currency }}</td>
+              </tr>
+              <tr>
+                <th colspan="2">TOTALES</th>
+                <td>
+                  <strong>{{
+                    credit.liquidate.total_credit | currency
+                  }}</strong>
+                </td>
+                <td>
+                  <strong>{{
+                    credit.liquidate.total_capital | currency
+                  }}</strong>
+                </td>
+                <td>
+                  <strong>{{
+                    credit.liquidate.total_interest | currency
+                  }}</strong>
+                </td>
+                <td></td>
+              </tr>
             </tbody>
           </table>
         </div>
