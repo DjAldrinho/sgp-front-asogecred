@@ -19,8 +19,8 @@ export class AdvisersService {
   }
 
   // tslint:disable-next-line:variable-name
-  getAdvisers(page?: number, per_page?: number, query?: string): Observable<{ advisers: Adviser[], total: number }> {
-    return this.baseService.get(this.section, page, per_page, false, query)
+  getAdvisers(page?: number, per_page?: number, query?: string, all?: boolean): Observable<{ advisers: Adviser[], total: number }> {
+    return this.baseService.get(this.section, page, per_page, all, query)
       .pipe(
         map((response: any) => {
           const advisers: Adviser[] = response.items;

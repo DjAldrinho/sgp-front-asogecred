@@ -21,6 +21,7 @@
         <th>No.</th>
         <th>Tipo</th>
         <th class="text-right">Valor</th>
+        <th *ngIf="commentary">Comentario</th>
         <th>Fecha</th>
       </tr>
       </thead>
@@ -42,6 +43,7 @@
           </span>
         </td>
         <td class="text-right">{{ item.value | currency }}</td>
+        <td *ngIf="commentary">{{ item.commentary }}</td>
         <td class="font-badge-lg">{{ getDate(item) | date: "yyyy-MM-dd" }}</td>
       </tr>
       </tbody>

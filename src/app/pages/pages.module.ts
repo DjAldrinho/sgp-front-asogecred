@@ -56,6 +56,7 @@ import {TableProcessesComponent} from '../components/table-processes/table-proce
 import {TableAdvisersComponent} from '../components/table-advisers/table-advisers.component';
 import {CardLawyerDetailComponent} from '../components/card-lawyer-detail/card-lawyer-detail.component';
 import {CardAdviserDetailComponent} from '../components/card-adviser-detail/card-adviser-detail.component';
+import { TransactionsComponent } from './transactions/transactions.component';
 
 
 @NgModule({
@@ -105,7 +106,8 @@ import {CardAdviserDetailComponent} from '../components/card-adviser-detail/card
     TableProcessesComponent,
     TableAdvisersComponent,
     CardLawyerDetailComponent,
-    CardAdviserDetailComponent
+    CardAdviserDetailComponent,
+    TransactionsComponent
   ],
   imports: [
     CommonModule,

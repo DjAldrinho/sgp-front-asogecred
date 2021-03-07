@@ -1,10 +1,10 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
-import { UserForm } from '../interfaces/user-form.interface';
-import { User } from '../models/user.model';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {environment} from 'src/environments/environment';
+import {UserForm} from '../interfaces/user-form.interface';
+import {User} from '../models/user.model';
 
 const base_url = environment.base_url;
 
@@ -13,9 +13,10 @@ const base_url = environment.base_url;
 })
 export class UsersService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  getUsers(page?: number, per_page?: number): Observable<{ users: User[], total: number }> {
+  getUsers(page?: number, per_page?: number, all?: boolean): Observable<{ users: User[], total: number }> {
 
     if (page == null) {
       page = 1;
@@ -24,7 +25,7 @@ export class UsersService {
       per_page = 10;
     }
 
-    const url = `${base_url}/auth/users?page=${page}&per_page=${per_page}`;
+    const url = all ? `${base_url}/auth/users` : `${base_url}/auth/users?page=${page}&per_page=${per_page}`;
     return this.http.get(url)
       .pipe(
         map((resp: any) => {

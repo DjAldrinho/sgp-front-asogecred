@@ -25,7 +25,6 @@ export class CreditsService {
               private userService: UserService) {
   }
 
-  // tslint:disable-next-line:variable-name
   getCredits(page?: number, perPage?: number,
              accountId?: number, clientId?: number,
              firstCoDebtorId?: number, secondCoDebtorId?: number,
@@ -80,6 +79,52 @@ export class CreditsService {
         map((resp: any) => {
           const credits: Credit[] = resp.credits.data;
           const total: number = resp.credits.total;
+          return {credits, total};
+        })
+      );
+  }
+
+
+  getCreditsExpired(page?: number, perPage?: number,
+                    accountId?: number, clientId?: number,
+                    firstCoDebtorId?: number, secondCoDebtorId?: number,
+                    date?: string, all: boolean = false): Observable<{ credits: Credit[], total: number }> {
+
+    if (page == null) {
+      page = 1;
+    }
+    if (perPage == null) {
+      perPage = 10;
+    }
+    let account = '';
+    if (accountId != null) {
+      account = `&account=${accountId}`;
+    }
+    let client = '';
+    if (clientId != null) {
+      client = `&client=${clientId}`;
+    }
+    let firstCoDebtor = '';
+    if (firstCoDebtorId != null) {
+      firstCoDebtor = `&first_co_debtor=${firstCoDebtorId}`;
+    }
+    let secondCoDebtor = '';
+    if (secondCoDebtorId != null) {
+      secondCoDebtor = `&second_co_debtor=${secondCoDebtorId}`;
+    }
+    let dateUrl = '';
+    if (date != null) {
+      dateUrl = `&${date}`;
+    }
+
+    const url = all
+      ? `${base_url}/credits/expired?all=${true}${account}${client}${firstCoDebtor}${secondCoDebtor}${dateUrl}`
+      : `${base_url}/credits/expired?page=${page}&per_page=${perPage}${account}${client}${firstCoDebtor}${secondCoDebtor}${dateUrl}`;
+    return this.http.get(url)
+      .pipe(
+        map((resp: any) => {
+          const credits: Credit[] = resp.data;
+          const total: number = resp.total;
           return {credits, total};
         })
       );

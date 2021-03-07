@@ -18,7 +18,8 @@ export class TransactionsService {
   getTransactions(
     page?: number, perPage?: number, accountId?: number,
     creditId?: number, origin?: string, clientId?: number,
-    userId?: number, processId?: number, adviserId?: number): Observable<{ transactions: Transaction[], total: number }> {
+    userId?: number, processId?: number, adviserId?: number,
+    transactionTypeId?: string, date?: string, all?: boolean): Observable<{ transactions: Transaction[], total: number }> {
 
     if (page == null) {
       page = 1;
@@ -26,42 +27,45 @@ export class TransactionsService {
     if (perPage == null) {
       perPage = 10;
     }
-
     let account = '';
     if (accountId != null) {
       account = `&account=${accountId}`;
     }
-
     let credit = '';
     if (creditId != null) {
       credit = `&credit=${creditId}`;
     }
-
     let origins = '';
     if (origin != null) {
       origins = `&origin=${origin}`;
     }
-
     let client = '';
     if (clientId != null) {
       client = `&client=${clientId}`;
     }
-
     let user = '';
     if (userId != null) {
       user = `&user=${userId}`;
     }
-
     let process = '';
     if (processId != null) {
       process = `&process=${processId}`;
     }
-
     let adviser = '';
     if (adviserId != null) {
       adviser = `&adviser=${adviserId}`;
     }
-    const url = `${base_url}/transactions/all?page=${page}&per_page=${perPage}${account}${credit}${origins}${client}${user}${process}${adviser}`;
+    let dateUrl = '';
+    if (date != null) {
+      dateUrl = `&${date}`;
+    }
+    let transactionType = '';
+    if (transactionTypeId != null) {
+      transactionType = `&type_transaction=${transactionTypeId}`;
+    }
+    const url = all
+      ? `${base_url}/transactions/all?all=${true}${account}${credit}${origins}${client}${user}${process}${adviser}${transactionType}${dateUrl}`
+      : `${base_url}/transactions/all?page=${page}&per_page=${perPage}${account}${credit}${origins}${client}${user}${process}${adviser}${transactionType}${dateUrl}`;
     return this.http.get(url)
       .pipe(
         map((resp: any) => {

@@ -10,6 +10,7 @@ import {DashboardService} from 'src/app/services/dashboard.service';
 import {TransactionsService} from 'src/app/services/transactions.service';
 import Swal from 'sweetalert2';
 import {Router} from '@angular/router';
+import {SwalTool} from '../../tools/swal.tool';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,6 +23,7 @@ export class DashboardComponent implements OnInit {
   public credits: Credit[] = [];
   public dashboard: Dashboard = new Dashboard('', '0', '0', '0', 0, 0, 0, 0, 0);
   public dataTable: any[];
+  public creditsExpired = 0;
 
   public fulldata = combineLatest([
     this.transactionService.getTransactions(1, 5),
@@ -45,6 +47,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getCreditsExpired();
     this.fulldata
       .subscribe(resp => {
         this.transactions = resp.transactions.transactions;
@@ -55,7 +58,7 @@ export class DashboardComponent implements OnInit {
           {title: 'Egresos del mes', value: this.dashboard.total_retire, icon: 'iconsminds-downward', money: true, type: null},
           {title: 'Créditos del mes', value: this.dashboard.total_credits, icon: 'iconsminds-diploma-2', money: false, type: 'ofTheMonth'},
           {title: 'Créditos activos', value: this.dashboard.active_credits, icon: 'simple-icon-book-open', money: false, type: 'assets'},
-          {title: 'Créditos atrasados', value: this.dashboard.expired_credits, icon: 'iconsminds-close', money: false, type: 'overdue'}
+          {title: 'Créditos atrasados', value: this.creditsExpired, icon: 'iconsminds-close', money: false, type: 'overdue'}
         ];
       }, () => {
         Swal.fire('Error', 'Ha ocurrido un error inesperado', 'error');
@@ -66,6 +69,15 @@ export class DashboardComponent implements OnInit {
     if (type !== null) {
       this.router.navigate(['/credits'], {queryParams: {dashboard: type}});
     }
+  }
+
+  getCreditsExpired(): void {
+    this.creditsService.getCreditsExpired()
+      .subscribe((resp) => {
+        this.creditsExpired = resp.total;
+      }, (error) => {
+        console.log('error', error);
+      });
   }
 
   getAccounts(): void {

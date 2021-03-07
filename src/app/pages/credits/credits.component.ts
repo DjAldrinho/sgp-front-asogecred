@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 import {Adviser} from '../../models/adviser.model';
 import {ReportsService} from '../../services/reports.service';
 import {BlobService} from '../../services/blob.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 // @ts-ignore
 import moment = require('moment');
 
@@ -36,6 +36,7 @@ export class CreditsComponent implements OnInit {
   public pdfLoading = false;
   public excelText = 'Exportar EXCEL';
   public excelLoading = false;
+  public valueFilter = false;
 
   public page: number;
   public total: number;
@@ -67,6 +68,7 @@ export class CreditsComponent implements OnInit {
       {id: 'P', name: 'Pendiente'},
       {id: 'R', name: 'Refinanciado'},
       {id: 'F', name: 'Finalizado'},
+      {id: 'L', name: 'Atrasado'},
       {id: 'C', name: 'Cancelado'}
     ];
     this.initFormSearch();
@@ -96,11 +98,6 @@ export class CreditsComponent implements OnInit {
       }
     });
 
-    this.getFormField('adviserId').valueChanges.subscribe(value => {
-      if (this.getFormField('adviserId').value.length > 0) {
-        this.getAdvisers(value);
-      }
-    });
   }
 
   private initFormSearch(): void {
@@ -119,6 +116,10 @@ export class CreditsComponent implements OnInit {
 
   getFormField(field: string): AbstractControl {
     return this.searchCreditForm.get(field);
+  }
+
+  setFormField(field: string): void {
+    this.searchCreditForm.get(field).setValue(null);
   }
 
   getAccounts(page?: number): void {
@@ -164,8 +165,11 @@ export class CreditsComponent implements OnInit {
           SwalTool.onError('Error', 'Error al cargar los créditos del mes');
         });
     } else if (type === 'assets') {
+      const startOfMonth = moment().startOf('month').format('YYYY/MM/DD');
+      const endOfMonth = moment().format('YYYY/MM/DD');
+      const date = `start_date=${startOfMonth}&end_date=${endOfMonth}`;
       this.creditService.getCredits(this.page, this.max, null, null,
-        null, null, null, null, 'A')
+        null, null, null, null, 'A', date)
         .subscribe((resp) => {
           this.credits = resp.credits;
           this.total = resp.total;
@@ -175,7 +179,7 @@ export class CreditsComponent implements OnInit {
           SwalTool.onError('Error', 'Error al cargar los créditos activos');
         });
     } else if (type === 'overdue') {
-      this.creditService.getCredits(this.page, this.max)
+      this.creditService.getCreditsExpired(this.page, this.max)
         .subscribe((resp) => {
           this.credits = resp.credits;
           this.total = resp.total;
@@ -208,6 +212,7 @@ export class CreditsComponent implements OnInit {
 
   setItems(items: number): void {
     this.max = items;
+    this.cleanFilter();
     this.getCredits(this.page);
   }
 
@@ -271,21 +276,40 @@ export class CreditsComponent implements OnInit {
         date = `start_date=${dateInitial}&end_date=${dateFinal}`;
       }
       let refinanced = null;
-      if (stateId !== null && stateId === 'R') {
-        refinanced = true;
-        stateId = null;
+      let expired = false;
+      if (stateId !== null) {
+        if (stateId === 'R') {
+          refinanced = true;
+          stateId = null;
+        } else if (stateId === 'L') {
+          expired = true;
+        }
       }
       this.loading = true;
-      this.creditService.getCredits(this.page, this.max, accountId, clientId,
-        firstCoDebtor, secondCoDebtor, adviserId, null, stateId, date, refinanced)
-        .subscribe((resp) => {
-          this.credits = resp.credits;
-          this.total = resp.total;
-          this.loading = false;
-        }, () => {
-          this.loading = false;
-          SwalTool.onError('Error', 'Error al filtrar los créditos');
-        });
+
+      if (!expired) {
+        this.creditService.getCredits(this.page, this.max, accountId, clientId,
+          firstCoDebtor, secondCoDebtor, adviserId, null, stateId, date, refinanced)
+          .subscribe((resp) => {
+            this.credits = resp.credits;
+            this.total = resp.total;
+            this.loading = false;
+          }, () => {
+            this.loading = false;
+            SwalTool.onError('Error', 'Error al filtrar los créditos');
+          });
+      } else {
+        this.creditService.getCreditsExpired(this.page, this.max, accountId, clientId,
+          firstCoDebtor, secondCoDebtor, date)
+          .subscribe((resp) => {
+            this.credits = resp.credits;
+            this.total = resp.total;
+            this.loading = false;
+          }, () => {
+            this.loading = false;
+            SwalTool.onError('Error', 'Error al filtrar los créditos');
+          });
+      }
 
     }
   }
@@ -390,6 +414,17 @@ export class CreditsComponent implements OnInit {
       }
     }
     return classBadge;
+  }
+
+  cleanFilter(): void {
+    this.setFormField('accountId');
+    this.setFormField('adviserId');
+    this.setFormField('clientId');
+    this.setFormField('stateId');
+    this.setFormField('firstCoDebtor');
+    this.setFormField('secondCoDebtor');
+    this.setFormField('dateInitial');
+    this.setFormField('dateFinal');
   }
 
 }

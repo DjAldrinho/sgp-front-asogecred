@@ -45,7 +45,7 @@ export class SidebarService {
       icon: 'iconsminds-statistic',
       url: '',
       items: [
-        {title: 'Tipos de transacciones', icon: 'iconsminds-shuffle-3', url: 'persons'}
+        {title: 'Transacciones', icon: 'simple-icon-shuffle', url: 'transactions'}
       ]
     },
     {

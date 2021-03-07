@@ -21,16 +21,18 @@ export class TableTransactionsComponent implements OnInit {
   @Input()
   totalPaginate: number;
   @Input()
+  max = 5;
+  @Input()
   maxSize = 5;
+  @Input()
+  commentary = false;
   public page: number;
-  public max: number;
 
   // tslint:disable-next-line:no-output-native
   @Output() pageChange: EventEmitter<number> = new EventEmitter();
 
   constructor() {
     this.page = 1;
-    this.max = 5;
   }
 
   ngOnInit(): void {

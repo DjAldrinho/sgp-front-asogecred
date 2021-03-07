@@ -24,6 +24,7 @@ import { ProcessesComponent } from './processes/processes.component';
 import { NewProcessComponent } from './processes/new-process/new-process.component';
 import { DetailProcessComponent } from './processes/detail-process/detail-process.component';
 import { DetailLawyerComponent } from './lawyers/detail-lawyer/detail-lawyer.component';
+import {TransactionsComponent} from './transactions/transactions.component';
 
 const routes: Routes = [
   {
@@ -56,6 +57,7 @@ const routes: Routes = [
       {path: 'processes', component: ProcessesComponent},
       {path: 'new-process', component: NewProcessComponent},
       {path: 'detail-process/:id', component: DetailProcessComponent},
+      {path: 'transactions', component: TransactionsComponent},
     ],
   },
 ];
