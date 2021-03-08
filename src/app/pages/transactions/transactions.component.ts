@@ -84,7 +84,8 @@ export class TransactionsComponent implements OnInit {
     this.getUsers();
     this.getAccounts();
     this.getTransactionTypes();
-    this.getTransactions();
+    this.getTransactions(this.page);
+
   }
 
   private initFormSearch(): void {
@@ -158,8 +159,7 @@ export class TransactionsComponent implements OnInit {
 
   setItems(items: number): void {
     this.max = items;
-    this.cleanFilter();
-    this.getTransactions(this.page);
+    this.transactionsFilter(this.page, true);
   }
 
   getDebtors(): void {
@@ -181,10 +181,7 @@ export class TransactionsComponent implements OnInit {
   }
 
   getTransactions(page?: number): void {
-    this.page = page;
-    if (page == null) {
-      this.page = 1;
-    }
+    this.page = page !== null ? page : 1;
     this.transactionsService.getTransactions(this.page, this.max)
       .subscribe(resp => {
         this.transactions = resp.transactions;
@@ -223,10 +220,28 @@ export class TransactionsComponent implements OnInit {
   }
 
   onPageChange(page): void {
+    this.transactionsFilter(page, true);
+  }
+
+  cleanFilter(page: number): void {
+    this.page = page;
+    this.setFormField('accountId');
+    this.setFormField('originId');
+    this.setFormField('adviserId');
+    this.setFormField('clientId');
+    this.setFormField('userId');
+    this.setFormField('processId');
+    this.setFormField('creditId');
+    this.setFormField('transactionTypeId');
+    this.setFormField('dateInitial');
+    this.setFormField('dateFinal');
     this.getTransactions(page);
   }
 
-  transactionsFilter(): void {
+  transactionsFilter(page?: number, transactions?: boolean): void {
+    if (page !== null) {
+      this.page = page;
+    }
     if (this.searchTransactionForm.valid) {
       const originId = this.getFormField('originId').value
         ? this.getFormField('originId').value.id
@@ -276,6 +291,10 @@ export class TransactionsComponent implements OnInit {
           SwalTool.onError('Error', 'Error al filtrar las transacciones');
         });
 
+    } else {
+      if (transactions) {
+        this.getTransactions();
+      }
     }
   }
 
@@ -380,19 +399,6 @@ export class TransactionsComponent implements OnInit {
       }
     }
     return classBadge;
-  }
-
-  cleanFilter(): void {
-    this.setFormField('accountId');
-    this.setFormField('originId');
-    this.setFormField('adviserId');
-    this.setFormField('clientId');
-    this.setFormField('userId');
-    this.setFormField('processId');
-    this.setFormField('creditId');
-    this.setFormField('transactionTypeId');
-    this.setFormField('dateInitial');
-    this.setFormField('dateFinal');
   }
 
 }

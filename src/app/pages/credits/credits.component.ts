@@ -60,7 +60,7 @@ export class CreditsComponent implements OnInit {
       if (dashboard !== undefined && dashboard !== null) {
         this.getCreditsDashboard(dashboard);
       } else {
-        this.getCredits();
+        this.getCredits(this.page);
       }
     });
     this.states = [
@@ -92,11 +92,7 @@ export class CreditsComponent implements OnInit {
       }
     });
 
-    this.getFormField('adviserId').valueChanges.subscribe(value => {
-      if (this.getFormField('adviserId').value.length > 0) {
-        this.getAdvisers(value);
-      }
-    });
+    this.getAdvisers();
 
   }
 
@@ -136,10 +132,7 @@ export class CreditsComponent implements OnInit {
   }
 
   getCredits(page?: number): void {
-    this.page = page;
-    if (page == null) {
-      this.page = 1;
-    }
+    this.page = page !== null ? page : 1;
     this.creditService.getCredits(this.page, this.max)
       .subscribe(resp => {
         this.credits = resp.credits;
@@ -212,12 +205,11 @@ export class CreditsComponent implements OnInit {
 
   setItems(items: number): void {
     this.max = items;
-    this.cleanFilter();
-    this.getCredits(this.page);
+    this.creditsFilter(this.page, true);
   }
 
-  getAdvisers(query: string): void {
-    this.advisersService.getAdvisers(1, 20, query)
+  getAdvisers(): void {
+    this.advisersService.getAdvisers(null, null, null, true)
       .subscribe((data) => {
         this.advisers = data.advisers;
       }, () => {
@@ -242,11 +234,24 @@ export class CreditsComponent implements OnInit {
   }
 
   onPageChange(page): void {
-    this.getCredits(page);
+    this.creditsFilter(page, true);
   }
 
-  creditsFilter(): void {
+  cleanFilter(): void {
+    this.setFormField('accountId');
+    this.setFormField('adviserId');
+    this.setFormField('clientId');
+    this.setFormField('stateId');
+    this.setFormField('firstCoDebtor');
+    this.setFormField('secondCoDebtor');
+    this.setFormField('dateInitial');
+    this.setFormField('dateFinal');
+    this.creditsFilter(this.page, true);
+  }
+
+  creditsFilter(page?: number, credits?: boolean): void {
     if (this.searchCreditForm.valid) {
+      this.page = page ?? null;
       const accountId = this.getFormField('accountId').value
         ? this.getFormField('accountId').value.id
         : null;
@@ -311,6 +316,10 @@ export class CreditsComponent implements OnInit {
           });
       }
 
+    } else {
+      if (credits) {
+        this.getCredits(page);
+      }
     }
   }
 
@@ -414,17 +423,6 @@ export class CreditsComponent implements OnInit {
       }
     }
     return classBadge;
-  }
-
-  cleanFilter(): void {
-    this.setFormField('accountId');
-    this.setFormField('adviserId');
-    this.setFormField('clientId');
-    this.setFormField('stateId');
-    this.setFormField('firstCoDebtor');
-    this.setFormField('secondCoDebtor');
-    this.setFormField('dateInitial');
-    this.setFormField('dateFinal');
   }
 
 }
