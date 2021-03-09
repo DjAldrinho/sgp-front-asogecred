@@ -41,12 +41,10 @@ export class SidebarService {
     },
     {
       id: 'reports',
-      title: 'Informes',
-      icon: 'iconsminds-statistic',
-      url: '',
-      items: [
-        {title: 'Transacciones', icon: 'simple-icon-shuffle', url: 'transactions'}
-      ]
+      title: 'Transacciones',
+      icon: 'simple-icon-shuffle',
+      url: '/transactions',
+      items: []
     },
     {
       id: 'settings',

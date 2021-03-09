@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Process } from 'src/app/models/process.model';
-import { Transaction } from 'src/app/models/transaction.model';
-import { ProcessesService } from 'src/app/services/processes.service';
-import { TransactionsService } from 'src/app/services/transactions.service';
-import { SwalTool } from 'src/app/tools/swal.tool';
-import { DepositProcessComponent } from '../deposit-process/deposit-process.component';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Process} from 'src/app/models/process.model';
+import {Transaction} from 'src/app/models/transaction.model';
+import {ProcessesService} from 'src/app/services/processes.service';
+import {TransactionsService} from 'src/app/services/transactions.service';
+import {SwalTool} from 'src/app/tools/swal.tool';
+import {DepositProcessComponent} from '../deposit-process/deposit-process.component';
 
 @Component({
   selector: 'app-detail-process',
@@ -25,14 +25,14 @@ export class DetailProcessComponent implements OnInit {
   public totalIncomes: number;
 
   constructor(private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private processesService: ProcessesService,
-    private transactionService: TransactionsService,
-    private dialog: MatDialog,) {
-      this.pageIncomes = 1;
-      this.totalIncomes = 0;
-      this.max = 5;
-    }
+              private activatedRoute: ActivatedRoute,
+              private processesService: ProcessesService,
+              private transactionService: TransactionsService,
+              private dialog: MatDialog,) {
+    this.pageIncomes = 1;
+    this.totalIncomes = 0;
+    this.max = 5;
+  }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(({id}) => {
@@ -44,14 +44,14 @@ export class DetailProcessComponent implements OnInit {
   getProcess(id: number): void {
     this.loading = true;
     this.processesService.getProcessById(id)
-    .subscribe(resp => {
-      this.process = resp;
-      this.loading = false;
-      this.getIncomes(this.pageIncomes);
-    }, err => {
-      this.loading = false;
-      this.router.navigateByUrl(`/dashboard`)
-    });
+      .subscribe(resp => {
+        this.process = resp;
+        this.loading = false;
+        this.getIncomes(this.pageIncomes);
+      }, () => {
+        this.loading = false;
+        this.router.navigateByUrl(`/dashboard`);
+      });
   }
 
   onPageIncomesChange(page): void {
@@ -63,13 +63,13 @@ export class DetailProcessComponent implements OnInit {
     if (page == null) {
       this.pageIncomes = 1;
     }
-    this.transactionService.getTransactions(this.pageIncomes, this.max, null, null, 'process_payment', this.idProcess)
-    .subscribe(resp => {
-      this.incomes = resp.transactions;
-      this.totalIncomes = resp.total;
-    }, err => {
-      SwalTool.onError('Error al cargar los depositos');
-    });
+    this.transactionService.getTransactions(this.pageIncomes, this.max, null, null, 'process_payment', null, null, this.idProcess)
+      .subscribe(resp => {
+        this.incomes = resp.transactions;
+        this.totalIncomes = resp.total;
+      }, () => {
+        SwalTool.onError('Error al cargar los depositos');
+      });
   }
 
   openModalDeposit(): void {

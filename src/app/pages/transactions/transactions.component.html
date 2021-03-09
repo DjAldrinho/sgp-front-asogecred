@@ -227,6 +227,7 @@
 
       <div class="form-row mr-3" *ngIf="valueFilter">
         <button
+          type="button"
           [routerLink]="'/transactions'"
           (click)="cleanFilter(page)"
           class="btn btn-outline-primary d-block btn-xs"
@@ -238,7 +239,7 @@
       <div class="form-row mr-3">
         <button
           (click)="valueFilter = !valueFilter"
-          type="submit"
+          type="button"
           class="btn btn-primary d-block btn-xs"
         >
           {{valueFilter ? 'Ocultar filtros' : 'Ver filtros'}}

@@ -47,7 +47,6 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCreditsExpired();
     this.fulldata
       .subscribe(resp => {
         this.transactions = resp.transactions.transactions;
@@ -58,7 +57,7 @@ export class DashboardComponent implements OnInit {
           {title: 'Egresos del mes', value: this.dashboard.total_retire, icon: 'iconsminds-downward', money: true, type: null},
           {title: 'Créditos del mes', value: this.dashboard.total_credits, icon: 'iconsminds-diploma-2', money: false, type: 'ofTheMonth'},
           {title: 'Créditos activos', value: this.dashboard.active_credits, icon: 'simple-icon-book-open', money: false, type: 'assets'},
-          {title: 'Créditos atrasados', value: this.creditsExpired, icon: 'iconsminds-close', money: false, type: 'overdue'}
+          {title: 'Créditos atrasados', value: this.dashboard.expired_credits, icon: 'iconsminds-close', money: false, type: 'overdue'}
         ];
       }, () => {
         Swal.fire('Error', 'Ha ocurrido un error inesperado', 'error');
@@ -75,8 +74,7 @@ export class DashboardComponent implements OnInit {
     this.creditsService.getCreditsExpired()
       .subscribe((resp) => {
         this.creditsExpired = resp.total;
-      }, (error) => {
-        console.log('error', error);
+      }, () => {
       });
   }
 

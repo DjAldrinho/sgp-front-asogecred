@@ -1,10 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {Credit} from '../models/credit.model';
-import {map} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
-import {Transaction} from '../models/transaction.model';
 
 const base_url = environment.base_url;
 
@@ -15,14 +10,14 @@ export class ReportsService {
 
   private section = 'report';
 
-  constructor(private http: HttpClient) {
+  constructor() {
   }
 
   credits(type: string, page?: number, perPage?: number,
           accountId?: number, clientId?: number,
           firstCoDebtorId?: number, secondCoDebtorId?: number,
-          adviserId?: number, all: boolean = false,
-          status?: string, date?: string, refinanced?: boolean): string {
+          adviserId?: number, all: boolean = false, status?: string,
+          dateInitial?: string, dateFinal?: string, refinanced?: boolean): string {
 
     if (page == null) {
       page = 1;
@@ -54,9 +49,13 @@ export class ReportsService {
     if (status != null) {
       statusUrl = `&status=${status}`;
     }
-    let dateUrl = '';
-    if (date != null) {
-      dateUrl = `&${date}`;
+    let dateInitialUrl = '';
+    if (dateInitial != null) {
+      dateInitialUrl = `&start_date=${dateInitial}`;
+    }
+    let dateFinalUrl = '';
+    if (dateFinal != null) {
+      dateFinalUrl = `&end_date=${dateFinal}`;
     }
     let refinancedUrl = '';
     if (refinanced != null) {
@@ -64,16 +63,16 @@ export class ReportsService {
     }
 
     return all
-      ? `${base_url}/${this.section}/credits?all=${true}&type=${type}${account}${client}${firstCoDebtor}${secondCoDebtor}${adviser}${statusUrl}${dateUrl}${refinancedUrl}`
+      ? `${base_url}/${this.section}/credits?all=${true}&type=${type}${account}${client}${firstCoDebtor}${secondCoDebtor}${adviser}${statusUrl}${dateInitialUrl}${dateFinalUrl}${refinancedUrl}`
       // tslint:disable-next-line:max-line-length
-      : `${base_url}/${this.section}/credits?page=${page}&per_page=${perPage}&type=${type}${account}${client}${firstCoDebtor}${secondCoDebtor}${adviser}${statusUrl}${dateUrl}${refinancedUrl}`;
+      : `${base_url}/${this.section}/credits?page=${page}&per_page=${perPage}&type=${type}${account}${client}${firstCoDebtor}${secondCoDebtor}${adviser}${statusUrl}${dateInitialUrl}${dateFinalUrl}${refinancedUrl}`;
   }
 
   transactions(
     type: string, page?: number, perPage?: number,
     accountId?: number, creditId?: number, origin?: string,
-    clientId?: number, userId?: number, processId?: number,
-    adviserId?: number, date?: string, transactionType?: string): string {
+    clientId?: number, userId?: number, processId?: number, adviserId?: number,
+    dateInitial?: string, dateFinal?: string, transactionType?: string): string {
 
     if (page == null) {
       page = 1;
@@ -109,14 +108,18 @@ export class ReportsService {
     if (adviserId != null) {
       adviser = `&adviser=${adviserId}`;
     }
-    let dateUrl = '';
-    if (date != null) {
-      dateUrl = `&${date}`;
+    let dateInitialUrl = '';
+    if (dateInitial != null) {
+      dateInitialUrl = `&start_date=${dateInitial}`;
+    }
+    let dateFinalUrl = '';
+    if (dateFinal != null) {
+      dateFinalUrl = `&end_date=${dateFinal}`;
     }
     let transactionTypeUrl = '';
     if (transactionType != null) {
       transactionTypeUrl = `&type_transaction=${transactionType}`;
     }
-    return `${base_url}/${this.section}/transactions?page=${page}&per_page=${perPage}&type=${type}${account}${credit}${origins}${client}${user}${process}${adviser}${dateUrl}${transactionTypeUrl}`;
+    return `${base_url}/${this.section}/transactions?page=${page}&per_page=${perPage}&type=${type}${account}${credit}${origins}${client}${user}${process}${adviser}${dateInitialUrl}${dateFinalUrl}${transactionTypeUrl}`;
   }
 }

@@ -29,7 +29,8 @@ export class CreditsService {
              accountId?: number, clientId?: number,
              firstCoDebtorId?: number, secondCoDebtorId?: number,
              adviserId?: number, all: boolean = false,
-             status?: string, date?: string, refinanced?: boolean): Observable<{ credits: Credit[], total: number }> {
+             status?: string, dateInitial?: string,
+             dateFinal?: string, refinanced?: boolean): Observable<{ credits: Credit[], total: number }> {
 
     if (page == null) {
       page = 1;
@@ -61,9 +62,13 @@ export class CreditsService {
     if (status != null) {
       statusUrl = `&status=${status}`;
     }
-    let dateUrl = '';
-    if (date != null) {
-      dateUrl = `&${date}`;
+    let dateInitialUrl = '';
+    if (dateInitial != null) {
+      dateInitialUrl = `&start_date=${dateInitial}`;
+    }
+    let dateFinalUrl = '';
+    if (dateFinal != null) {
+      dateFinalUrl = `&end_date=${dateFinal}`;
     }
     let refinancedUrl = '';
     if (refinanced != null) {
@@ -71,9 +76,9 @@ export class CreditsService {
     }
 
     const url = all
-      ? `${base_url}/credits/all?${account}${client}${firstCoDebtor}${secondCoDebtor}${adviser}${statusUrl}${dateUrl}${refinancedUrl}`
+      ? `${base_url}/credits/all?${account}${client}${firstCoDebtor}${secondCoDebtor}${adviser}${statusUrl}${dateInitialUrl}${dateFinalUrl}${refinancedUrl}`
       // tslint:disable-next-line:max-line-length
-      : `${base_url}/credits/all?page=${page}&per_page=${perPage}${account}${client}${firstCoDebtor}${secondCoDebtor}${adviser}${statusUrl}${dateUrl}${refinancedUrl}`;
+      : `${base_url}/credits/all?page=${page}&per_page=${perPage}${account}${client}${firstCoDebtor}${secondCoDebtor}${adviser}${statusUrl}${dateInitialUrl}${dateFinalUrl}${refinancedUrl}`;
     return this.http.get(url)
       .pipe(
         map((resp: any) => {
@@ -88,7 +93,7 @@ export class CreditsService {
   getCreditsExpired(page?: number, perPage?: number,
                     accountId?: number, clientId?: number,
                     firstCoDebtorId?: number, secondCoDebtorId?: number,
-                    date?: string, all: boolean = false): Observable<{ credits: Credit[], total: number }> {
+                    dateInitial?: string, dateFinal?: string, all: boolean = false): Observable<{ credits: Credit[], total: number }> {
 
     if (page == null) {
       page = 1;
@@ -112,14 +117,18 @@ export class CreditsService {
     if (secondCoDebtorId != null) {
       secondCoDebtor = `&second_co_debtor=${secondCoDebtorId}`;
     }
-    let dateUrl = '';
-    if (date != null) {
-      dateUrl = `&${date}`;
+    let dateInitialUrl = '';
+    if (dateInitial != null) {
+      dateInitialUrl = `&start_date=${dateInitial}`;
+    }
+    let dateFinalUrl = '';
+    if (dateFinal != null) {
+      dateFinalUrl = `&end_date=${dateFinal}`;
     }
 
     const url = all
-      ? `${base_url}/credits/expired?all=${true}${account}${client}${firstCoDebtor}${secondCoDebtor}${dateUrl}`
-      : `${base_url}/credits/expired?page=${page}&per_page=${perPage}${account}${client}${firstCoDebtor}${secondCoDebtor}${dateUrl}`;
+      ? `${base_url}/credits/expired?all=${true}${account}${client}${firstCoDebtor}${secondCoDebtor}${dateInitialUrl}${dateFinalUrl}`
+      : `${base_url}/credits/expired?page=${page}&per_page=${perPage}${account}${client}${firstCoDebtor}${secondCoDebtor}${dateInitialUrl}${dateFinalUrl}`;
     return this.http.get(url)
       .pipe(
         map((resp: any) => {

@@ -27,6 +27,7 @@
         <div class="search-sm d-inline-blockfloat-md-left mr-1 mb-1 align-top">
           <input class="form-control"
                  placeholder="estado"
+                 autocomplete="off"
                  formControlName="stateId"
                  [matAutocomplete]="stateComplete"
                  id="searchState">
@@ -48,6 +49,7 @@
         <div class="search-sm d-inline-block w-100 float-md-left mr-1 mb-1 align-top">
           <input class="form-control w-100"
                  placeholder="asesor"
+                 autocomplete="off"
                  formControlName="adviserId"
                  [matAutocomplete]="adviserComplete"
                  id="searchAdviser">
@@ -69,6 +71,7 @@
           <label for="dateInitial">Fecha de inicio</label>
           <input
             type="date"
+            autocomplete="off"
             class="form-control"
             id="dateInitial"
             formControlName="dateInitial"
@@ -83,6 +86,7 @@
           <label for="dateFinal">Fecha final</label>
           <input
             type="date"
+            autocomplete="off"
             class="form-control"
             id="dateFinal"
             formControlName="dateFinal"
@@ -101,6 +105,7 @@
         <div class="search-sm d-inline-block w-100 float-md-left mr-1 mb-1 align-top">
           <input class="form-control w-100"
                  placeholder="cuenta"
+                 autocomplete="off"
                  formControlName="accountId"
                  [matAutocomplete]="accountComplete"
                  id="searchAccount">
@@ -122,6 +127,7 @@
         <div class="search-sm d-inline-block w-100 float-md-left mr-1 mb-1 align-top">
           <input class="form-control w-100"
                  placeholder="cliente"
+                 autocomplete="off"
                  formControlName="clientId"
                  [matAutocomplete]="clientComplete"
                  id="searchClient">
@@ -143,6 +149,7 @@
         <div class="search-sm d-inline-block w-100 float-md-left mr-1 mb-1 align-top">
           <input class="form-control w-100"
                  placeholder="codeudor"
+                 autocomplete="off"
                  formControlName="firstCoDebtor"
                  [matAutocomplete]="firstCoDebtorComplete"
                  id="searchDebtor">
@@ -164,6 +171,7 @@
         <div class="search-sm d-inline-block w-100 float-md-left mr-1 mb-1 align-top">
           <input class="form-control w-100"
                  placeholder="2° codeudor"
+                 autocomplete="off"
                  formControlName="secondCoDebtor"
                  [matAutocomplete]="secondCoDebtorComplete"
                  id="searchCodebtor">
@@ -215,6 +223,7 @@
 
       <div class="form-row mr-3" *ngIf="valueFilter">
         <button
+          type="button"
           [routerLink]="'/credits'"
           (click)="cleanFilter()"
           class="btn btn-outline-primary d-block btn-xs"
@@ -225,8 +234,8 @@
 
       <div class="form-row mr-3">
         <button
+          type="button"
           (click)="valueFilter = !valueFilter"
-          type="submit"
           class="btn btn-primary d-block btn-xs"
         >
           {{valueFilter?'Ocultar filtros':'Ver filtros'}}

@@ -56,6 +56,7 @@ export class CreditsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.initFormSearch();
     this.route.queryParams.subscribe(({dashboard}) => {
       if (dashboard !== undefined && dashboard !== null) {
         this.getCreditsDashboard(dashboard);
@@ -71,7 +72,7 @@ export class CreditsComponent implements OnInit {
       {id: 'L', name: 'Atrasado'},
       {id: 'C', name: 'Cancelado'}
     ];
-    this.initFormSearch();
+
     this.getAccounts();
 
     this.getFormField('clientId').valueChanges.subscribe(value => {
@@ -144,11 +145,11 @@ export class CreditsComponent implements OnInit {
 
   getCreditsDashboard(type: string): void {
     if (type === 'ofTheMonth') {
-      const startOfMonth = moment().startOf('month').format('YYYY/MM/DD');
-      const endOfMonth = moment().format('YYYY/MM/DD');
-      const date = `start_date=${startOfMonth}&end_date=${endOfMonth}`;
+      const startOfMonth = moment().startOf('month').format('YYYY-MM-DD');
+      const endOfMonth = moment().format('YYYY-MM-DD');
+      this.searchCreditForm.patchValue({dateInitial: startOfMonth, dateFinal: endOfMonth});
       this.creditService.getCredits(this.page, this.max, null, null,
-        null, null, null, null, null, date)
+        null, null, null, null, null, startOfMonth, endOfMonth)
         .subscribe((resp) => {
           this.credits = resp.credits;
           this.total = resp.total;
@@ -158,11 +159,11 @@ export class CreditsComponent implements OnInit {
           SwalTool.onError('Error', 'Error al cargar los créditos del mes');
         });
     } else if (type === 'assets') {
-      const startOfMonth = moment().startOf('month').format('YYYY/MM/DD');
-      const endOfMonth = moment().format('YYYY/MM/DD');
-      const date = `start_date=${startOfMonth}&end_date=${endOfMonth}`;
+      const startOfMonth = moment().startOf('month').format('YYYY-MM-DD');
+      const endOfMonth = moment().format('YYYY-MM-DD');
+      this.searchCreditForm.patchValue({dateInitial: startOfMonth, dateFinal: endOfMonth});
       this.creditService.getCredits(this.page, this.max, null, null,
-        null, null, null, null, 'A', date)
+        null, null, null, null, 'A', startOfMonth, endOfMonth)
         .subscribe((resp) => {
           this.credits = resp.credits;
           this.total = resp.total;
@@ -276,10 +277,6 @@ export class CreditsComponent implements OnInit {
       const dateFinal = this.getFormField('dateFinal').value
         ? this.getFormField('dateFinal').value
         : null;
-      let date = null;
-      if (dateInitial !== null && dateFinal !== null) {
-        date = `start_date=${dateInitial}&end_date=${dateFinal}`;
-      }
       let refinanced = null;
       let expired = false;
       if (stateId !== null) {
@@ -294,7 +291,7 @@ export class CreditsComponent implements OnInit {
 
       if (!expired) {
         this.creditService.getCredits(this.page, this.max, accountId, clientId,
-          firstCoDebtor, secondCoDebtor, adviserId, null, stateId, date, refinanced)
+          firstCoDebtor, secondCoDebtor, adviserId, null, stateId, dateInitial, dateFinal, refinanced)
           .subscribe((resp) => {
             this.credits = resp.credits;
             this.total = resp.total;
@@ -305,7 +302,7 @@ export class CreditsComponent implements OnInit {
           });
       } else {
         this.creditService.getCreditsExpired(this.page, this.max, accountId, clientId,
-          firstCoDebtor, secondCoDebtor, date)
+          firstCoDebtor, secondCoDebtor, dateInitial, dateFinal)
           .subscribe((resp) => {
             this.credits = resp.credits;
             this.total = resp.total;
@@ -356,10 +353,6 @@ export class CreditsComponent implements OnInit {
       const dateFinal = this.getFormField('dateFinal').value
         ? this.getFormField('dateFinal').value
         : null;
-      let date = null;
-      if (dateInitial !== null && dateFinal !== null) {
-        date = `start_date=${dateInitial}&end_date=${dateFinal}`;
-      }
       let refinanced = null;
       if (stateId !== null && stateId === 'R') {
         refinanced = true;
@@ -367,7 +360,7 @@ export class CreditsComponent implements OnInit {
       }
 
       const route = this.reportService.credits(type, this.page, this.max, accountId, clientId,
-        firstCoDebtor, secondCoDebtor, adviserId, null, stateId, date, refinanced);
+        firstCoDebtor, secondCoDebtor, adviserId, null, stateId, dateInitial, dateFinal, refinanced);
 
       const fileType = type === 'pdf' ? type : 'xlsx';
       this.blobService.getFile(route, `reporte-creditos.${fileType}`, true)
