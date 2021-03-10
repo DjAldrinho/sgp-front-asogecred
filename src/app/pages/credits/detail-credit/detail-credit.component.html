@@ -6,7 +6,8 @@
     >
       <i class="simple-icon-arrow-left align-middle title-md"></i>
     </a>
-    <span>Detalles del crédito</span>
+    <span>Detalles del crédito&nbsp; &nbsp;</span> 
+    <span *ngIf="credit" class="badge badge-secondary">{{credit.code}}</span> 
   </h1>
 </div>
 
