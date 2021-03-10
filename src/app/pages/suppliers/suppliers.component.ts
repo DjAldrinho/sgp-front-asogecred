@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { TypeModal } from 'src/app/enums/modals.enum';
-import { Supplier } from 'src/app/models/supplier.model';
-import { SuppliersService } from 'src/app/services/suppliers.service';
-import { SwalTool } from 'src/app/tools/swal.tool';
-import { AddEditSupplierComponent } from './add-edit-supplier/add-edit-supplier.component';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {TypeModal} from 'src/app/enums/modals.enum';
+import {Supplier} from 'src/app/models/supplier.model';
+import {SuppliersService} from 'src/app/services/suppliers.service';
+import {SwalTool} from 'src/app/tools/swal.tool';
+import {AddEditSupplierComponent} from './add-edit-supplier/add-edit-supplier.component';
 import Swal from 'sweetalert2';
+import {AbstractControl, FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-suppliers',
@@ -15,19 +16,56 @@ import Swal from 'sweetalert2';
 export class SuppliersComponent implements OnInit {
 
   public suppliers: Supplier[] = [];
+  public searchSupplierForm: FormGroup;
 
   public page: number;
   public total: number;
   public max: number;
 
   constructor(private supplierService: SuppliersService,
-    private dialog: MatDialog,) {
+              private dialog: MatDialog,
+              private fb: FormBuilder) {
     this.page = 1;
     this.total = 0;
     this.max = 10;
   }
 
   ngOnInit(): void {
+    this.getSuppliers();
+    this.initFormSearch();
+  }
+
+  private initFormSearch(): void {
+    this.searchSupplierForm = this.fb.group({
+      supplierSearch: ['']
+    });
+  }
+
+  getFormField(field: string): AbstractControl {
+    return this.searchSupplierForm.get(field);
+  }
+
+  suppliersFilter(page?: number): void {
+    if (this.searchSupplierForm.valid) {
+      this.page = page ?? null;
+      const supplierSearch = this.getFormField('supplierSearch').value
+        ? this.getFormField('supplierSearch').value
+        : null;
+      if (supplierSearch) {
+        this.supplierService.getSuppliers(this.page, this.max, null, supplierSearch)
+          .subscribe(resp => {
+            this.suppliers = resp.suppliers;
+            this.total = resp.total;
+          }, () => {
+            SwalTool.onError('Error al cargar los resultados de la busqueda');
+          });
+      }
+
+    }
+  }
+
+  clearFilter(): void {
+    this.searchSupplierForm.patchValue({supplierSearch: null});
     this.getSuppliers();
   }
 
@@ -37,13 +75,12 @@ export class SuppliersComponent implements OnInit {
       this.page = 1;
     }
     this.supplierService.getSuppliers(this.page, this.max)
-    .subscribe(resp => {
-      this.suppliers = resp.suppliers;
-      console.log(this.suppliers);
-      this.total = resp.total;
-    }, err => {
-      SwalTool.onError('Error al cargar los proveedores');
-    });
+      .subscribe(resp => {
+        this.suppliers = resp.suppliers;
+        this.total = resp.total;
+      }, () => {
+        SwalTool.onError('Error al cargar los proveedores');
+      });
   }
 
   onPageChange(page): void {
@@ -92,7 +129,7 @@ export class SuppliersComponent implements OnInit {
             this.getSuppliers(this.page);
             SwalTool.onMessage('Proveedor eliminado', `El proveedor ${supplier.name} fue eliminado correctamente`);
           }, () => {
-            SwalTool.onError("Error al eliminar el proveedor");
+            SwalTool.onError('Error al eliminar el proveedor');
           });
       }
     });

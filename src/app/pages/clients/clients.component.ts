@@ -7,6 +7,7 @@ import {AddEditClientComponent} from './add-edit-client/add-edit-client.componen
 import {TypeModal} from 'src/app/enums/modals.enum';
 import {SwalTool} from 'src/app/tools/swal.tool';
 import {ModalMassiveLoadComponent} from './modal-massive-load/modal-massive-load.component';
+import {AbstractControl, FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-clients',
@@ -16,19 +17,56 @@ import {ModalMassiveLoadComponent} from './modal-massive-load/modal-massive-load
 export class ClientsComponent implements OnInit {
 
   public clients: Client[] = [];
+  public searchClientForm: FormGroup;
 
   public page: number;
   public total: number;
   public max: number;
 
   constructor(private clientService: ClientsService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private fb: FormBuilder) {
     this.page = 1;
     this.total = 0;
     this.max = 10;
   }
 
   ngOnInit(): void {
+    this.getClients();
+    this.initFormSearch();
+  }
+
+  private initFormSearch(): void {
+    this.searchClientForm = this.fb.group({
+      clientSearch: ['']
+    });
+  }
+
+  getFormField(field: string): AbstractControl {
+    return this.searchClientForm.get(field);
+  }
+
+  clientsFilter(page?: number): void {
+    if (this.searchClientForm.valid) {
+      this.page = page ?? null;
+      const clientSearch = this.getFormField('clientSearch').value
+        ? this.getFormField('clientSearch').value
+        : null;
+      if (clientSearch) {
+        this.clientService.getClients(this.page, this.max, clientSearch)
+          .subscribe(resp => {
+            this.clients = resp.clients;
+            this.total = resp.total;
+          }, () => {
+            SwalTool.onError('Error al cargar los resultados de la busqueda');
+          });
+      }
+
+    }
+  }
+
+  clearFilter(): void {
+    this.searchClientForm.patchValue({clientSearch: null});
     this.getClients();
   }
 
@@ -41,8 +79,7 @@ export class ClientsComponent implements OnInit {
       .subscribe(resp => {
         this.clients = resp.clients;
         this.total = resp.total;
-        console.log(this.clients);
-      }, err => {
+      }, () => {
         SwalTool.onError('Error al cargar los clientes');
       });
   }

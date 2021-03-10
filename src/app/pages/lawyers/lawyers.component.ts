@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import {MatDialog} from '@angular/material/dialog';
 import {AddEditLawyerComponent} from './add-edit-lawyer/add-edit-lawyer.component';
 import {TypeModal} from '../../enums/modals.enum';
+import {AbstractControl, FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-lawyers',
@@ -15,18 +16,57 @@ import {TypeModal} from '../../enums/modals.enum';
 export class LawyersComponent implements OnInit {
 
   public lawyers: Lawyer[] = [];
+  public searchLawyerForm: FormGroup;
 
   public page: number;
   public total: number;
   public max: number;
 
-  constructor(private lawyerService: LawyersService, private dialog: MatDialog) {
+  constructor(private lawyerService: LawyersService,
+              private dialog: MatDialog,
+              private fb: FormBuilder) {
     this.page = 1;
     this.total = 0;
     this.max = 10;
   }
 
   ngOnInit(): void {
+    this.getLawyers();
+    this.initFormSearch();
+  }
+
+
+  private initFormSearch(): void {
+    this.searchLawyerForm = this.fb.group({
+      lawyerSearch: ['']
+    });
+  }
+
+  getFormField(field: string): AbstractControl {
+    return this.searchLawyerForm.get(field);
+  }
+
+  lawyersFilter(page?: number): void {
+    if (this.searchLawyerForm.valid) {
+      this.page = page ?? null;
+      const lawyerSearch = this.getFormField('lawyerSearch').value
+        ? this.getFormField('lawyerSearch').value
+        : null;
+      if (lawyerSearch) {
+        this.lawyerService.getLawyers(this.page, this.max, lawyerSearch)
+          .subscribe(resp => {
+            this.lawyers = resp.lawyers;
+            this.total = resp.total;
+          }, () => {
+            SwalTool.onError('Error al cargar los resultados de la busqueda');
+          });
+      }
+
+    }
+  }
+
+  clearFilter(): void {
+    this.searchLawyerForm.patchValue({lawyerSearch: null});
     this.getLawyers();
   }
 

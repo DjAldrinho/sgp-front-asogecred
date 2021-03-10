@@ -6,6 +6,7 @@ import {SwalTool} from '../../tools/swal.tool';
 import Swal from 'sweetalert2';
 import {AddEditAdvisersComponent} from './add-edit-advisers/add-edit-advisers.component';
 import {TypeModal} from '../../enums/modals.enum';
+import {AbstractControl, FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-advisers',
@@ -15,12 +16,15 @@ import {TypeModal} from '../../enums/modals.enum';
 export class AdvisersComponent implements OnInit {
 
   public advisers: Adviser[] = [];
+  public searchAdviserForm: FormGroup;
 
   public page: number;
   public total: number;
   public max: number;
 
-  constructor(private adviserService: AdvisersService, private dialog: MatDialog) {
+  constructor(private adviserService: AdvisersService,
+              private dialog: MatDialog,
+              private fb: FormBuilder) {
     this.page = 1;
     this.total = 0;
     this.max = 10;
@@ -28,9 +32,43 @@ export class AdvisersComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAdvisers();
+    this.initFormSearch();
   }
 
-  // tslint:disable-next-line:variable-name
+  private initFormSearch(): void {
+    this.searchAdviserForm = this.fb.group({
+      adviserSearch: ['']
+    });
+  }
+
+  getFormField(field: string): AbstractControl {
+    return this.searchAdviserForm.get(field);
+  }
+
+  advisersFilter(page?: number): void {
+    if (this.searchAdviserForm.valid) {
+      this.page = page ?? null;
+      const adviserSearch = this.getFormField('adviserSearch').value
+        ? this.getFormField('adviserSearch').value
+        : null;
+      if (adviserSearch) {
+        this.adviserService.getAdvisers(this.page, this.max, adviserSearch)
+          .subscribe(({advisers, total}) => {
+            this.advisers = advisers;
+            this.total = total;
+          }, () => {
+            SwalTool.onError('Error al cargar los resultados de la busqueda');
+          });
+      }
+
+    }
+  }
+
+  clearFilter(): void {
+    this.searchAdviserForm.patchValue({adviserSearch: null});
+    this.getAdvisers();
+  }
+
   getAdvisers(page?: number, query?: string): void {
     this.page = page;
     if (page == null) {

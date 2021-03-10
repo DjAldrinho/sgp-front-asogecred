@@ -22,22 +22,46 @@
 </div>
 
 <!-- buscador -->
+<form
+  autocomplete="off"
+  class="m-0 p-0 w-100"
+  [formGroup]="searchClientForm"
+  (ngSubmit)="clientsFilter()"
+>
 <div class="mb-2">
-  <a class="btn pt-0 pl-0 d-inline-block d-md-none" data-toggle="collapse" href="#displayOptions" role="button"
-     aria-expanded="true" aria-controls="displayOptions">
-    Display Options
-    <i class="simple-icon-arrow-down align-middle"></i>
-  </a>
-  <div class="collapse d-md-block" id="displayOptions">
-    <div class="d-block d-md-inline-block">
-      <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-        <label>
-          <input placeholder="Buscar...">
-        </label>
+  <div class="d-flex flex-row">
+    <div class="collapse d-md-block w-25" id="displayOptions">
+      <div class="d-block d-md-inline-block w-100">
+        <div class="search-sm d-inline-block w-100 float-md-left mr-1 mb-1 align-top">
+          <label class="w-100">
+            <input
+              type="text"
+              autocomplete="off"
+              placeholder="Nombre o documento"
+              class="form-control w-100"
+              id="clientSearch"
+              formControlName="clientSearch"
+            />
+          </label>
+        </div>
       </div>
     </div>
+    <button
+      type="submit"
+      class="btn btn-clients btn-primary d-block btn-xs ml-2"
+    >
+      Buscar
+    </button>
+    <button
+      (click)="clearFilter()"
+      type="button"
+      class="btn btn-clients btn-outline-primary d-block btn-xs ml-2"
+    >
+      Limpiar busqueda
+    </button>
   </div>
 </div>
+</form>
 <!-- fin buscador -->
 
 <div class="separator mb-5"></div>

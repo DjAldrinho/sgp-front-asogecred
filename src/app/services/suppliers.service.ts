@@ -1,10 +1,10 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
-import { SupplierForm } from '../interfaces/supplier-form.interface';
-import { Supplier } from '../models/supplier.model';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {environment} from 'src/environments/environment';
+import {SupplierForm} from '../interfaces/supplier-form.interface';
+import {Supplier} from '../models/supplier.model';
 
 const base_url = environment.base_url;
 
@@ -13,33 +13,36 @@ const base_url = environment.base_url;
 })
 export class SuppliersService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  getSuppliers(page?: number, per_page?: number, all: boolean = false): Observable<{suppliers: Supplier[], total:number}>{
-
-    let url = "";
-
-    if(all){
-      url = `${base_url}/suppliers/all`;
-    }else{
-      url = `${base_url}/suppliers/all?page=${page}&per_page=${per_page}`;
-    }
+  // tslint:disable-next-line:max-line-length
+  getSuppliers(page?: number, perPage?: number, all: boolean = false, query?: string): Observable<{ suppliers: Supplier[], total: number }> {
 
     if (page == null) {
       page = 1;
     }
-    if (per_page == null) {
-      per_page = 10
+    if (perPage == null) {
+      perPage = 10;
     }
 
+    let search = '';
+    if (query != null) {
+      search = `&search=${query}`;
+    }
+
+    const url = all
+      ? `${base_url}/suppliers/all`
+      : `${base_url}/suppliers/all?page=${page}&per_page=${perPage}${search}`;
+
     return this.http.get(url)
-    .pipe(
-      map((resp: any) => {
-        const suppliers: Supplier[] = resp.suppliers.data;
-        const total: number = resp.suppliers.total;
-        return {suppliers, total};
-      })
-    );
+      .pipe(
+        map((resp: any) => {
+          const suppliers: Supplier[] = resp.suppliers.data;
+          const total: number = resp.suppliers.total;
+          return {suppliers, total};
+        })
+      );
   }
 
   createSupplier(supplier: SupplierForm): Observable<any> {
