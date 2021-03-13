@@ -48,10 +48,6 @@ export class AddEditLawyerComponent implements OnInit {
       default:
         if (this.type === TypeModal.SHOW) {
           this.addEditLawyerForm.disable();
-        } else {
-          this.getFormField('name').disable();
-          this.getFormField('document_type').disable();
-          this.getFormField('document_number').disable();
         }
 
         this.addEditLawyerForm.patchValue({

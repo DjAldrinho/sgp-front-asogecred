@@ -60,6 +60,13 @@
   <div class="col-12 mb-4">
     <div class="card">
       <div class="card-body">
+        <h5 class="card-title d-flex flex-row justify-content-between align-items-center">
+          <span></span>
+          <span *ngIf="total" class="d-flex flex-column justify-content-end align-items-end">
+            <small class="text-small">Total de asesores:</small>
+            {{total}}
+          </span>
+        </h5>
         <table class="table">
           <thead>
             <tr>

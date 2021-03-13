@@ -12,7 +12,6 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import {LawyersComponent} from './lawyers/lawyers.component';
 import {PagesComponent} from './pages.component';
 import {PayrollsComponent} from './payrolls/payrolls.component';
-import {PersonsComponent} from './persons/persons.component';
 import {ProfileComponent} from './profile/profile.component';
 import { SuppliersComponent } from './suppliers/suppliers.component';
 import { UsersComponent } from './users/users.component';
@@ -34,7 +33,6 @@ const routes: Routes = [
     canLoad: [AuthGuard],
     children: [
       {path: '', component: DashboardComponent},
-      {path: 'persons', component: PersonsComponent},
       {path: 'lawyers', component: LawyersComponent},
       {path: 'detail-lawyer/:id', component: DetailLawyerComponent},
       {path: 'profile', component: ProfileComponent},

@@ -16,6 +16,7 @@ export class ModalMassiveLoadComponent implements OnInit {
   public approveClientForm: FormGroup;
   public loading = false;
   public fileText = 'Descargar plantilla';
+  public uploadText = 'Cargar archivo';
   public fileLoading = false;
   public fileToUpload: File;
 
@@ -50,11 +51,17 @@ export class ModalMassiveLoadComponent implements OnInit {
 
   massiveLoad(): void {
     if (this.approveClientForm.valid) {
+      this.uploadText = 'Cargando...';
+      this.loading = true;
       this.clientsService.massiveLoad(this.fileToUpload)
         .subscribe(() => {
+          this.uploadText = 'Cargar archivo';
+          this.loading = false;
           SwalTool.onMessage('Clientes cargados', `Los clientes se han cargado correctamente`);
           this.dialogRef.close('YES');
         }, () => {
+          this.uploadText = 'Cargar archivo';
+          this.loading = false;
           SwalTool.onError('Error al cargar los clientes');
         });
     }

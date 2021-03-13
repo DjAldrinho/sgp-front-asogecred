@@ -96,7 +96,7 @@
                 (optionSelected)="selectDebtor($event.option.value)"
               >
                 <mat-option *ngFor="let debtor of debtors" [value]="debtor">
-                  {{ debtor.document_number }} {{ debtor.name | uppercase }} 
+                  {{ debtor.document_number }} {{ debtor.name | uppercase }}
                 </mat-option>
               </mat-autocomplete>
               <small
@@ -250,6 +250,8 @@
                 formControlName="interest"
                 mask="percent"
                 suffix="%"
+                mask="separator.2"
+                decimalMarker="."
               />
               <small
                 *ngIf="
@@ -269,6 +271,8 @@
                 formControlName="commission"
                 mask="percent"
                 suffix="%"
+                mask="separator.2"
+                decimalMarker="."
               />
               <small
                 *ngIf="

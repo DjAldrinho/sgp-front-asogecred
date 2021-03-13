@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AppRoutingModule } from '../app-routing.module';
-import { PersonsComponent } from './persons/persons.component';
 import { ProfileComponent } from './profile/profile.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from '../interceptors/interceptor.service';
@@ -57,12 +56,12 @@ import {TableAdvisersComponent} from '../components/table-advisers/table-adviser
 import {CardLawyerDetailComponent} from '../components/card-lawyer-detail/card-lawyer-detail.component';
 import {CardAdviserDetailComponent} from '../components/card-adviser-detail/card-adviser-detail.component';
 import { TransactionsComponent } from './transactions/transactions.component';
+import { ModalUploadFilesCreditsComponent } from './credits/modal-upload-files-credits/modal-upload-files-credits.component';
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    PersonsComponent,
     ProfileComponent,
     ClientsComponent,
     AddEditClientComponent,
@@ -107,7 +106,8 @@ import { TransactionsComponent } from './transactions/transactions.component';
     TableAdvisersComponent,
     CardLawyerDetailComponent,
     CardAdviserDetailComponent,
-    TransactionsComponent
+    TransactionsComponent,
+    ModalUploadFilesCreditsComponent
   ],
   imports: [
     CommonModule,

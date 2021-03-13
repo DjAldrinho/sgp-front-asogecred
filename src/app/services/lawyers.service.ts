@@ -67,12 +67,20 @@ export class LawyersService {
   }
 
   updateLawyer(lawyer: LawyerInterface, id: number, file?: File): Observable<any> {
-    const body = {
-      name: lawyer.name,
-      phone: lawyer.phone,
-      email: lawyer.email
-    };
-    return this.http.patch(`${base_url}/lawyers/update/${id}`, body);
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.userService.token}`,
+      'Content-Type': 'multipart/form-data'
+    });
+    const formData: FormData = new FormData();
+    formData.append('name', lawyer.name);
+    formData.append('email', lawyer.email);
+    formData.append('phone', lawyer.phone);
+    formData.append('document_type', lawyer.document_type);
+    formData.append('document_number', lawyer.document_number);
+    if(file){
+      formData.append('professional_card', file, file.name);
+    }
+    return this.http.post(`${base_url}/lawyers/update/${id}`, formData, {headers});
   }
 
   deleteLawyer(lawyer: Lawyer): Observable<any> {

@@ -227,4 +227,21 @@ export class CreditsService {
     return `${base_url}/report/peace/${idCredit}`;
   }
 
+  uploadDocumentsCredit(idCredit: number, files: File[]) : Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.userService.token}`,
+      'Content-Type': 'multipart/form-data'
+    });
+    const formData: FormData = new FormData();
+    for (let x = 0; x < files.length; x++) {
+      formData.append(`files[${x}]`, files[x]);
+    }
+    formData.append('credit_id', `${idCredit}`);
+    return this.http.post(`${base_url}/credits/add-document`, formData, {headers});
+  }
+
+  deleteDocumentCredit(idDocument: number) : Observable<any> {
+    return this.http.delete(`${base_url}/credits/delete-document/${idDocument}`);
+  }
+
 }
