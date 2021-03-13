@@ -1,4 +1,4 @@
-import {EventEmitter, Output} from '@angular/core';
+import {EventEmitter, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
@@ -6,7 +6,7 @@ import {Component, Input, OnInit} from '@angular/core';
   templateUrl: './table-transactions.component.html',
   styleUrls: ['./table-transactions.component.css']
 })
-export class TableTransactionsComponent implements OnInit {
+export class TableTransactionsComponent implements OnInit, OnChanges {
 
   @Input()
   title: string;
@@ -25,8 +25,12 @@ export class TableTransactionsComponent implements OnInit {
   @Input()
   maxSize = 5;
   @Input()
+  count: number;
+  @Input()
   commentary = false;
   public page: number;
+  public transactions: any[];
+  public counter: number;
 
   // tslint:disable-next-line:no-output-native
   @Output() pageChange: EventEmitter<number> = new EventEmitter();
@@ -36,6 +40,15 @@ export class TableTransactionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.items.length > 0){
+      this.counter = ((this.page * this.max) - this.max);
+      this.transactions = this.items.map((item) => {
+        return {count:  ++this.counter, ...item };
+      });
+    }
   }
 
   getDate(item: any): string {

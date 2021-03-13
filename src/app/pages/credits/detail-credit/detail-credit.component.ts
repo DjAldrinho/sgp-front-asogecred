@@ -30,11 +30,13 @@ export class DetailCreditComponent implements OnInit {
   public incomes: Transaction[] = [];
   public pageIncomes: number;
   public totalIncomes: number;
+  public countIncomes: number;
 
   // egresos
   public expenses: Transaction[] = [];
   public pageExpenses: number;
   public totalExpenses: number;
+  public countExpenses: number;
 
   public commentarysForm: FormGroup;
   public loadingCommentaryForm: boolean = false;
