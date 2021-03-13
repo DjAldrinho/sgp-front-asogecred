@@ -1,5 +1,6 @@
 import {EventEmitter, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {Component, Input, OnInit} from '@angular/core';
+import {Transaction} from '../../models/transaction.model';
 
 @Component({
   selector: 'app-table-transactions',
@@ -28,12 +29,16 @@ export class TableTransactionsComponent implements OnInit, OnChanges {
   count: number;
   @Input()
   commentary = false;
+  @Input()
+  deleteTransaction = false;
   public page: number;
   public transactions: any[];
   public counter: number;
 
   // tslint:disable-next-line:no-output-native
   @Output() pageChange: EventEmitter<number> = new EventEmitter();
+  // tslint:disable-next-line:no-output-native no-output-on-prefix
+  @Output() onDeleteTransaction: EventEmitter<Transaction> = new EventEmitter();
 
   constructor() {
     this.page = 1;
@@ -43,10 +48,10 @@ export class TableTransactionsComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.items.length > 0){
+    if (this.items.length > 0) {
       this.counter = ((this.page * this.max) - this.max);
       this.transactions = this.items.map((item) => {
-        return {count:  ++this.counter, ...item };
+        return {count: ++this.counter, ...item};
       });
     }
   }
@@ -58,6 +63,12 @@ export class TableTransactionsComponent implements OnInit, OnChanges {
   onPageChange(page): void {
     this.page = page;
     this.pageChange.emit(page);
+  }
+
+  getDeleteTransaction(item: Transaction): void {
+    if (item.origin === 'deposit') {
+      this.onDeleteTransaction.emit(item);
+    }
   }
 
   getClassBadge(item: string): string {

@@ -19,11 +19,12 @@
       <thead>
       <tr>
         <th>No.</th>
-        <th>Código</th>
+        <th *ngIf="!deleteTransaction">Código</th>
         <th>Tipo</th>
         <th class="text-right">Valor</th>
         <th *ngIf="commentary">Comentario</th>
         <th>Fecha</th>
+        <th *ngIf="deleteTransaction">Acciones</th>
       </tr>
       </thead>
       <tbody>
@@ -38,7 +39,7 @@
         <td>
           <span class="badge pl-0 font-weight-bold font-badge">{{ item.count }}</span>
         </td>
-        <td>
+        <td *ngIf="!deleteTransaction">
           <span class="badge pl-0 font-weight-bold font-badge">{{ item.code }}</span>
         </td>
         <td>
@@ -49,6 +50,19 @@
         <td class="text-right">{{ item.value | currency }}</td>
         <td *ngIf="commentary">{{ item.commentary }}</td>
         <td class="font-badge-lg">{{ getDate(item) | date: "yyyy-MM-dd" }}</td>
+        <th *ngIf="deleteTransaction" class="text-center">
+          <button
+            [disabled]="item.origin!=='deposit'"
+            type="button"
+            class="btn btn-danger px-2 btn-xs"
+            data-toggle="tooltip"
+            data-placement="top"
+            title="Eliminar"
+            (click)="getDeleteTransaction(item)"
+          >
+            <i class="simple-icon-trash"></i>
+          </button>
+        </th>
       </tr>
       </tbody>
     </table>

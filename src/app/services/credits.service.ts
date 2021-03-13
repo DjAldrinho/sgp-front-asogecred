@@ -240,7 +240,7 @@ export class CreditsService {
     return this.http.post(`${base_url}/credits/add-document`, formData, {headers});
   }
 
-  deleteDocumentCredit(idDocument: number) : Observable<any> {
+  deleteDocumentCredit(idDocument: number): Observable<any> {
     return this.http.delete(`${base_url}/credits/delete-document/${idDocument}`);
   }
 

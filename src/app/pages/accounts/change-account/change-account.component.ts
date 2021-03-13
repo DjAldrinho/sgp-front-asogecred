@@ -8,6 +8,7 @@ import {TransactionsService} from 'src/app/services/transactions.service';
 import {SwalTool} from 'src/app/tools/swal.tool';
 import {ModalChangeAccountComponent} from './modal-change-account/modal-change-account.component';
 import {CreditsService} from '../../../services/credits.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-change-account',
@@ -128,6 +129,27 @@ export class ChangeAccountComponent implements OnInit {
       }
     }
     return classBadge;
+  }
+
+  deleteTransaction(item: Transaction): void {
+    Swal.fire({
+      title: '¿Borrar transacción?',
+      text: `Está apunto de borrar esta transacción`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Si, borrar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+        this.transactionService.deleteTransaction(item.id)
+          .subscribe(() => {
+            this.getAccount(this.idAccount);
+            SwalTool.onMessage('Transacción eliminada', `La transacción fue eliminada correctamente`);
+          }, (err) => {
+            SwalTool.onError(err.error.message);
+          });
+      }
+    });
   }
 
 }

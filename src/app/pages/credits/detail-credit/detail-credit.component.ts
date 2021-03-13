@@ -4,15 +4,15 @@ import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Credit} from 'src/app/models/credit.model';
 import {Transaction} from 'src/app/models/transaction.model';
-import { BlobService } from 'src/app/services/blob.service';
+import {BlobService} from 'src/app/services/blob.service';
 import {CreditsService} from 'src/app/services/credits.service';
-import { ReportsService } from 'src/app/services/reports.service';
+import {ReportsService} from 'src/app/services/reports.service';
 import {TransactionsService} from 'src/app/services/transactions.service';
 import {SwalTool} from 'src/app/tools/swal.tool';
 import Swal from 'sweetalert2';
 import {DepositCreditComponent} from '../deposit-credit/deposit-credit.component';
 import {ModalApproveCreditComponent} from '../modal-approve-credit/modal-approve-credit.component';
-import { ModalUploadFilesCreditsComponent } from '../modal-upload-files-credits/modal-upload-files-credits.component';
+import {ModalUploadFilesCreditsComponent} from '../modal-upload-files-credits/modal-upload-files-credits.component';
 import {RefinanceCreditComponent} from '../refinance-credit/refinance-credit.component';
 
 @Component({
@@ -31,6 +31,7 @@ export class DetailCreditComponent implements OnInit {
   public incomes: Transaction[] = [];
   public pageIncomes: number;
   public totalIncomes: number;
+  public countIncomes: number;
 
   // egresos
   public expenses: Transaction[] = [];
@@ -121,7 +122,10 @@ export class DetailCreditComponent implements OnInit {
     }
     this.transactionService.getTransactions(this.pageIncomes, this.max, null, this.idCredit, 'deposit,credit_payment')
       .subscribe(resp => {
-        this.incomes = resp.transactions;
+        this.countIncomes = ((this.pageIncomes * this.max) - this.max);
+        this.incomes = resp.transactions.map((item) => {
+          return {count: ++this.countIncomes, ...item};
+        });
         this.totalIncomes = resp.total;
       }, () => {
         SwalTool.onError('Error al cargar los ingresos del crédito');
@@ -277,36 +281,36 @@ export class DetailCreditComponent implements OnInit {
 
   downloadReportCredit(): void {
     this.creditReportLoading = true;
-    this.creditReportText = "Descargando...";
+    this.creditReportText = 'Descargando...';
     const url = this.creditsService.urlReportCredit(this.credit.id);
     this.blobService.getFile(url, `reporte-credito-${this.credit.code}.pdf`, true)
-    .subscribe(() => {
-      setTimeout(() => {
+      .subscribe(() => {
+        setTimeout(() => {
+          this.creditReportLoading = false;
+          this.creditReportText = 'Descargar reporte';
+        }, 500);
+      }, () => {
         this.creditReportLoading = false;
-        this.creditReportText = "Descargar reporte";
-      }, 500);
-    }, () => {
-      this.creditReportLoading = false;
-      this.creditReportText = "Descargar reporte";
-      SwalTool.onError('Error al descargar el reporte');
-    });
+        this.creditReportText = 'Descargar reporte';
+        SwalTool.onError('Error al descargar el reporte');
+      });
   }
 
   downloadPeaceSaveCredit(): void {
     this.peaceSaveLoading = true;
-    this.peaceSaveText = "Descargando...";
+    this.peaceSaveText = 'Descargando...';
     const url = this.creditsService.urlPeaceSaveCredit(this.credit.id);
     this.blobService.getFile(url, `paz-y-salvo-credito-${this.credit.code}.pdf`, true)
-    .subscribe(() => {
-      setTimeout(() => {
+      .subscribe(() => {
+        setTimeout(() => {
+          this.peaceSaveLoading = false;
+          this.peaceSaveText = 'Descargar paz y salvo';
+        }, 500);
+      }, () => {
         this.peaceSaveLoading = false;
-        this.peaceSaveText = "Descargar paz y salvo";
-      }, 500);
-    }, () => {
-      this.peaceSaveLoading = false;
-      this.peaceSaveText = "Descargar paz y salvo";
-      SwalTool.onError('Error al descargar el paz y salvo');
-    });
+        this.peaceSaveText = 'Descargar paz y salvo';
+        SwalTool.onError('Error al descargar el paz y salvo');
+      });
   }
 
   deleteDocumentCredit(idDocument: number): void {
@@ -336,6 +340,28 @@ export class DetailCreditComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'YES') {
         this.getCredit(this.idCredit);
+      }
+    });
+  }
+
+  deleteIncomeCredit(item: Transaction): void {
+    Swal.fire({
+      title: '¿Borrar Abono?',
+      text: `Está apunto de borrar este abono`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Si, borrar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+        this.transactionService.deleteTransaction(item.id)
+          .subscribe(() => {
+            this.getCredit(this.idCredit);
+            this.getIncomes(this.pageIncomes);
+            SwalTool.onMessage('Abono eliminado', `El abono fue eliminado correctamente`);
+          }, (err) => {
+            SwalTool.onError(err.error.message);
+          });
       }
     });
   }

@@ -379,9 +379,10 @@
                 <thead>
                   <tr>
                     <th>No.</th>
-                    <th>Tipo</th>
+                    <th>Código</th>
                     <th>Valor</th>
                     <th>Fecha</th>
+                    <th class="text-center">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -398,17 +399,29 @@
                     "
                   >
                     <td>
-                      <span class="badge pl-0 font-weight-bold font-badge">{{
-                        item.code
-                      }}</span>
+                      <span class="badge pl-0 font-weight-bold font-badge">
+                        {{item.count}}
+                      </span>
                     </td>
                     <td>
-                      <span [ngClass]="getClassBadge(item.origin)">{{
-                        item.origin | formatTypeTransaction
-                      }}</span>
+                      <span class="badge pl-0 font-weight-bold font-badge">
+                        {{item.code}}
+                      </span>
                     </td>
                     <td>{{ item.value | currency }}</td>
                     <td>{{ item.created_at | date: "yyyy-MM-dd" }}</td>
+                    <td class="text-center">
+                      <button
+                        type="button"
+                        class="btn btn-danger px-2 btn-xs"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Eliminar"
+                        (click)="deleteIncomeCredit(item)"
+                      >
+                        <i class="simple-icon-trash"></i>
+                      </button>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -478,7 +491,6 @@
             type="button"
             class="btn btn-outline-primary btn-sm"
             (click)="openModalAddDocument()"
-            *ngIf="credit.status === 'A'"
           >
             Agregar documentos
           </button>
@@ -513,7 +525,7 @@
                 <div class="btn-group" role="group" aria-label="Basic example">
                   <a
                     type="button"
-                    class="btn btn-info"
+                    class="btn btn-info btn-xs"
                     data-toggle="tooltip"
                     data-placement="top"
                     title="Ver"
@@ -524,7 +536,7 @@
                   </a>
                   <button
                     type="button"
-                    class="btn btn-danger"
+                    class="btn btn-danger btn-xs"
                     data-toggle="tooltip"
                     data-placement="top"
                     title="Eliminar"

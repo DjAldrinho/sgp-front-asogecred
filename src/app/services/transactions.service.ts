@@ -75,4 +75,8 @@ export class TransactionsService {
         })
       );
   }
+
+  deleteTransaction(transactionId: number): Observable<any> {
+    return this.http.delete(`${base_url}/transactions/delete/${transactionId}`);
+  }
 }
