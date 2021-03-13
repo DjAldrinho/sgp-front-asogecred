@@ -56,6 +56,7 @@ import {TableAdvisersComponent} from '../components/table-advisers/table-adviser
 import {CardLawyerDetailComponent} from '../components/card-lawyer-detail/card-lawyer-detail.component';
 import {CardAdviserDetailComponent} from '../components/card-adviser-detail/card-adviser-detail.component';
 import { TransactionsComponent } from './transactions/transactions.component';
+import { ModalUploadFilesCreditsComponent } from './credits/modal-upload-files-credits/modal-upload-files-credits.component';
 
 
 @NgModule({
@@ -105,7 +106,8 @@ import { TransactionsComponent } from './transactions/transactions.component';
     TableAdvisersComponent,
     CardLawyerDetailComponent,
     CardAdviserDetailComponent,
-    TransactionsComponent
+    TransactionsComponent,
+    ModalUploadFilesCreditsComponent
   ],
   imports: [
     CommonModule,

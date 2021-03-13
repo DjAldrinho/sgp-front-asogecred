@@ -6,8 +6,8 @@
     >
       <i class="simple-icon-arrow-left align-middle title-md"></i>
     </a>
-    <span>Detalles del crédito&nbsp; &nbsp;</span> 
-    <span *ngIf="credit" class="badge badge-secondary">{{credit.code}}</span> 
+    <span>Detalles del crédito&nbsp; &nbsp;</span>
+    <span *ngIf="credit" class="badge badge-secondary">{{ credit.code }}</span>
   </h1>
 </div>
 
@@ -472,7 +472,17 @@
   <div class="col-12 mb-4">
     <div class="card">
       <div class="card-body">
-        <h5 class="mb-4">Documentos Anexos del Crédito</h5>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5>Documentos Anexos del Crédito</h5>
+          <button
+            type="button"
+            class="btn btn-outline-primary btn-sm"
+            (click)="openModalAddDocument()"
+            *ngIf="credit.status === 'A'"
+          >
+            Agregar documentos
+          </button>
+        </div>
         <table class="table table-striped">
           <thead>
             <tr>
@@ -512,6 +522,16 @@
                   >
                     <i class="simple-icon-eye"></i>
                   </a>
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Eliminar"
+                    (click)="deleteDocumentCredit(item.id)"
+                  >
+                    <i class="simple-icon-trash"></i>
+                  </button>
                 </div>
               </td>
             </tr>

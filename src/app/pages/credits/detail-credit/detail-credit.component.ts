@@ -12,6 +12,7 @@ import {SwalTool} from 'src/app/tools/swal.tool';
 import Swal from 'sweetalert2';
 import {DepositCreditComponent} from '../deposit-credit/deposit-credit.component';
 import {ModalApproveCreditComponent} from '../modal-approve-credit/modal-approve-credit.component';
+import { ModalUploadFilesCreditsComponent } from '../modal-upload-files-credits/modal-upload-files-credits.component';
 import {RefinanceCreditComponent} from '../refinance-credit/refinance-credit.component';
 
 @Component({
@@ -305,6 +306,37 @@ export class DetailCreditComponent implements OnInit {
       this.peaceSaveLoading = false;
       this.peaceSaveText = "Descargar paz y salvo";
       SwalTool.onError('Error al descargar el paz y salvo');
+    });
+  }
+
+  deleteDocumentCredit(idDocument: number): void {
+    Swal.fire({
+      title: '¿Borrar documento?',
+      text: `Está apunto de borrar el documento`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Si, borrar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+        this.creditsService.deleteDocumentCredit(idDocument)
+          .subscribe(() => {
+            this.getCredit(this.idCredit);
+            SwalTool.onMessage('Documento eliminado', `El documento fue eliminado correctamente`);
+          }, (err) => {
+            SwalTool.onError(err.error.message);
+          });
+      }
+    });
+  }
+
+  openModalAddDocument(): void {
+    const dialogRef = this.dialog.open(ModalUploadFilesCreditsComponent, {width: '50%', panelClass: 'card'});
+    dialogRef.componentInstance.credit = this.credit;
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'YES') {
+        this.getCredit(this.idCredit);
+      }
     });
   }
 
