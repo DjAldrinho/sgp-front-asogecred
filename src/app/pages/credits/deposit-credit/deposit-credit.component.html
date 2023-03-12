@@ -27,6 +27,23 @@
               >El valor es requerido</small
             >
           </div>
+          <div class="form-group col-md-12">
+            <label for="deposit_date">Fecha de abono*</label>
+            <input
+              type="date"
+              class="form-control"
+              id="deposit_date"
+              formControlName="deposit_date"
+            />
+            <small
+              *ngIf="
+                  getFormField('deposit_date').errors?.required &&
+                  getFormField('deposit_date').touched
+                "
+              class="form-text text-danger"
+            >La fecha de abono es requerida</small
+            >
+          </div>
         </div>
         <div class="form-row">
           <button

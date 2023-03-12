@@ -24,7 +24,7 @@ export class DetailCreditComponent implements OnInit {
 
   public credit: Credit;
   private idCredit: number;
-  public loading: boolean = false;
+  public loading = false;
   public max: number;
 
   // ingresos
@@ -39,7 +39,7 @@ export class DetailCreditComponent implements OnInit {
   public totalExpenses: number;
 
   public commentarysForm: FormGroup;
-  public loadingCommentaryForm: boolean = false;
+  public loadingCommentaryForm = false;
 
   public peaceSaveText = 'Descargar paz y salvo';
   public peaceSaveLoading = false;

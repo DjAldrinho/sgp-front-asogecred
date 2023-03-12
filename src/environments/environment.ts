@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  base_url: 'https://sgpapi.dnrjs.com/api',
+  base_url: 'http://localhost:8001/api',
 };
