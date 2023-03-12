@@ -5783,6 +5783,13 @@ ng2-pagination@^2.0.2:
   resolved "https://registry.yarnpkg.com/ng2-pagination/-/ng2-pagination-2.0.2.tgz#532dc9154de1f15e19e94edf554b96884b5f83d6"
   integrity sha1-Uy3JFU3h8V4Z6U7fVUuWiEtfg9Y=
 
+ngx-mask@^11.1.4:
+  version "11.1.5"
+  resolved "https://registry.yarnpkg.com/ngx-mask/-/ngx-mask-11.1.5.tgz#c4bdf0a99d2e9cf10417af5df93a137fc879fce9"
+  integrity sha512-rp0iH0bCpM7SiKi9FHZAyl6KwzwtIzO3vmxDPWCjjMxPN7cgUGA88mN2aAgFjL5cMvvQZRwUGyOfT2Di/GpPgg==
+  dependencies:
+    tslib "^2.0.0"
+
 ngx-pagination@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/ngx-pagination/-/ngx-pagination-5.0.0.tgz#a4b4c150a70aef17ccd825e4543e174a974bbd14"

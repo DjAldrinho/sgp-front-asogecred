@@ -57,7 +57,7 @@ export class TableTransactionsComponent implements OnInit, OnChanges {
   }
 
   getDate(item: any): string {
-    return item.created_at ? item.created_at : item.updated_at;
+    return item.transaction_date ? item.transaction_date : item.created_at;
   }
 
   onPageChange(page): void {

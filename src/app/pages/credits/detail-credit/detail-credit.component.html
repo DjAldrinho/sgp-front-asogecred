@@ -377,17 +377,17 @@
               </div>
               <table class="table">
                 <thead>
-                  <tr>
-                    <th>No.</th>
-                    <th>Código</th>
-                    <th>Valor</th>
-                    <th>Fecha</th>
-                    <th class="text-center">Acciones</th>
-                  </tr>
+                <tr>
+                  <th>No.</th>
+                  <th>Código</th>
+                  <th>Valor</th>
+                  <th>Fecha</th>
+                  <th class="text-center">Acciones</th>
+                </tr>
                 </thead>
                 <tbody>
-                  <tr
-                    *ngFor="
+                <tr
+                  *ngFor="
                       let item of incomes
                         | paginate
                           : {
@@ -397,32 +397,32 @@
                               id: 'incomes'
                             }
                     "
-                  >
-                    <td>
+                >
+                  <td>
                       <span class="badge pl-0 font-weight-bold font-badge">
                         {{item.count}}
                       </span>
-                    </td>
-                    <td>
+                  </td>
+                  <td>
                       <span class="badge pl-0 font-weight-bold font-badge">
                         {{item.code}}
                       </span>
-                    </td>
-                    <td>{{ item.value | currency }}</td>
-                    <td>{{ item.created_at | date: "yyyy-MM-dd" }}</td>
-                    <td class="text-center">
-                      <button
-                        type="button"
-                        class="btn btn-danger px-2 btn-xs"
-                        data-toggle="tooltip"
-                        data-placement="top"
-                        title="Eliminar"
-                        (click)="deleteIncomeCredit(item)"
-                      >
-                        <i class="simple-icon-trash"></i>
-                      </button>
-                    </td>
-                  </tr>
+                  </td>
+                  <td>{{ item.value | currency }}</td>
+                  <td>{{ item.transaction_date ? item.transaction_date : item.created_at| date: "yyyy-MM-dd" }}</td>
+                  <td class="text-center">
+                    <button
+                      type="button"
+                      class="btn btn-danger px-2 btn-xs"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Eliminar"
+                      (click)="deleteIncomeCredit(item)"
+                    >
+                      <i class="simple-icon-trash"></i>
+                    </button>
+                  </td>
+                </tr>
                 </tbody>
               </table>
               <div class="text-center mt-3">
@@ -439,7 +439,7 @@
                       <span
                         *ngIf="!pIncomes.isFirstPage()"
                         (click)="pIncomes.previous()"
-                        ><i class="simple-icon-arrow-left"></i
+                      ><i class="simple-icon-arrow-left"></i
                       ></span>
                     </div>
                     <div
@@ -450,7 +450,7 @@
                       <span
                         (click)="pIncomes.setCurrent(page.value)"
                         *ngIf="pIncomes.getCurrent() !== page.value"
-                        >{{ page.label }}</span
+                      >{{ page.label }}</span
                       >
                       <div *ngIf="pIncomes.getCurrent() === page.value">
                         <span>{{ page.label }}</span>
@@ -463,7 +463,7 @@
                       <span
                         *ngIf="!pIncomes.isLastPage()"
                         (click)="pIncomes.next()"
-                        ><i class="simple-icon-arrow-right"></i
+                      ><i class="simple-icon-arrow-right"></i
                       ></span>
                     </div>
                   </div>
@@ -497,56 +497,56 @@
         </div>
         <table class="table table-striped">
           <thead>
-            <tr>
-              <th>Archivo</th>
-              <th>Fecha anexado</th>
-              <th class="text-center">Acciones</th>
-            </tr>
+          <tr>
+            <th>Archivo</th>
+            <th>Fecha anexado</th>
+            <th class="text-center">Acciones</th>
+          </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of credit.documents">
-              <td>
-                <img
-                  *ngIf="getDocument(item.document_file_url)"
-                  [src]="item.document_file_url"
-                  class="img-thumbnail"
-                  width="50px"
-                />
-                {{
-                  !getDocument(item.document_file_url)
-                    ? item.document_file_url
-                    : ""
-                }}
-              </td>
-              <td>
-                {{ item.created_at | date: "yyyy-MM-dd" }}
-              </td>
-              <td class="text-center">
-                <div class="btn-group" role="group" aria-label="Basic example">
-                  <a
-                    type="button"
-                    class="btn btn-info btn-xs"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Ver"
-                    [href]="item.document_file_url"
-                    target="_blank"
-                  >
-                    <i class="simple-icon-eye"></i>
-                  </a>
-                  <button
-                    type="button"
-                    class="btn btn-danger btn-xs"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Eliminar"
-                    (click)="deleteDocumentCredit(item.id)"
-                  >
-                    <i class="simple-icon-trash"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
+          <tr *ngFor="let item of credit.documents">
+            <td>
+              <img
+                *ngIf="getDocument(item.document_file_url)"
+                [src]="item.document_file_url"
+                class="img-thumbnail"
+                width="50px"
+              />
+              {{
+              !getDocument(item.document_file_url)
+                ? item.document_file_url
+                : ""
+              }}
+            </td>
+            <td>
+              {{ item.created_at | date: "yyyy-MM-dd" }}
+            </td>
+            <td class="text-center">
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <a
+                  type="button"
+                  class="btn btn-info btn-xs"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Ver"
+                  [href]="item.document_file_url"
+                  target="_blank"
+                >
+                  <i class="simple-icon-eye"></i>
+                </a>
+                <button
+                  type="button"
+                  class="btn btn-danger btn-xs"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Eliminar"
+                  (click)="deleteDocumentCredit(item.id)"
+                >
+                  <i class="simple-icon-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
           </tbody>
         </table>
       </div>
@@ -601,55 +601,55 @@
         <div class="mt-4" *ngIf="credit.liquidate">
           <table class="table table-striped">
             <thead>
-              <tr>
-                <th>No.</th>
-                <th>Fecha vencimiento</th>
-                <th>Valor cuota</th>
-                <th>Valor capital</th>
-                <th>Valor intereses</th>
-                <th>Saldo capital</th>
-              </tr>
+            <tr>
+              <th>No.</th>
+              <th>Fecha vencimiento</th>
+              <th>Valor cuota</th>
+              <th>Valor capital</th>
+              <th>Valor intereses</th>
+              <th>Saldo capital</th>
+            </tr>
             </thead>
             <tbody>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>
-                  <strong>{{
-                    credit.liquidate.total_credit | currency
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
+                <strong>{{
+                  credit.liquidate.total_credit | currency
                   }}</strong>
-                </td>
-              </tr>
-              <tr *ngFor="let item of credit.liquidate.fees">
-                <td>{{ item.number }}</td>
-                <td>{{ item.start_date }}</td>
-                <td>{{ item.fee_value | currency }}</td>
-                <td>{{ item.capital_fee | currency }}</td>
-                <td>{{ item.interest_value | currency }}</td>
-                <td>{{ item.capital_balance | currency }}</td>
-              </tr>
-              <tr>
-                <th colspan="2">TOTALES</th>
-                <td>
-                  <strong>{{
-                    credit.liquidate.total_credit | currency
+              </td>
+            </tr>
+            <tr *ngFor="let item of credit.liquidate.fees">
+              <td>{{ item.number }}</td>
+              <td>{{ item.start_date }}</td>
+              <td>{{ item.fee_value | currency }}</td>
+              <td>{{ item.capital_fee | currency }}</td>
+              <td>{{ item.interest_value | currency }}</td>
+              <td>{{ item.capital_balance | currency }}</td>
+            </tr>
+            <tr>
+              <th colspan="2">TOTALES</th>
+              <td>
+                <strong>{{
+                  credit.liquidate.total_credit | currency
                   }}</strong>
-                </td>
-                <td>
-                  <strong>{{
-                    credit.liquidate.total_capital | currency
+              </td>
+              <td>
+                <strong>{{
+                  credit.liquidate.total_capital | currency
                   }}</strong>
-                </td>
-                <td>
-                  <strong>{{
-                    credit.liquidate.total_interest | currency
+              </td>
+              <td>
+                <strong>{{
+                  credit.liquidate.total_interest | currency
                   }}</strong>
-                </td>
-                <td></td>
-              </tr>
+              </td>
+              <td></td>
+            </tr>
             </tbody>
           </table>
         </div>

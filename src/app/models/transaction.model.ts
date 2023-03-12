@@ -19,6 +19,8 @@ export class Transaction {
     public user_id: number,
     // tslint:disable-next-line:variable-name
     public credit_id: number,
+    // tslint:disable-next-line:variable-name
+    public transaction_date: Date,
   ) {
   }
 }

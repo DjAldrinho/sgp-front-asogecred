@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Credit } from 'src/app/models/credit.model';
 import { CreditsService } from 'src/app/services/credits.service';
 import { SwalTool } from 'src/app/tools/swal.tool';
+import * as moment from "moment/moment";
 
 @Component({
   selector: 'app-deposit-credit',
@@ -28,6 +29,7 @@ export class DepositCreditComponent implements OnInit {
   private initForm(): void {
     this.newDepositForm = this.fb.group({
       value: ['', [Validators.required]],
+      deposit_date: ['', [Validators.required]],
     });
   }
 
@@ -39,9 +41,14 @@ export class DepositCreditComponent implements OnInit {
     if (this.newDepositForm.valid) {
       this.loading = true;
       const value = this.getFormField('value').value;
+
+
+      const depositDate = moment.utc(this.getFormField('deposit_date').value).format('yyyy-MM-DD');
+
       const deposit = {
         credit_id : this.credit.id,
-        value
+        value,
+        deposit_date: depositDate
       }
       this.creditsService.depositCredit(deposit)
       .subscribe(resp => {
